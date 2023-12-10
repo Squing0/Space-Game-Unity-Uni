@@ -5,37 +5,31 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public float totalTime = 80f;
+    public float totalTime = 1;
     public bool timerOn;
     public TMP_Text timerText;
-    //public PlayerMovement player;
-    //public GameOverScreen gameover;
+    private double charge = 1;
+
+    public GameObject gameover;
+    GameOverScreen gm;
+
+    // CHANGE SOME OF THIS OVER TO UI MANAGER
 
     private void Start()
     {
         timerOn = true;
+        gm = gameover.GetComponent<GameOverScreen>();
     }
     private void Update()
     {
-        if (timerOn)
+        if (charge < 100)
         {
-            if (totalTime > 0)
-            {
-                totalTime -= Time.deltaTime;    // Used deltaTime to get most accurate data
-                UpdateTimer();  // Timer updated every frame
-            }
-            else
-            {
-                //gameover.ActivateGameover(player.health, (int)totalTime);
-            }
+            charge += Time.deltaTime * 5;
+            timerText.text = $"Charge: {(int)charge}%";
         }
-    }
-
-    private void UpdateTimer()
-    {
-        int seconds = Mathf.FloorToInt(totalTime % 60); // Used modulo to get seconds in a minute
-        int minutes = Mathf.FloorToInt(totalTime / 60); // Used division to get minutes
-
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);  // used string formatting to get specific minute seconds format
+        else
+        {
+            gm.ActivateGameover(3, 3);
+        }
     }
 }
