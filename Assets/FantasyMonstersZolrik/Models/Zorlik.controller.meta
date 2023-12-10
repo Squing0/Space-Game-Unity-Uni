@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: dda24622485dd41628cc04a17381ed53
+timeCreated: 1534001848
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 124327
+  packageName: Fantasy Monsters Zolrik (ZolrikMercenary) - Strategy, RPG
+  packageVersion: 1.0
+  assetPath: Assets/FantasyMonstersZolrik/Models/Zorlik.controller
+  uploadId: 260715
