@@ -24,7 +24,7 @@ public class BasicAi : MonoBehaviour
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.updatePosition = true;
         agent.updateRotation = true;
-        state = State.SHIP;
+        state = State.CHASE;
         StartCoroutine("FSM");
     }
     IEnumerator FSM()

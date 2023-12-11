@@ -477,7 +477,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 7782707775351878582}
-  camera: {fileID: 0}
 --- !u!1 &969025158167772386
 GameObject:
   m_ObjectHideFlags: 0
@@ -3217,7 +3216,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -3242,11 +3241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 6572093370058569238}
-  state: 2
+  state: 1
   waypoints: []
   ship: {fileID: 0}
   patrolSpeed: 3
-  chaseSpeed: 5
+  chaseSpeed: 10
   target: {fileID: 0}
 --- !u!136 &347864891955560869
 CapsuleCollider:

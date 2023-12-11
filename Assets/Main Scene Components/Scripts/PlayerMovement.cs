@@ -101,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
         maxJumps = 2;
         jumpCounter = 0;
-        maxHealth = 3;
+        maxHealth = 6;  // Should be able to change in inspector
         health = maxHealth;
         Health = health;
 

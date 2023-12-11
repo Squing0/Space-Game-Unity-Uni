@@ -1191,14 +1191,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1439221227952327920}
-  state: 0
+  state: 1
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   ship: {fileID: 0}
   patrolSpeed: 3
-  chaseSpeed: 5
+  chaseSpeed: 10
   target: {fileID: 0}
 --- !u!54 &4401787263050630051
 Rigidbody:
