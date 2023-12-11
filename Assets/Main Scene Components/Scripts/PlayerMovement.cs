@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Score")]
     public Timer timer;
     public GameObject gameover;
-    GameOverScreen gm;
+    GameOverScreen gm;  // CHANGE NAMES
 
     [Header("Health")]
     public int health;
@@ -55,12 +56,20 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation;
 
+    [Header("Shooting")]
+    public Image enemyCrosshair;
+
+    [Header("Enemy")]
+
+
     float horizontalInput;
     float verticalInput;
 
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    private Camera m_Camera;
 
     public int Health
     {
@@ -78,6 +87,11 @@ public class PlayerMovement : MonoBehaviour
         air
     }
 
+    private void Awake()
+    {
+        m_Camera = Camera.main; // unity tut
+        enemyCrosshair.enabled = false;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -95,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         startYScale = transform.localScale.y;   // Scale is set to default for crouching
 
         //healthUpdate();
+
         gm = gameover.GetComponent<GameOverScreen>();
     }
 
@@ -106,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+        mouseDetection();
 
         if (grounded)
         {
@@ -171,6 +187,26 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
         }
 
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Input.mousePosition;
+            Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
+            if(Physics.Raycast(ray, out RaycastHit hit))
+            {
+                //print(hit.collider.gameObject);
+                if(hit.collider.gameObject.tag == "Enemy")
+                {
+                    //enemyStats.Health -= 1;
+                    //hit.collider.GetComponent<EnemyStats>().Health -= 1;
+                    hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
+
+                    //hit.collider.GetComponentInChildren<EnemyHealthBar>().updateHealth(
+                    //    hit.collider.GetComponent<EnemyStats>().Health,
+                    //    hit.collider.GetComponent<EnemyStats>().MaxHealth);
+
+                }
+            }
+        }
     }
 
     private void Jump()
@@ -240,26 +276,35 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void mouseDetection()
     {
-        if (other.tag == "cheese")
+        Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+        if(Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (health < 3)
+            if(hit.collider.gameObject.tag == "Enemy")
             {
-                health += 1;    // Increases health with a cap of 3
-                //healthUpdate();
+                enemyCrosshair.enabled = true;
             }
             else
             {
-                Debug.Log("Health already full!");  // Still destroys object if player collides with it but informs that health is full            
+                enemyCrosshair.enabled = false;
             }
-            Destroy(other.gameObject);
         }
+    }
 
-        if (other.tag == "poisonousCheese")
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Enemy")
         {
-            health -= 1;
-            //healthUpdate(); // Poisionous cheese is made to look similar to regular to trick players and reduce health
+            //if (health < 3)
+            //{
+            //    health += 1;    // Increases health with a cap of 3
+            //    //healthUpdate();
+            //}
+            //else
+            //{
+            //    Debug.Log("Health already full!");  // Still destroys object if player collides with it but informs that health is full            
+            //}
             Destroy(other.gameObject);
         }
     }
@@ -269,10 +314,50 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             health -= 1;
+            //Destroy(collision.gameObject);  
             //healthUpdate();
         }
     }
+    private void OnMouseOver()  // THESE TWO COPIED FROM ABOVE, SHORTEN DOWN FOR THE LOVE OF GOD
+    {
+        //Vector3 mousePos = Input.mousePosition;
+        //Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
+        //if (Physics.Raycast(ray, out RaycastHit hit))
+        //{
+        //    //print(hit.collider.gameObject);
+        //    if (hit.collider.gameObject.tag == "Enemy")
+        //    {
+        //        enemyCrosshair.enabled = true;
+        //    }
+        //}
 
+        //if(gameObject.gameObject.tag == "Enemy")
+        //{
+        //    enemyCrosshair.enabled = true;
+        //    print("Hit");
+        //}
+        //print("Hit " + gameObject.name);
+    }
+    private void OnMouseExit()
+    {
+        //Vector3 mousePos = Input.mousePosition;
+        //Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
+        //if (Physics.Raycast(ray, out RaycastHit hit))
+        //{
+        //    //print(hit.collider.gameObject);
+        //    if (hit.collider.gameObject.tag == "Enemy")
+        //    {
+        //        enemyCrosshair.enabled = false;
+        //    }
+        //}
+
+        //if (gameObject.gameObject.tag == "Enemy")
+        //{
+        //    enemyCrosshair.enabled = false;
+        //    print("Not hit");
+        //}
+        //print("Left " + gameObject.name);
+    }
     //private void healthUpdate()
     //{
     //    healthText.text = String.Format($"Health : {health}");

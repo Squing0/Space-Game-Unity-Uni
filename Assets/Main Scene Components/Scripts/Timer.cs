@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
     {
         if (charge < 100)
         {
-            charge += Time.deltaTime * 5;
+            charge += Time.deltaTime * 1;
             timerText.text = $"Charge: {(int)charge}%";
         }
         else
