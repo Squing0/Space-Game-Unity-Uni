@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -57,12 +58,15 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
 
     [Header("Shooting")]
-    public Image enemyCrosshair;
+    public UnityEngine.UI.Image enemyCrosshair;
+    public GameObject bullet;
+    //public GameObject gun;
+    public Transform shootPos;
 
     [Header("Enemy")]
 
 
-    float horizontalInput;
+    float horizontalInput;      
     float verticalInput;
 
     Vector3 moveDirection;
@@ -78,6 +82,9 @@ public class PlayerMovement : MonoBehaviour
         }
         set { }
     }
+
+    [SerializeField]
+    private HealthBar healthBar;
 
     public enum MovementState
     {
@@ -191,24 +198,37 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 mousePos = Input.mousePosition;
             Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
-            if(Physics.Raycast(ray, out RaycastHit hit))
+    
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                //print(hit.collider.gameObject);
-                if(hit.collider.gameObject.tag == "Enemy")
+               Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z + 1);
+
+
+                GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90,0,0));
+
+                Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
+
+                //bulletRigidbody.AddForce(bullet.transform.forward * 30, ForceMode.Impulse);
+                //bulletRigidbody.velocity = shootPos.transform.forward * 30;
+                bulletRigidbody.AddRelativeForce(new Vector3(0, 0, 2));
+
+                StartCoroutine(deleteBullet(clone));              
+
+                if (hit.collider.gameObject.tag == "Enemy")
                 {
-                    //enemyStats.Health -= 1;
-                    //hit.collider.GetComponent<EnemyStats>().Health -= 1;
-                    hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
-
-                    //hit.collider.GetComponentInChildren<EnemyHealthBar>().updateHealth(
-                    //    hit.collider.GetComponent<EnemyStats>().Health,
-                    //    hit.collider.GetComponent<EnemyStats>().MaxHealth);
-
+                    //hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
+                   
                 }
             }
         }
     }
 
+    private IEnumerator deleteBullet(GameObject obj)
+    {
+        yield return new WaitForSeconds(2f);
+
+        Destroy(obj);
+    }
     private void Jump()
     {
         rb.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);   // Specifically moves player in y axis, impulse is used here as jump is instant 
@@ -314,6 +334,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             health -= 1;
+            healthBar.updateHealth(health, maxHealth);
             //Destroy(collision.gameObject);  
             //healthUpdate();
         }

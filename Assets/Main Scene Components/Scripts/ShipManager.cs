@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipManager : MonoBehaviour
 {
     [Header("Health")]
     public int health = 20;
+    public int maxHealth = 20;
 
     public int Health
     {
@@ -16,9 +18,13 @@ public class ShipManager : MonoBehaviour
     public GameObject gameover;
     GameOverScreen gm;
 
+    [SerializeField]
+    private HealthBar healthBar;
+
     private void Start()
     {
         gm = gameover.GetComponent<GameOverScreen>();
+        health = maxHealth;
     }
     private void Update()
     {
@@ -34,6 +40,7 @@ public class ShipManager : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             health--;
+            healthBar.updateHealth(health, maxHealth);
         }
     }
 }

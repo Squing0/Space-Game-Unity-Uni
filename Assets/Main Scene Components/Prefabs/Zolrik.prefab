@@ -384,7 +384,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1580994197825231053}
   - component: {fileID: 7782707775351878582}
-  - component: {fileID: 484660337884405905}
+  - component: {fileID: 1997100429181169726}
+  - component: {fileID: 3906507480096554849}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -464,7 +465,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &484660337884405905
+--- !u!114 &1997100429181169726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908093944156100802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e58cbd2a8b40c84fa79bcf8da9231c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 7782707775351878582}
+--- !u!114 &3906507480096554849
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -476,7 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7152447b8b8e01443bb18535a4516efb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 7782707775351878582}
+  camera: {fileID: 0}
 --- !u!1 &969025158167772386
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,6 +3171,7 @@ GameObject:
   - component: {fileID: 2166618201246524983}
   - component: {fileID: 347864891955560869}
   - component: {fileID: 687611247020337071}
+  - component: {fileID: 6038267614222630791}
   m_Layer: 0
   m_Name: Zolrik
   m_TagString: Enemy
@@ -3284,7 +3299,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   maxHealth: 3
-  healthBar: {fileID: 484660337884405905}
+  agent: {fileID: 6572093370058569238}
+  healthBar: {fileID: 1997100429181169726}
+--- !u!54 &6038267614222630791
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8139422624394418415}
+  serializedVersion: 4
+  m_Mass: 0.001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8154122115107898827
 GameObject:
   m_ObjectHideFlags: 0

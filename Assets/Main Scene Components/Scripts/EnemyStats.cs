@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyStats : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class EnemyStats : MonoBehaviour
     public int health = 3;
     public int maxHealth = 3;
 
-    public EnemyHealthBar healthBar;    // Change this to be more efficient
+
+    public NavMeshAgent agent;
+    public HealthBar healthBar;    // Change this to be more efficient
     public int Health
     {
         get { return health; } set { health = value; }  // Use MAX health here too
@@ -22,12 +25,14 @@ public class EnemyStats : MonoBehaviour
 
     private void Awake()
     {
-        healthBar = GetComponentInChildren<EnemyHealthBar>();
+        healthBar = GetComponentInChildren<HealthBar>();
+        agent = GetComponent<NavMeshAgent>();   // Do this like this for other scripts, is way Peter does it.
     }
     private void Update()
     {
         if(health < 1)
         {
+            agent.isStopped = true;
             Destroy(gameObject);
         }
     }
@@ -36,5 +41,13 @@ public class EnemyStats : MonoBehaviour
     {
         health -= damage;
         healthBar.updateHealth(health, maxHealth);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            reduceHealth(1);
+        }
     }
 }

@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BasicAi : MonoBehaviour
 {
-    public UnityEngine.AI.NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public enum State { PATROL, CHASE, SHIP}
     public State state;
 
-    public GameObject[] waypoints;
-    private int waypointIndex = 0;
+    //public GameObject[] waypoints;
+    //private int waypointIndex = 0;
 
     public GameObject ship;
 
@@ -21,11 +22,11 @@ public class BasicAi : MonoBehaviour
 
     private void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = true;
         agent.updateRotation = true;
-        state = State.CHASE;
-        StartCoroutine("FSM");
+        state = State.SHIP;
+        StartCoroutine(FSM());
     }
     IEnumerator FSM()
     {
@@ -33,9 +34,9 @@ public class BasicAi : MonoBehaviour
         {
             switch (state)
             {
-                case State.PATROL:
-                    patrol();
-                    break;
+                //case State.PATROL:
+                //    patrol();
+                //    break;
                 case State.CHASE:
                     Chase();
                     break;
@@ -47,21 +48,21 @@ public class BasicAi : MonoBehaviour
             yield return null;
         }
     }
-    private void patrol()
-    {
-        agent.speed = patrolSpeed;
-        if (Vector3.Distance(transform.position, waypoints[waypointIndex].transform.position) > 1) {
-            agent.SetDestination(waypoints[waypointIndex].transform.position);
-        }
-        else
-        {
-            waypointIndex++;
-        }
+    //private void patrol()
+    //{
+    //    agent.speed = patrolSpeed;
+    //    if (Vector3.Distance(transform.position, waypoints[waypointIndex].transform.position) > 1) {
+    //        agent.SetDestination(waypoints[waypointIndex].transform.position);
+    //    }
+    //    else
+    //    {
+    //        waypointIndex++;
+    //    }
 
-        if (waypointIndex >= waypoints.Length){
-            waypointIndex = 0;
-        }
-    }
+    //    if (waypointIndex >= waypoints.Length){
+    //        waypointIndex = 0;
+    //    }
+    //}
     private void Ship()
     {
         agent.SetDestination(ship.transform.position);
