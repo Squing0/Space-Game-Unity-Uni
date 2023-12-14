@@ -3257,7 +3257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 6572093370058569238}
   state: 1
-  waypoints: []
   ship: {fileID: 0}
   patrolSpeed: 3
   chaseSpeed: 10
@@ -3297,8 +3296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5241900b8daa97348a50c182a478dd98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
-  maxHealth: 3
+  health: 8
+  maxHealth: 8
   agent: {fileID: 6572093370058569238}
   healthBar: {fileID: 1997100429181169726}
 --- !u!54 &6038267614222630791

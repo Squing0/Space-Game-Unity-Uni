@@ -43,9 +43,17 @@ public class EnemyStats : MonoBehaviour
         healthBar.updateHealth(health, maxHealth);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if(collision.gameObject.tag == "Bullet")
+    //    {
+    //        reduceHealth(1);
+    //    }
+    //}
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.tag == "Bullet")
+        if (other.gameObject.CompareTag("Bullet"))
         {
             reduceHealth(1);
         }

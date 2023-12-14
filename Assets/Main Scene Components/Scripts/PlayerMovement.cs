@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bullet;
     //public GameObject gun;
     public Transform shootPos;
+    public ParticleSystem gunSmoke;
 
     [Header("Enemy")]
 
@@ -118,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
         //healthUpdate();
 
         gm = gameover.GetComponent<GameOverScreen>();
+
+        gunSmoke.Stop();
     }
 
     private void Update()
@@ -201,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
     
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-               Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z + 1);
+               Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z);
 
 
                 GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90,0,0));
@@ -209,10 +212,12 @@ public class PlayerMovement : MonoBehaviour
                 Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
 
                 //bulletRigidbody.AddForce(bullet.transform.forward * 30, ForceMode.Impulse);
-                //bulletRigidbody.velocity = shootPos.transform.forward * 30;
-                bulletRigidbody.AddRelativeForce(new Vector3(0, 0, 2));
+                bulletRigidbody.velocity = shootPos.transform.forward * 50;
+                //bulletRigidbody.AddRelativeForce(new Vector3(0, 0, 2));
 
-                StartCoroutine(deleteBullet(clone));              
+                gunSmoke.Play();
+
+                StartCoroutine(deleteBullet(clone));
 
                 if (hit.collider.gameObject.tag == "Enemy")
                 {
@@ -228,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Destroy(obj);
+        gunSmoke.Stop();
     }
     private void Jump()
     {
