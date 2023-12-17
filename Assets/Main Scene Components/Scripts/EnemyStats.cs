@@ -28,6 +28,11 @@ public class EnemyStats : MonoBehaviour
         healthBar = GetComponentInChildren<HealthBar>();
         agent = GetComponent<NavMeshAgent>();   // Do this like this for other scripts, is way Peter does it.
     }
+
+    private void Start()
+    {
+        StartCoroutine(DestroyEnemy());
+    }
     private void Update()
     {
         if(health < 1)
@@ -41,6 +46,12 @@ public class EnemyStats : MonoBehaviour
     {
         health -= damage;
         healthBar.updateHealth(health, maxHealth);
+    }
+
+    public IEnumerator DestroyEnemy() {
+       
+        yield return new WaitForSeconds(30f);
+        Destroy(gameObject);
     }
 
     //private void OnCollisionEnter(Collision collision)

@@ -233,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Destroy(obj);
-        gunSmoke.Stop();
+        gunSmoke.Stop       ();
     }
     private void Jump()
     {

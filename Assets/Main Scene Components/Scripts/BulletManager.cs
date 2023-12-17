@@ -8,7 +8,7 @@ public class BulletManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }
