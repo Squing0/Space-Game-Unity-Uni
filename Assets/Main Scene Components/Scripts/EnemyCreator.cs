@@ -15,7 +15,7 @@ public class EnemyCreator : MonoBehaviour
         pos = transform;
         pos.position = new Vector3 (0, 0, 0);
 
-        isRunning = true;
+        isRunning = true;   
         StartCoroutine(CreateEnemy());
     }
 
