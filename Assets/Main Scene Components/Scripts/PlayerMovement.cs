@@ -67,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bulletManagerObj;
     private BulletManager bm;
 
+    public bool playerAreaRange;
+    public LayerMask isEnemy;
+    public float playerRange;
+
     [Header("Enemy")]
 
 
@@ -102,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Camera = Camera.main; // unity tut
         enemyCrosshair.enabled = false;
+        //playerAreaRange = Physics.CheckSphere(transform.position, playerRange, isEnemy); // Not sure if useful
     }
     private void Start()
     {
@@ -149,12 +154,18 @@ public class PlayerMovement : MonoBehaviour
         if (health < 1)
         {
             timer.timerOn = false; // Stops timer to get end time
-            gm.ActivateGameover(health, (int)timer.totalTime);
+            gm.ActivateGameover(health, (int)timer.totalTime, "You lost all your health!");
         }
     }
     private void FixedUpdate()
     {
         Moveplayer();    // Called within fixed update specifically as uses physics 
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerRange);
     }
     private void MyInput()
     {

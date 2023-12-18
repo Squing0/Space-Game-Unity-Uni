@@ -1105,7 +1105,7 @@ GameObject:
   - component: {fileID: 4401787263050630051}
   - component: {fileID: 1439221227952327920}
   - component: {fileID: 6773365755886373548}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Monster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1174,10 +1174,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6583387
+  m_Radius: 0.2924164
   m_Height: 2.389597
   m_Direction: 1
-  m_Center: {x: -4.474545e-10, y: 0.6947987, z: 0.15833867}
+  m_Center: {x: -0.08134985, y: 0.6947987, z: -0.12623581}
 --- !u!114 &8271422183595037082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,7 +1266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 8
   maxHealth: 8
-  readyDestroy: 0
   agent: {fileID: 1439221227952327920}
   healthBar: {fileID: 538754413467373718}
 --- !u!1 &2215187924808920747

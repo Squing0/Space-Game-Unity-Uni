@@ -28,7 +28,10 @@ public class BasicAi : MonoBehaviour
     public GameObject bulletManagerObj;
     private BulletManager bm;
     private Rigidbody rb;
-    
+
+    Vector3 playerRange;
+
+
     private void Awake()
     {
         bm = bulletManagerObj.GetComponent<BulletManager>();
@@ -38,11 +41,16 @@ public class BasicAi : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updatePosition = true;
         agent.updateRotation = true;
-        state = State.SHIP;
+
+        state = State.CHASE;
         StartCoroutine(FSM());
+
+        playerRange = new Vector3(ship.transform.position.x - 1,    // CHANGE NAME
+            ship.transform.position.y,
+            ship.transform.position.z - 1);
     }
 
-
+        
     IEnumerator FSM()
     {
         while(true)
@@ -79,14 +87,14 @@ public class BasicAi : MonoBehaviour
     private void AttackPlayer()
     {
         agent.SetDestination(target.transform.position);
-        transform.LookAt(target.transform.position);
+        transform.LookAt(target.transform.position);  // Find better way for this
 
         if(!alreadyAttacked)
         {
-            Vector3 alteredPosition = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z + .2f);
+            Vector3 alteredPosition = new Vector3(transform.position.x + .5f, transform.position.y + 0.5f, transform.position.z + .5f);
 
             rb = Instantiate(bulletManagerObj, alteredPosition, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.velocity = transform.forward * 50;
+            rb.velocity = transform.forward * 30;
             StartCoroutine(bm.deleteBullet(rb.gameObject));
 
             alreadyAttacked = true;
@@ -126,6 +134,30 @@ public class BasicAi : MonoBehaviour
     private void Ship()
     {
         agent.SetDestination(ship.transform.position);
+
+        //var rotation = Quaternion.LookRotation(ship.transform.position - transform.position); // Taken from unity thread
+        //rotation.y = 0;
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
+
+        //transform.LookAt(ship.transform.position);
+
+        Rigidbody enemyRB = agent.GetComponent<Rigidbody>();
+        enemyRB.constraints = RigidbodyConstraints.FreezeRotation;
+        enemyRB.constraints = RigidbodyConstraints.FreezePosition;
+
+        if (!alreadyAttacked)   // Just copied from attack method
+        {
+            Vector3 alteredPosition = new Vector3(transform.position.x + .2f, transform.position.y + .3f, transform.position.z + .2f);
+
+            rb = Instantiate(bulletManagerObj, alteredPosition  , Quaternion.identity).GetComponent<Rigidbody>();
+            rb.velocity = transform.forward * 50;
+            StartCoroutine(bm.deleteBullet(rb.gameObject));
+
+            alreadyAttacked = true;
+
+            //StartCoroutine(ResetAttacked());
+            Invoke(nameof(ResetAttack), 2f);
+        }
     }
     private void Chase()
     {

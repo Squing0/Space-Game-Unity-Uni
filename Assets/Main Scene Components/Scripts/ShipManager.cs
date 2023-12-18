@@ -30,7 +30,7 @@ public class ShipManager : MonoBehaviour
     {
         if (health < 1)
         {
-            gm.ActivateGameover(3, 3);
+            gm.ActivateGameover(3, 3, "Your ship was destroyed!");
         }
     }
 
@@ -38,6 +38,15 @@ public class ShipManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")    // Change to compare tag for this and other occurences
+        {
+            health--;
+            healthBar.updateHealth(health, maxHealth);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
         {
             health--;
             healthBar.updateHealth(health, maxHealth);

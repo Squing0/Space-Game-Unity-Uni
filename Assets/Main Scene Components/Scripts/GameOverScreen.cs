@@ -10,12 +10,12 @@ public class GameOverScreen : MonoBehaviour
     public GameObject gameoverScreen;
     public GameObject mainUIScreen;
 
-    public void ActivateGameover(float health, int timeLeft)
+    public void ActivateGameover(float health, int timeLeft, string deathReason)
     {
         gameoverScreen.SetActive(true);     // Set Background UI to active so is shown on screen
         mainUIScreen.SetActive(false);      // Hide main UI so that only background is shown
         float totalScore = timeLeft + (health * 25);    // Total score calcualted. Health increased to lower disparity in comaprison to time
-        scoreText.text = $"Score: {totalScore}";
+        scoreText.text = $"Score: {totalScore}\n{deathReason}";
     }
 
     public void ResetScene()

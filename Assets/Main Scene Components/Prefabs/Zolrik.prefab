@@ -3172,7 +3172,7 @@ GameObject:
   - component: {fileID: 347864891955560869}
   - component: {fileID: 687611247020337071}
   - component: {fileID: 6038267614222630791}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Zolrik
   m_TagString: Enemy
   m_Icon: {fileID: 0}
