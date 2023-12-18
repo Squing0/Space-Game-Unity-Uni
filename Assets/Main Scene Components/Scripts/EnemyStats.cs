@@ -10,7 +10,6 @@ public class EnemyStats : MonoBehaviour
     public int health = 3;
     public int maxHealth = 3;
 
-
     public NavMeshAgent agent;
     public HealthBar healthBar;    // Change this to be more efficient
     public int Health
@@ -51,7 +50,10 @@ public class EnemyStats : MonoBehaviour
     public IEnumerator DestroyEnemy() {
        
         yield return new WaitForSeconds(30f);
-        Destroy(gameObject);
+
+        if (gameObject.name != "Zolrik (1)") {
+            Destroy(gameObject);
+        }
     }
 
     //private void OnCollisionEnter(Collision collision)

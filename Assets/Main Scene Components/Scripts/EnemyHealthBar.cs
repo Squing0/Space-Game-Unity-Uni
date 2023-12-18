@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyHealthBar : MonoBehaviour
 {
-    [SerializeField]
-    private Camera camera;  // CHANGE NAME
+    public Camera camera;  // CHANGE NAME
 
     private void Update()
     {

@@ -8,7 +8,16 @@ public class BulletManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject);    // Make so destroys once hit anything, not specifically enemy
         }
+
+        // Destroy(gameObject);
+    }
+
+    public IEnumerator deleteBullet(GameObject obj)
+    {
+        yield return new WaitForSeconds(2f);
+
+        Destroy(obj);
     }
 }

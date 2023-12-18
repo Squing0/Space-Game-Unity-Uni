@@ -16,7 +16,7 @@ public class ShipManager : MonoBehaviour
     }
 
     public GameObject gameover;
-    GameOverScreen gm;
+    private GameOverScreen gm;
 
     [SerializeField]
     private HealthBar healthBar;

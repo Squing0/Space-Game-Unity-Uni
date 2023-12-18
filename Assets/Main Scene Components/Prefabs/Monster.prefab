@@ -1196,6 +1196,13 @@ MonoBehaviour:
   patrolSpeed: 3
   chaseSpeed: 10
   target: {fileID: 0}
+  isPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  attackRange: 10
+  PlayerWithinRange: 0
+  alreadyAttacked: 0
+  bulletManagerObj: {fileID: 0}
 --- !u!54 &4401787263050630051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1259,6 +1266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 8
   maxHealth: 8
+  readyDestroy: 0
   agent: {fileID: 1439221227952327920}
   healthBar: {fileID: 538754413467373718}
 --- !u!1 &2215187924808920747

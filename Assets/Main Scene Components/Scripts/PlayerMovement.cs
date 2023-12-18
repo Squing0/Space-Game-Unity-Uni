@@ -64,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform shootPos;
     public ParticleSystem gunSmoke;
 
+    public GameObject bulletManagerObj;
+    private BulletManager bm;
+
     [Header("Enemy")]
 
 
@@ -119,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
         //healthUpdate();
 
         gm = gameover.GetComponent<GameOverScreen>();
+        bm = bulletManagerObj.GetComponent<BulletManager>();
 
         gunSmoke.Stop();
     }
@@ -204,37 +208,41 @@ public class PlayerMovement : MonoBehaviour
     
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-               Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z);
-
-
-                GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90,0,0));
-
-                Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
-
-                //bulletRigidbody.AddForce(bullet.transform.forward * 30, ForceMode.Impulse);
-                bulletRigidbody.velocity = shootPos.transform.forward * 50;
-                //bulletRigidbody.AddRelativeForce(new Vector3(0, 0, 2));
-
-                gunSmoke.Play();
-
-                StartCoroutine(deleteBullet(clone));
-
-                if (hit.collider.gameObject.tag == "Enemy")
-                {
-                    //hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
-                   
-                }
+               
             }
+
+            Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z);
+
+
+            GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90, 0, 0));
+
+            Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
+
+            bulletRigidbody.velocity = shootPos.transform.forward * 50;
+
+            //bulletRigidbody.AddForce(shootPos.transform.forward * 20f, ForceMode.Impulse);    // ALternate way of shooting bullets!
+            //bulletRigidbody.AddForce(shootPos.transform.up * 10f, ForceMode.Impulse);
+
+            gunSmoke.Stop();    // FIX THIS LATER
+            gunSmoke.Play();
+
+            StartCoroutine(bm.deleteBullet(clone));
+
+            //if (hit.collider.gameObject.tag == "Enemy")
+            //{
+            //    //hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
+
+            //}
         }
     }
 
-    private IEnumerator deleteBullet(GameObject obj)
-    {
-        yield return new WaitForSeconds(2f);
+    //private IEnumerator deleteBullet(GameObject obj)
+    //{
+    //    yield return new WaitForSeconds(2f);
 
-        Destroy(obj);
-        gunSmoke.Stop       ();
-    }
+    //    Destroy(obj);
+    //}
+
     private void Jump()
     {
         rb.AddForce(transform.up * jumpSpeed, ForceMode.Impulse);   // Specifically moves player in y axis, impulse is used here as jump is instant 
@@ -332,6 +340,11 @@ public class PlayerMovement : MonoBehaviour
             //    Debug.Log("Health already full!");  // Still destroys object if player collides with it but informs that health is full            
             //}
             Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("Bullet")) {
+            health -= 1;
+            healthBar.updateHealth(health, maxHealth);  
         }
     }
 

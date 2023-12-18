@@ -8,7 +8,7 @@ public class BasicAi : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public enum State { PATROL, CHASE, SHIP}
+    public enum State { PATROL, CHASE, SHIP, ATTACK}
     public State state;
 
     //public GameObject[] waypoints;
@@ -20,6 +20,19 @@ public class BasicAi : MonoBehaviour
     public float chaseSpeed = 1.0f;
     public GameObject target;
 
+    public LayerMask isPlayer;
+    public float attackRange;
+    public bool PlayerWithinRange;
+    public bool alreadyAttacked;
+
+    public GameObject bulletManagerObj;
+    private BulletManager bm;
+    private Rigidbody rb;
+    
+    private void Awake()
+    {
+        bm = bulletManagerObj.GetComponent<BulletManager>();
+    }
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -28,6 +41,8 @@ public class BasicAi : MonoBehaviour
         state = State.SHIP;
         StartCoroutine(FSM());
     }
+
+
     IEnumerator FSM()
     {
         while(true)
@@ -43,11 +58,56 @@ public class BasicAi : MonoBehaviour
                 case State.SHIP:
                     Ship(); 
                     break;
+                case State.ATTACK:
+                    AttackPlayer();
+                    break;
             }
 
             yield return null;
         }
     }
+
+    private void Update()
+    {     
+        PlayerWithinRange = Physics.CheckSphere(transform.position, attackRange, isPlayer); 
+        if (PlayerWithinRange)
+        {
+            state = State.ATTACK;
+        }
+    }
+
+    private void AttackPlayer()
+    {
+        agent.SetDestination(target.transform.position);
+        transform.LookAt(target.transform.position);
+
+        if(!alreadyAttacked)
+        {
+            Vector3 alteredPosition = new Vector3(transform.position.x + .2f, transform.position.y, transform.position.z + .2f);
+
+            rb = Instantiate(bulletManagerObj, alteredPosition, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.velocity = transform.forward * 50;
+            StartCoroutine(bm.deleteBullet(rb.gameObject));
+
+            alreadyAttacked = true;
+
+            //StartCoroutine(ResetAttacked());
+            Invoke(nameof(ResetAttack), 2f);
+        }
+        
+    }
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+    private IEnumerator ResetAttacked()
+    {
+        alreadyAttacked = false;
+        yield return new WaitForSeconds(2f);
+    }
+
     //private void patrol()
     //{
     //    agent.speed = patrolSpeed;
@@ -82,5 +142,9 @@ public class BasicAi : MonoBehaviour
             target = collision.gameObject;
         }
     }
-
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }

@@ -20,6 +20,6 @@ public class GameOverScreen : MonoBehaviour
 
     public void ResetScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Level1");
     }
 }
