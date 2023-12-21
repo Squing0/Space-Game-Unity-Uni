@@ -212,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButton(0))
         {
             Vector3 mousePos = Input.mousePosition;
             Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
@@ -353,7 +353,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.CompareTag("Bullet")) {
+        if (other.CompareTag("EnemyBullet")) {
             health -= 1;
             healthBar.updateHealth(health, maxHealth);  
         }

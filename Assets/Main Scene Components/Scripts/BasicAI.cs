@@ -91,16 +91,18 @@ public class BasicAi : MonoBehaviour
 
         if(!alreadyAttacked)
         {
-            Vector3 alteredPosition = new Vector3(transform.position.x + .5f, transform.position.y + 0.5f, transform.position.z + .5f);
+            Vector3 alteredPosition = new Vector3(transform.position.x + .2f, transform.position.y + 0.5f, transform.position.z + 1.5f);
 
             rb = Instantiate(bulletManagerObj, alteredPosition, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.gameObject.tag = "EnemyBullet";  // Changed tag as bullets would hit enemy colliders and weren't supposed to.    
+
             rb.velocity = transform.forward * 30;
             StartCoroutine(bm.deleteBullet(rb.gameObject));
 
             alreadyAttacked = true;
 
             //StartCoroutine(ResetAttacked());
-            Invoke(nameof(ResetAttack), 2f);
+            Invoke(nameof(ResetAttack), 2f);    
         }
         
     }

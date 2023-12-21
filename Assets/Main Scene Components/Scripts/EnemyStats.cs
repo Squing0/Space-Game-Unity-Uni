@@ -66,6 +66,14 @@ public class EnemyStats : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Rigidbody rb;
+        rb = other.gameObject.GetComponent<Rigidbody>();
+
+        //if (other.gameObject.CompareTag("Bullet") && rb.velocity.x != 30 || rb.velocity.y != 30 || rb.velocity.z != 30)
+        //{
+        //    reduceHealth(1);
+        //}
+
         if (other.gameObject.CompareTag("Bullet"))
         {
             reduceHealth(1);
