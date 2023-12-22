@@ -63,11 +63,6 @@ public class GunShoot : MonoBehaviour
 
     private void MyInput()
     {
-        if (currentBullets == 0) // Would prefer to be -1 but this kinda works
-        {
-            Invoke(nameof(Reload), reloadTime); // Make so takes longer, if run out of bullets and don't manually reload
-        }
-
         if (Input.GetMouseButton(0) && readyToAttack && currentBullets > 0)
         {
             Shoot();
@@ -75,9 +70,13 @@ public class GunShoot : MonoBehaviour
 
         if(Input.GetKey(KeyCode.E) && currentBullets < magazineTotal)
         {
-            Reload();
+            Invoke(nameof(Reload), reloadTime); // CHANGE TO COROUTINE FOR BOTH, BE CONSISTENT
         }
 
+        if (currentBullets == 0) // Would prefer to be -1 but this kinda works
+        {
+            Invoke(nameof(Reload), reloadTime); // Make so takes longer, if run out of bullets and don't manually reload
+        }
     }
 
     private void Reload()
