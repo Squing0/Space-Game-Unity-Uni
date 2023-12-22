@@ -39,6 +39,19 @@ public class PlayerMovement : MonoBehaviour
     public int maxHealth;
     //public TMP_Text healthText;
 
+    // Health property
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+        set { }
+    }
+
+    [SerializeField]
+    private HealthBar healthBar;
+
     [Header("Power Ups")]
     public float speedIncrease;
     public float jumpIncrease;
@@ -57,43 +70,25 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation;
 
-    [Header("Shooting")]
-    public UnityEngine.UI.Image enemyCrosshair;
-    public GameObject bullet;
-    //public GameObject gun;
-    public Transform shootPos;
-    public ParticleSystem gunSmoke;
-
-    public GameObject bulletManagerObj;
-    private BulletManager bm;
-
+    // Useful for trying to keeo enemy outside of player range
     public bool playerAreaRange;
     public LayerMask isEnemy;
     public float playerRange;
 
-    [Header("Enemy")]
 
+    // Miscellaneous 
 
+    // Player movement
     float horizontalInput;      
     float verticalInput;
 
     Vector3 moveDirection;
 
+    // Rigidbody and camera
     Rigidbody rb;
-
     private Camera m_Camera;
 
-    public int Health
-    {
-        get { 
-            return health;
-        }
-        set { }
-    }
-
-    [SerializeField]
-    private HealthBar healthBar;
-
+    // State handler
     public enum MovementState
     {
         walking,
@@ -105,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         m_Camera = Camera.main; // unity tut
-        enemyCrosshair.enabled = false;
+        gm = gameover.GetComponent<GameOverScreen>();
         //playerAreaRange = Physics.CheckSphere(transform.position, playerRange, isEnemy); // Not sure if useful
     }
     private void Start()
@@ -120,16 +115,6 @@ public class PlayerMovement : MonoBehaviour
         maxHealth = 6;  // Should be able to change in inspector
         health = maxHealth;
         Health = health;
-
-
-        startYScale = transform.localScale.y;   // Scale is set to default for crouching
-
-        //healthUpdate();
-
-        gm = gameover.GetComponent<GameOverScreen>();
-        bm = bulletManagerObj.GetComponent<BulletManager>();
-
-        gunSmoke.Stop();
     }
 
     private void Update()
@@ -140,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-        mouseDetection();
+        //mouseDetection();
 
         if (grounded)
         {
@@ -206,53 +191,12 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);  // Pushes them down so that they don't remain in the air 
         }
 
-        // Stop crouching
-        if (Input.GetKeyUp(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
-        }
-
-        if(Input.GetMouseButton(0))
-        {
-            Vector3 mousePos = Input.mousePosition;
-            Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
-    
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-               
-            }
-
-            Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z);
-
-
-            GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90, 0, 0));
-
-            Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
-
-            bulletRigidbody.velocity = shootPos.transform.forward * 50;
-
-            //bulletRigidbody.AddForce(shootPos.transform.forward * 20f, ForceMode.Impulse);    // ALternate way of shooting bullets!
-            //bulletRigidbody.AddForce(shootPos.transform.up * 10f, ForceMode.Impulse);
-
-            gunSmoke.Stop();    // FIX THIS LATER
-            gunSmoke.Play();
-
-            StartCoroutine(bm.deleteBullet(clone));
-
-            //if (hit.collider.gameObject.tag == "Enemy")
-            //{
-            //    //hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
-
-            //}
-        }
+        //// Stop crouching
+        //if (Input.GetKeyUp(crouchKey))
+        //{
+        //    transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
+        //}
     }
-
-    //private IEnumerator deleteBullet(GameObject obj)
-    //{
-    //    yield return new WaitForSeconds(2f);
-
-    //    Destroy(obj);
-    //}
 
     private void Jump()
     {
@@ -321,22 +265,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void mouseDetection()
-    {
-        Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if(hit.collider.gameObject.tag == "Enemy")
-            {
-                enemyCrosshair.enabled = true;
-            }
-            else
-            {
-                enemyCrosshair.enabled = false;
-            }
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
@@ -369,50 +297,7 @@ public class PlayerMovement : MonoBehaviour
             //healthUpdate();
         }
     }
-    private void OnMouseOver()  // THESE TWO COPIED FROM ABOVE, SHORTEN DOWN FOR THE LOVE OF GOD
-    {
-        //Vector3 mousePos = Input.mousePosition;
-        //Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
-        //if (Physics.Raycast(ray, out RaycastHit hit))
-        //{
-        //    //print(hit.collider.gameObject);
-        //    if (hit.collider.gameObject.tag == "Enemy")
-        //    {
-        //        enemyCrosshair.enabled = true;
-        //    }
-        //}
-
-        //if(gameObject.gameObject.tag == "Enemy")
-        //{
-        //    enemyCrosshair.enabled = true;
-        //    print("Hit");
-        //}
-        //print("Hit " + gameObject.name);
-    }
-    private void OnMouseExit()
-    {
-        //Vector3 mousePos = Input.mousePosition;
-        //Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
-        //if (Physics.Raycast(ray, out RaycastHit hit))
-        //{
-        //    //print(hit.collider.gameObject);
-        //    if (hit.collider.gameObject.tag == "Enemy")
-        //    {
-        //        enemyCrosshair.enabled = false;
-        //    }
-        //}
-
-        //if (gameObject.gameObject.tag == "Enemy")
-        //{
-        //    enemyCrosshair.enabled = false;
-        //    print("Not hit");
-        //}
-        //print("Left " + gameObject.name);
-    }
-    //private void healthUpdate()
-    //{
-    //    healthText.text = String.Format($"Health : {health}");
-    //}
+    
     private IEnumerator PowerupTimer(float powerupIncrease)
     {
         yield return new WaitForSeconds(powerupCooldown);   // Cooldown used here so that powerup only lasts for a limited while
