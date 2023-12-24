@@ -13,9 +13,17 @@ public class ItemPickup : MonoBehaviour
     private GunShoot gs; // Is this best way to access other scripts?
     private PlayerMovement pm;
     private HealthBar hb;
-    private void Awake()
+    private void Start()
     {
+        StartCoroutine(DestroyPowerup());
     }
+
+    private IEnumerator DestroyPowerup()
+    {
+        yield return new WaitForSeconds(10);    // Make variable (get from creator script so consistent?)
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

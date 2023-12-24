@@ -7919,7 +7919,9 @@ MonoBehaviour:
   ship: {fileID: 989168989}
   player: {fileID: 1223664228}
   timer: {fileID: 1763760856}
-  time: {fileID: 0}
+  speedUp: {fileID: 6403206816932027440, guid: f5c3492e2978a954cab6463b7b07a847, type: 3}
+  healthUp: {fileID: 6237603899392064767, guid: 616df1998fc07db45a25971fcb250498, type: 3}
+  ammoUp: {fileID: 2163625931366611956, guid: fc57a8b596f1bbf4cacd7aa7611510ca, type: 3}
 --- !u!33 &986181345
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -49,7 +49,7 @@ public class EnemyStats : MonoBehaviour
 
     public IEnumerator DestroyEnemy() {
        
-        yield return new WaitForSeconds(40f);
+        yield return new WaitForSeconds(40f);   // Make variable?
 
         if (gameObject.name != "Zolrik (1)") {
             Destroy(gameObject);

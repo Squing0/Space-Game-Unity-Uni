@@ -8,7 +8,7 @@ public class BasicAi : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public enum State { PATROL, CHASE, SHIP, ATTACK}
+    public enum State { PATROL, CHASE, SHIP, ATTACK}    // Make property? Might be different with enums?
     public State state;
 
     //public GameObject[] waypoints;
@@ -42,7 +42,7 @@ public class BasicAi : MonoBehaviour
         agent.updatePosition = true;
         agent.updateRotation = true;
 
-        state = State.CHASE;
+        //state = State.CHASE;  // fucks with instantiating states
         StartCoroutine(FSM());
 
         playerRange = new Vector3(ship.transform.position.x - 1,    // CHANGE NAME
@@ -78,7 +78,7 @@ public class BasicAi : MonoBehaviour
     private void Update()
     {     
         PlayerWithinRange = Physics.CheckSphere(transform.position, attackRange, isPlayer); 
-        if (PlayerWithinRange)
+        if (PlayerWithinRange && state == State.CHASE)  // So that doesn't inerfere with ship or patrol
         {
             state = State.ATTACK;
         }
