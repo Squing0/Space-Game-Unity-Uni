@@ -20,18 +20,18 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (tag == "JumpUp")
-        {
-            doubleJumpText.text = "Double Jump Activated";  // Moved code from player movement to make more organised
-            movement.maxJumps = 2;
-            Destroy(gameObject);
-        }
+        //    if (tag == "JumpUp")
+        //    {
+        //        doubleJumpText.text = "Double Jump Activated";  // Moved code from player movement to make more organised
+        //        movement.maxJumps = 2;
+        //        Destroy(gameObject);
+        //    }
 
-        if (tag == "SpeedUp")
-        {
-            speedText.text = "Speed Increased";
-            movement.PowerupActivate(movement.speedIncrease);   // Used PowerupActivate specifically here as stats were changed
-            Destroy(gameObject);
-        }
+        //    if (tag == "SpeedUp")
+        //    {
+        //        speedText.text = "Speed Increased";
+        //        movement.PowerupActivate(movement.speedIncrease);   // Used PowerupActivate specifically here as stats were changed
+        //        Destroy(gameObject);
+        //    }
     }
 }

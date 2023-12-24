@@ -46,7 +46,22 @@ public class PlayerMovement : MonoBehaviour
         {
             return health;
         }
-        set { }
+        set 
+        { 
+            health = value;
+        }
+    }
+
+    public int MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+        set
+        { 
+            maxHealth = value; 
+        }
     }
 
     [SerializeField]
@@ -298,19 +313,35 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     
-    private IEnumerator PowerupTimer(float powerupIncrease)
+    //private IEnumerator PowerupTimer(float powerupIncrease)
+    //{
+    //    yield return new WaitForSeconds(powerupCooldown);   // Cooldown used here so that powerup only lasts for a limited while
+
+    //    walkSpeed -= powerupIncrease;   //Resets powerups back to normal
+    //    runSpeed -= powerupIncrease;
+
+    //}
+
+    //public void PowerupActivate(float powerupIncrease)
+    //{
+    //    walkSpeed += powerupIncrease;
+    //    runSpeed += powerupIncrease;
+    //    StartCoroutine(PowerupTimer(powerupIncrease));
+    //}
+
+    public void SpeedUpActivate(float speedIncrease, float speedTime)  // MAKE MORE GENERAL LIKE ABOVE SO REUSABLE???
     {
-        yield return new WaitForSeconds(powerupCooldown);   // Cooldown used here so that powerup only lasts for a limited while
-
-        walkSpeed -= powerupIncrease;   //Resets powerups back to normal
-        runSpeed -= powerupIncrease;
-
+        walkSpeed += speedIncrease;
+        runSpeed += speedIncrease;
+        StartCoroutine(SpeedTimer(speedIncrease, speedTime));
     }
 
-    public void PowerupActivate(float powerupIncrease)
+    private IEnumerator SpeedTimer(float speedDecrease, float speedCooldown)
     {
-        walkSpeed += powerupIncrease;
-        runSpeed += powerupIncrease;
-        StartCoroutine(PowerupTimer(powerupIncrease));
+        yield return new WaitForSeconds(speedCooldown);
+
+        walkSpeed -= speedDecrease;
+        runSpeed -= speedDecrease;
+
     }
 }

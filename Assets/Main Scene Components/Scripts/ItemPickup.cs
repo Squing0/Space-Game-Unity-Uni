@@ -1,16 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public GameObject gunObj;
-    private GunShoot gs; // Is this best way to access other scripts?
-    public float ammoToAdd; // Awful name
+    public int ammoToAdd; // Awful name
+    public int healthToAdd;
+    public int speedToAdd;
+    public float speedTime;
 
+    private GunShoot gs; // Is this best way to access other scripts?
+    private PlayerMovement pm;
+    private HealthBar hb;
     private void Awake()
     {
-        gs = gunObj.GetComponent<GunShoot>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -18,7 +22,28 @@ public class ItemPickup : MonoBehaviour
         {
             if(tag == "AmmoIncrease")
             {
+                gs = other.gameObject.GetComponentInChildren<GunShoot>();
                 gs.AddAmmo(ammoToAdd);
+                Destroy(gameObject);
+            }
+
+            if(tag == "HealthIncrease")
+            {
+                pm = other.gameObject.GetComponent<PlayerMovement>();
+                if(pm.Health < pm.MaxHealth)
+                {
+                    pm.Health += 1;
+                }
+                Debug.Log(pm.Health);
+                //hb = other.gameObject.GetComponentInChildren<HealthBar>();
+                //hb.updateHealth(pm.Health, pm.MaxHealth);
+                Destroy(gameObject);
+            }
+
+            if(tag == "SpeedIncrease")
+            {
+                pm = other.gameObject.GetComponent<PlayerMovement>();
+                pm.SpeedUpActivate(speedToAdd, speedTime);
                 Destroy(gameObject);
             }
         }

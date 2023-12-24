@@ -8,7 +8,13 @@ public class Timer : MonoBehaviour
     public float totalTime = 1;
     public bool timerOn;
     public TMP_Text timerText;
-    private double charge = 1;
+    private float charge = 1;
+
+    public float Charge
+    {
+        get { return charge; }
+        set { charge = value; }
+    }
     public int timeSpeeder;
 
     //public GameObject gameover;

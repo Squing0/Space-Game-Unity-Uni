@@ -68,27 +68,52 @@ public class GunShoot : MonoBehaviour
             Shoot();
         }
 
-        if(Input.GetKey(KeyCode.E) && currentBullets < magazineTotal)
+        if(Input.GetKey(KeyCode.E) && currentBullets < magazineTotal && bulletTotal > 0)
         {
             Invoke(nameof(Reload), reloadTime); // CHANGE TO COROUTINE FOR BOTH, BE CONSISTENT
         }
 
-        if (currentBullets == 0) // Would prefer to be -1 but this kinda works
-        {
-            Invoke(nameof(Reload), reloadTime); // Make so takes longer, if run out of bullets and don't manually reload
-        }
+        //if (currentBullets == 0) // Would prefer to be -1 but this kinda works
+        //{
+        //    Invoke(nameof(Reload), reloadTime); // Make so takes longer, if run out of bullets and don't manually reload
+        //}
+
+        //if(bulletTotal == 0)
+        //{
+        //    readyToAttack = false;
+        //}
     }
 
     private void Reload()
     {
-        bulletTotal -= magazineTotal - currentBullets;
-        if(bulletTotal > 0)
+        //bulletTotal -= magazineTotal - currentBullets;
+
+        //if(bulletTotal < 0)
+        //{
+        //    currentBullets += bulletTotal;
+        //    bulletTotal = 0;
+        //}
+
+        //if(bulletTotal > 0) 
+        //{
+        //    currentBullets = magazineTotal;
+        //}
+
+        float bulletsNeeded = magazineTotal - currentBullets;   //Chatgpt gave this, change?
+
+        if(bulletTotal >= bulletsNeeded)
         {
             currentBullets = magazineTotal;
+            bulletTotal -= bulletsNeeded;
+        }
+        else
+        {
+            currentBullets += bulletTotal;
+            bulletTotal = 0;
         }
     }
 
-    public void AddAmmo(float ammo)
+    public void AddAmmo(int ammo)
     {
         if (currentBullets == magazineTotal)    // Make total that total bullets can't go over?
         {
@@ -124,13 +149,13 @@ public class GunShoot : MonoBehaviour
 
         GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90, 0, 0));
         Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = shootPos.transform.forward * bulletVelocity;
+        bulletRigidbody.velocity = shootPos.transform.forward * bulletVelocity; // May be better to have more accurate/complex way of shooting here
 
         //bulletRigidbody.AddForce(shootPos.transform.forward * 20f, ForceMode.Impulse);    // ALternate way of shooting bullets!
         //bulletRigidbody.AddForce(shootPos.transform.up * 10f, ForceMode.Impulse);
 
-        gunSmoke.Stop();    // FIX THIS LATER
-        gunSmoke.Play();
+        gunSmoke.Play();          // FIX THIS LATER
+        
 
         StartCoroutine(bm.deleteBullet(clone));
 
@@ -141,6 +166,8 @@ public class GunShoot : MonoBehaviour
         //}
         StartCoroutine(ResetShooting());
         //Invoke("Reset", timeBetweenAttacks);
+
+        //gunSmoke.Stop();
         currentBullets--;
     }
 

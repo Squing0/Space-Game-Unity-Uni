@@ -8,6 +8,8 @@ TagManager:
   - Bullet
   - EnemyBullet
   - AmmoIncrease
+  - HealthIncrease
+  - SpeedIncrease
   layers:
   - Default
   - TransparentFX
