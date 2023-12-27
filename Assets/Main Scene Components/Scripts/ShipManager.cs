@@ -37,7 +37,7 @@ public class ShipManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Enemy")    // Change to compare tag for this and other occurences
+        if (collision.gameObject.CompareTag("Knife"))       // Change to compare tag for this and other occurences
         {
             health--;
             healthBar.updateHealth(health, maxHealth);

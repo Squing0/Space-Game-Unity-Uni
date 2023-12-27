@@ -296,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.CompareTag("EnemyBullet")) {
+        if (other.CompareTag("Rock")) {
             health -= 1;
             healthBar.updateHealth(health, maxHealth);  
         }

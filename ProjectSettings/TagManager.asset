@@ -10,6 +10,8 @@ TagManager:
   - AmmoIncrease
   - HealthIncrease
   - SpeedIncrease
+  - Rock
+  - Knife
   layers:
   - Default
   - TransparentFX

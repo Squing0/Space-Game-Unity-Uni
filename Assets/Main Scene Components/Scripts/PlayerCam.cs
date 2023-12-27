@@ -8,6 +8,7 @@ public class PlayerCam : MonoBehaviour
     public float sensY;
 
     public Transform orientation;
+    //public Transform playerModel;
 
     float xRotation;
     float yRotation;
@@ -31,6 +32,7 @@ public class PlayerCam : MonoBehaviour
 
         // rotate camera and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        //playerModel.rotation = Quaternion.Euler(xRotation, yRotation, 0);     Didn't work
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }

@@ -25,16 +25,25 @@ public class BasicAi : MonoBehaviour
     public bool PlayerWithinRange;
     public bool alreadyAttacked;
 
-    public GameObject bulletManagerObj;
-    private BulletManager bm;
+    public GameObject rockObj;
+    private ProjectileManager pm;
     private Rigidbody rb;
 
+    public Transform rockPos;
+    public GameObject knifeObj;
+
     Vector3 playerRange;
+
+    [Header("Animations")]
+    public Animator enemyAnimator;
+    public String runAnimation;
+    public String combatRunAnimation;
+    public String attackAnimation;
 
 
     private void Awake()
     {
-        bm = bulletManagerObj.GetComponent<BulletManager>();
+        pm = rockObj.GetComponent<ProjectileManager>();
     }
     private void Start()
     {
@@ -79,8 +88,12 @@ public class BasicAi : MonoBehaviour
     {     
         PlayerWithinRange = Physics.CheckSphere(transform.position, attackRange, isPlayer); 
         if (PlayerWithinRange && state == State.CHASE)  // So that doesn't inerfere with ship or patrol
-        {
+        {   
             state = State.ATTACK;
+        }
+        else if(!PlayerWithinRange && state == State.ATTACK)
+        {
+            state = State.CHASE;
         }
     }
 
@@ -88,28 +101,32 @@ public class BasicAi : MonoBehaviour
     {
         agent.SetDestination(target.transform.position);
         transform.LookAt(target.transform.position);  // Find better way for this
+        //enemyAnimator.Play(combatRunAnimation);
 
-        if(!alreadyAttacked)
+        if (!alreadyAttacked)
         {
-            Vector3 alteredPosition = new Vector3(transform.position.x + .2f, transform.position.y + 0.5f, transform.position.z + 1.5f);
+            Vector3 alteredPosition = new Vector3(rockPos.position.x + 0.2f, rockPos.position.y - 0.5f, rockPos.position.z + 0.2f);
 
-            rb = Instantiate(bulletManagerObj, alteredPosition, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.gameObject.tag = "EnemyBullet";  // Changed tag as bullets would hit enemy colliders and weren't supposed to.    
+
+            rb = Instantiate(rockObj, alteredPosition, Quaternion.identity).GetComponent<Rigidbody>();
+            //rb.gameObject.tag = "EnemyBullet";  // Changed tag as bullets would hit enemy colliders and weren't supposed to.    
 
             rb.velocity = transform.forward * 30;
-            StartCoroutine(bm.deleteBullet(rb.gameObject));
+            StartCoroutine(pm.deleteProjectile(rb.gameObject));
 
             alreadyAttacked = true;
+            enemyAnimator.Play(attackAnimation);
 
             //StartCoroutine(ResetAttacked());
             Invoke(nameof(ResetAttack), 2f);    
-        }
+        }   
+        
         
     }
 
     private void ResetAttack()
     {
-        alreadyAttacked = false;
+        alreadyAttacked = false;       
     }
 
     private IEnumerator ResetAttacked()
@@ -135,6 +152,7 @@ public class BasicAi : MonoBehaviour
     //}
     private void Ship()
     {
+        knifeObj.SetActive(true);   // Should only have to be in one place
         agent.SetDestination(ship.transform.position);
 
         //var rotation = Quaternion.LookRotation(ship.transform.position - transform.position); // Taken from unity thread
@@ -146,16 +164,14 @@ public class BasicAi : MonoBehaviour
         Rigidbody enemyRB = agent.GetComponent<Rigidbody>();
         enemyRB.constraints = RigidbodyConstraints.FreezeRotation;
         enemyRB.constraints = RigidbodyConstraints.FreezePosition;
+        //enemyAnimator.Play(runAnimation);
 
         if (!alreadyAttacked)   // Just copied from attack method
         {
-            Vector3 alteredPosition = new Vector3(transform.position.x + .2f, transform.position.y + .3f, transform.position.z + .2f);
 
-            rb = Instantiate(bulletManagerObj, alteredPosition  , Quaternion.identity).GetComponent<Rigidbody>();
-            rb.velocity = transform.forward * 50;
-            StartCoroutine(bm.deleteBullet(rb.gameObject));
 
-            alreadyAttacked = true;
+            enemyAnimator.Play(attackAnimation);
+            alreadyAttacked = true; 
 
             //StartCoroutine(ResetAttacked());
             Invoke(nameof(ResetAttack), 2f);
@@ -165,6 +181,10 @@ public class BasicAi : MonoBehaviour
     {
         agent.speed = chaseSpeed;
         agent.SetDestination(target.transform.position);
+        knifeObj.SetActive(false);
+
+        enemyAnimator.StopPlayback();
+        enemyAnimator.Play(runAnimation);
     }
 
    

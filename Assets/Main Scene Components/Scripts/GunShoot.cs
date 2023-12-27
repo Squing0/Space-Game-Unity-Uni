@@ -17,7 +17,7 @@ public class GunShoot : MonoBehaviour
     public UnityEngine.UI.Image enemyCrosshair;
 
     private bool readyToAttack;
-    private BulletManager bm;
+    private ProjectileManager pm;
     private Camera m_Camera;
 
     public float magazineTotal, bulletTotal, reloadTime;
@@ -29,7 +29,7 @@ public class GunShoot : MonoBehaviour
         m_Camera = Camera.main;
         enemyCrosshair.enabled = false;
 
-        bm = bullet.GetComponent<BulletManager>();  
+        pm = bullet.GetComponent<ProjectileManager>();  
     }
     private void Start()
     {
@@ -157,7 +157,7 @@ public class GunShoot : MonoBehaviour
         gunSmoke.Play();          // FIX THIS LATER
         
 
-        StartCoroutine(bm.deleteBullet(clone));
+        StartCoroutine(pm.deleteProjectile(clone));
 
         //if (hit.collider.gameObject.tag == "Enemy")
         //{

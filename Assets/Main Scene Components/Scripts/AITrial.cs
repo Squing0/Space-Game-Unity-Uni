@@ -27,7 +27,7 @@ public class AITrial : MonoBehaviour
 
     // Bullet
     public GameObject bulletManagerObj;
-    private BulletManager bm;
+    private ProjectileManager pm;
     private Rigidbody rb;
 
     private void Awake()
@@ -35,7 +35,7 @@ public class AITrial : MonoBehaviour
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
 
-        bm = bulletManagerObj.GetComponent<BulletManager>();    // REMEMBER TO DELETE THIS SCRIPTTTT
+        pm = bulletManagerObj.GetComponent<ProjectileManager>();    // REMEMBER TO DELETE THIS SCRIPTTTT
     }
     private void Update()
     {
@@ -101,7 +101,7 @@ public class AITrial : MonoBehaviour
             //rb.AddForce(transform.up * 20f, ForceMode.Impulse);
             rb.velocity = transform.forward * 50;
 
-            StartCoroutine(bm.deleteBullet(rb.gameObject));
+            StartCoroutine(pm.deleteProjectile(rb.gameObject));
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
