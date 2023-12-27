@@ -170,11 +170,11 @@ public class BasicAi : MonoBehaviour
    
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            state = State.CHASE;
-            target = collision.gameObject;
-        }
+        //if (collision.gameObject.tag == "Player") Can use if needed
+        //{
+        //    state = State.CHASE;
+        //    target = collision.gameObject;
+        //}
     }
     private void OnDrawGizmosSelected()
     {

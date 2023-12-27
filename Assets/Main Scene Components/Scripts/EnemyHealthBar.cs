@@ -9,6 +9,6 @@ public class EnemyHealthBar : MonoBehaviour
 
     private void Update()
     {
-        transform.rotation = camera.transform.rotation;
+        transform.rotation = camera.transform.rotation; // CHECK WORKING DEPENDING ON FINAL PLAYER MODEL USED!
     }
 }
