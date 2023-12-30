@@ -30,7 +30,6 @@ namespace Enemy
         private ProjectileManager pm;
         private Rigidbody rb;
 
-        public Transform rockPos;
         public GameObject knifeObj;
 
         Vector3 playerRange;
@@ -94,6 +93,10 @@ namespace Enemy
             {
                 state = State.CHASE;
             }
+
+            Collider knifeCollider = knifeObj.GetComponent<Collider>();
+            knifeCollider.transform.position = knifeObj.transform.position;
+            knifeCollider.transform.rotation = knifeObj.transform.rotation;
         }
 
         private void AttackPlayer()
@@ -104,10 +107,7 @@ namespace Enemy
 
             if (!alreadyAttacked)
             {
-                Vector3 alteredPosition = new Vector3(rockPos.position.x + 0.2f, rockPos.position.y - 0.5f, rockPos.position.z + 0.2f);
-
-
-                rb = Instantiate(rockObj, alteredPosition, Quaternion.identity).GetComponent<Rigidbody>();
+                rb = Instantiate(rockObj, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
                 //rb.gameObject.tag = "EnemyBullet";  // Changed tag as bullets would hit enemy colliders and weren't supposed to.    
 
                 rb.velocity = transform.forward * 30;
@@ -164,7 +164,7 @@ namespace Enemy
             //enemyAnimator.Play(runAnimation);
 
             if (!alreadyAttacked)   // Just copied from attack method
-            {
+            {               
                 enemyAnimator.Play(attackAnimation);
                 alreadyAttacked = true;
 

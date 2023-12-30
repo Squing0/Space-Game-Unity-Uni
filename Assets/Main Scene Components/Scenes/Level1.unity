@@ -20142,7 +20142,7 @@ MonoBehaviour:
   totalTime: 80
   timerOn: 0
   timerText: {fileID: 986943092}
-  timeSpeeder: 5
+  timeSpeeder: 1
   win: {fileID: 2032057757}
 --- !u!4 &1763760858
 Transform:

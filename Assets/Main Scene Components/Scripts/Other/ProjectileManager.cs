@@ -5,10 +5,10 @@ public class ProjectileManager : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);    // Make so destroys once hit anything, not specifically enemy               
-        }
+        //if (other.gameObject.CompareTag("Enemy")) 
+        //{
+        //    Destroy(gameObject);    // Make so destroys once hit anything, not specifically enemy               
+        //}
 
         // Destroy(gameObject);
     }
