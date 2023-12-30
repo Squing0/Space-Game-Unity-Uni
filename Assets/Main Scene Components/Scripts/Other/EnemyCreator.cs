@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
-
+using UI;
+using Enemy;
 public class EnemyCreator : MonoBehaviour
 {
     public GameObject enemy;
@@ -24,15 +25,7 @@ public class EnemyCreator : MonoBehaviour
     }
     void Start()
     {
-        enemyPos = new Vector3(250, 0.5f, 250);
-
-        //BasicAi enemyAi = enemy.GetComponent<BasicAi>();
-        //enemyAi.ship = ship;
-        //enemyAi.target = player;
-
-        //EnemyHealthBar health = enemy.GetComponentInChildren<EnemyHealthBar>();
-        //health.camera = Camera.main;
-
+        enemyPos = new Vector3(250, 0.5f, 250);       
 
         isRunning = true;
         enemySpawned = false;
@@ -45,21 +38,6 @@ public class EnemyCreator : MonoBehaviour
     {
         float randomPos = Random.Range(245, 255);
         enemyPos = new Vector3(randomPos, 0.5f, randomPos);
-
-        //if (!isRunning)
-        //{
-        //    StartCoroutine(CreateEnemy());
-        //}
-
-        //if (Mathf.Abs(time.Charge - Mathf.Round(time.Charge / 15f) * 15f) < 0.0001f)
-        //{
-        //    CreateEm();
-        //}
-
-        //if (time.Charge % 15f == 0.002f)
-        //{
-        //    CreateEm();
-        //}
 
         if (!enemySpawned && (int)time.Charge % 15 == 0)
         {
@@ -98,7 +76,7 @@ public class EnemyCreator : MonoBehaviour
                 powerup = healthUp; // Put just to get rid of unassigned error but can changed
                 break;
         }
-        GameObject newPowerup = Instantiate(powerup, enemyPos, Quaternion.identity);
+        GameObject newPowerup = Instantiate(powerup, enemyPos, Quaternion.Euler(270,45,45));
     }
 
     private IEnumerator ResetEnemyCreation()
@@ -111,26 +89,6 @@ public class EnemyCreator : MonoBehaviour
         yield return new WaitForSeconds(1);
         powerUpSpawned = false; // EXACT SAME AS ABOVE?
     }
-    //public IEnumerator CreateEnemy() {
-    //    isRunning = true;
-
-    //    //Vector3 poss = enemy.transform.position;
-    //    //poss.y += 2
-
-    //    GameObject newEnemy = Instantiate(enemy, enemyPos, Quaternion.identity);
-    //    newEnemy.name = "Enemy Clone";
-
-    //    //BasicAi newEnemyAi = newEnemy.GetComponent<BasicAi>();
-    //    //newEnemyAi.ship = ship;
-    //    //newEnemyAi.target = player;
-
-    //    //newEnemy.AddComponent   <BasicAi>();
-    //    //EnemyHealthBar newHealth = newEnemy.GetComponentInChildren<EnemyHealthBar>();
-
-    //    yield return new WaitForSeconds(15f);
-
-    //    isRunning = false;
-    //}
 
     public void CreateEm()
     {
@@ -150,6 +108,5 @@ public class EnemyCreator : MonoBehaviour
                 break;
         }
         Debug.Log(AI.state);
-
     }
 }

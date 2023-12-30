@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UI;
 
 namespace Player
 {
@@ -34,7 +35,6 @@ namespace Player
         [Header("Health")]
         public int health;
         public int maxHealth;
-        //public TMP_Text healthText;
 
         // Health property
         public int Health
@@ -150,8 +150,7 @@ namespace Player
 
             if (health < 1)
             {
-                timer.timerOn = false; // Stops timer to get end time
-                gm.ActivateGameover(health, (int)timer.totalTime, "You lost all your health!");
+                gm.ActivateGameover("You lost all your health!");
             }
         }
         private void FixedUpdate()
@@ -196,14 +195,14 @@ namespace Player
             }
 
             // Start crouching
-            if (Input.GetKeyDown(crouchKey))
-            {
-                transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);   // Halves the size of the player
+            //if (Input.GetKeyDown(crouchKey))  VERY BUGGY (one piece reference) 
+            //{
+            //    transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);   // Halves the size of the player
 
-                rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);  // Pushes them down so that they don't remain in the air 
-            }
+            //    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);  // Pushes them down so that they don't remain in the air 
+            //}
 
-            //// Stop crouching
+            ////// Stop crouching
             //if (Input.GetKeyUp(crouchKey))
             //{
             //    transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
@@ -300,34 +299,16 @@ namespace Player
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision collision)   // Needed anymore? (TAKE OUT EVENTUALLY)
         {
             if (collision.gameObject.tag == "Enemy")
             {
                 health -= 1;
                 healthBar.updateHealth(health, maxHealth);
-                //Destroy(collision.gameObject);  
-                //healthUpdate();
             }
-        }
+}
 
-        //private IEnumerator PowerupTimer(float powerupIncrease)
-        //{
-        //    yield return new WaitForSeconds(powerupCooldown);   // Cooldown used here so that powerup only lasts for a limited while
-
-        //    walkSpeed -= powerupIncrease;   //Resets powerups back to normal
-        //    runSpeed -= powerupIncrease;
-
-        //}
-
-        //public void PowerupActivate(float powerupIncrease)
-        //{
-        //    walkSpeed += powerupIncrease;
-        //    runSpeed += powerupIncrease;
-        //    StartCoroutine(PowerupTimer(powerupIncrease));
-        //}
-
-        public void SpeedUpActivate(float speedIncrease, float speedTime)  // MAKE MORE GENERAL LIKE ABOVE SO REUSABLE???
+public void SpeedUpActivate(float speedIncrease, float speedTime)  // MAKE MORE GENERAL LIKE ABOVE SO REUSABLE???
         {
             walkSpeed += speedIncrease;
             runSpeed += speedIncrease;

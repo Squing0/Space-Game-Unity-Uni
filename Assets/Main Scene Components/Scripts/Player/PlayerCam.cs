@@ -8,7 +8,6 @@ namespace Player
         public float sensY;
 
         public Transform orientation;
-        //public Transform playerModel;
 
         float xRotation;
         float yRotation;

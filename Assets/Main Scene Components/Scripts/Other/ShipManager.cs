@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
+using UI;
 public class ShipManager : MonoBehaviour
 {
     [Header("Health")]
@@ -30,7 +27,7 @@ public class ShipManager : MonoBehaviour
     {
         if (health < 1)
         {
-            gm.ActivateGameover(3, 3, "Your ship was destroyed!");
+            gm.ActivateGameover("Your ship was destroyed!");
         }
     }
 

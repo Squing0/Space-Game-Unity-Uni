@@ -151,23 +151,14 @@ namespace Player
             Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
             bulletRigidbody.velocity = shootPos.transform.forward * bulletVelocity; // May be better to have more accurate/complex way of shooting here
 
-            //bulletRigidbody.AddForce(shootPos.transform.forward * 20f, ForceMode.Impulse);    // ALternate way of shooting bullets!
+            //bulletRigidbody.AddForce(shootPos.transform.forward * 20f, ForceMode.Impulse);    // Alternate way of shooting bullets!
             //bulletRigidbody.AddForce(shootPos.transform.up * 10f, ForceMode.Impulse);
 
-            gunSmoke.Play();          // FIX THIS LATER
-
+            gunSmoke.Play();          
 
             StartCoroutine(pm.deleteProjectile(clone));
-
-            //if (hit.collider.gameObject.tag == "Enemy")
-            //{
-            //    //hit.collider.GetComponent<EnemyStats>().reduceHealth(1);
-
-            //}
             StartCoroutine(ResetShooting());
-            //Invoke("Reset", timeBetweenAttacks);
 
-            //gunSmoke.Stop();
             currentBullets--;
         }
 

@@ -1,19 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using Player;
 
-public class UiManager : MonoBehaviour
+namespace UI
 {
-    [Header ("Text elements")]
-    public TMP_Text playerHealth;
-    public TMP_Text shipHealth; // Is this class needed now?
-
-    private void Update()
+    public class UiManager : MonoBehaviour
     {
-        playerHealth.text = $"Player Health:";
-        shipHealth.text = $"Ship Health:";
+        public GameObject playerObj;
+        public GameObject timerObj;
+        public GameObject shipObj;
+
+        private PlayerMovement playerMovement;
+        private Timer timer;
+        private ShipManager shipManager; // CHANGE FOR THE LOVE OF GOD
+
+        private float totalScore;   // change to int?
+        private void Start()
+        {
+            playerMovement = playerObj.GetComponent<PlayerMovement>();
+            timer = timerObj.GetComponent<Timer>();
+            shipManager = shipObj.GetComponent<ShipManager>();
+        }
+
+        public void CalculateScore(string endReason, TMP_Text scoreText)
+        {
+            timer.ChargeOn = false;
+            
+            totalScore = (100 - timer.Charge) + (playerMovement.Health * 25) + (shipManager.Health * 25);
+            scoreText.text = $"{endReason}\nScore: {(int)totalScore}";
+        }
     }
 }
-    

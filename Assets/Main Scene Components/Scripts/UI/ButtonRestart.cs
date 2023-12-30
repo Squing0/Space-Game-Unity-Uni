@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonRestart : MonoBehaviour
+namespace UI
 {
-    public Button restart;
-
-    private void Update()
+    public class ButtonRestart : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.R))    // Allows the user to restart with R as mouse can't be used due to it being used with the camera
+        public Button restart;
+
+        private void Update()
         {
-            restart.onClick.Invoke();
+            if (Input.GetKeyDown(KeyCode.R))    // Allows the user to restart with R as mouse can't be used due to it being used with the camera
+            {
+                restart.onClick.Invoke();
+            }
         }
     }
 }

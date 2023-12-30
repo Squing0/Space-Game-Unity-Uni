@@ -1,45 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+namespace UI
 {
-    public float totalTime = 1;
-    public bool timerOn;
-    public TMP_Text timerText;
-    private float charge = 1;
-
-    public float Charge
+    public class Timer : MonoBehaviour
     {
-        get { return charge; }
-        set { charge = value; }
-    }
-    public int timeSpeeder;
+        public float totalTime = 1;
+        public bool timerOn;
+        public TMP_Text timerText;
+        private float charge = 1;
+        private bool chargeOn = true;
 
-    //public GameObject gameover;
-    //GameOverScreen gm;
-
-    public GameObject win;
-    GameWinScreen winScreen;
-
-    // CHANGE SOME OF THIS OVER TO UI MANAGER
-
-    private void Start()
-    {
-        timerOn = true;
-        winScreen = win.GetComponent<GameWinScreen>();
-    }
-    private void Update()
-    {
-        if (charge < 100)   
+        public bool ChargeOn
         {
-            charge += Time.deltaTime * timeSpeeder;
-            timerText.text = $"Charge: {(int)charge}%";
+            get { return chargeOn; }
+            set { chargeOn = value; }
         }
-        else
+
+        public float Charge
         {
-            winScreen.ActivateWin();
+            get { return charge; }
+            set { charge = value; }
+        }
+        public int timeSpeeder;
+
+        //public GameObject gameover;
+        //GameOverScreen gm;
+
+        public GameObject win;
+        GameWinScreen winScreen;
+
+        // CHANGE SOME OF THIS OVER TO UI MANAGER
+
+        private void Start()
+        {
+            timerOn = true;
+            winScreen = win.GetComponent<GameWinScreen>();
+        }
+        private void Update()
+        {
+            if (charge < 100)
+            {
+                if (chargeOn)
+                {
+                    charge += Time.deltaTime * timeSpeeder;
+                    timerText.text = $"Charge: {(int)charge}%";
+                }
+            }
+            else
+            {
+                winScreen.ActivateWin();
+            }
         }
     }
 }

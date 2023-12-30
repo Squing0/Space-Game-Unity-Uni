@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Player;
+using UI;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class ItemPickup : MonoBehaviour
     public int healthToAdd;
     public int speedToAdd;
     public float speedTime;
+
+    public GameObject playerHealthBar;    // Don't like this as speed and ammo don't use
 
     private GunShoot gs; // Is this best way to access other scripts?
     private PlayerMovement pm;
@@ -25,7 +28,7 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) // Have UI messages for when powerups picked up?
         {
             if(tag == "AmmoIncrease")
             {
@@ -41,9 +44,13 @@ public class ItemPickup : MonoBehaviour
                 {
                     pm.Health += 1;
                 }
+                else
+                {
+                    Debug.Log("Health full!");
+                }
                 Debug.Log(pm.Health);
-                //hb = other.gameObject.GetComponentInChildren<HealthBar>();
-                //hb.updateHealth(pm.Health, pm.MaxHealth);
+                hb = playerHealthBar.gameObject.GetComponent<HealthBar>();
+                hb.updateHealth(pm.Health, pm.MaxHealth);
                 Destroy(gameObject);
             }
 
