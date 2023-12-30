@@ -97,9 +97,9 @@ namespace Enemy
                 state = State.CHASE;
             }
 
-            Collider knifeCollider = knifeObj.GetComponent<Collider>(); // THIS DOESN'T WORK
-            knifeCollider.transform.position = knifeObj.transform.position;
-            knifeCollider.transform.rotation = knifeObj.transform.rotation;
+            //Collider knifeCollider = knifeObj.GetComponent<Collider>(); // THIS DOESN'T WORK
+            //knifeCollider.transform.position = knifeObj.transform.position;
+            //knifeCollider.transform.rotation = knifeObj.transform.rotation;
 
             //RaycastHit hit;
             //playerPos = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
@@ -113,14 +113,19 @@ namespace Enemy
 
         private void AttackPlayer()
         {
-            transform.LookAt(target.transform.position);
+            //transform.LookAt(target.transform.position);
             agent.SetDestination(target.transform.position);
-            //transform.LookAt(playerPos);
-            //agent.SetDestination(playerPos);
 
-            // Find better way for this
-            //enemyAnimator.Play(combatRunAnimation);
+            // ChatGpt Trial:
+            Vector3 directionToPlayer = target.transform.position - transform.position;
+            directionToPlayer.y = 0;
 
+            if(directionToPlayer.y > 0.1f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+            }
+                   
             if (!alreadyAttacked)
             {
                 rb = Instantiate(rockObj, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
@@ -193,6 +198,8 @@ namespace Enemy
             agent.speed = chaseSpeed;
             transform.LookAt(target.transform.position);
             agent.SetDestination(target.transform.position);
+            
+
             //transform.LookAt(playerPos);
             //agent.SetDestination(playerPos);
 
@@ -201,20 +208,19 @@ namespace Enemy
             enemyAnimator.StopPlayback();
             enemyAnimator.Play(runAnimation);
         }
-
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            //if (collision.gameObject.tag == "Player") Can use if needed
-            //{
-            //    state = State.CHASE;
-            //    target = collision.gameObject;
-            //}
-        }
+     
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRange);
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+
+            }
         }
     }
 }

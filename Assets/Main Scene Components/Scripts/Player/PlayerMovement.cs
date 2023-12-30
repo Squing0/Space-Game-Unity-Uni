@@ -132,8 +132,9 @@ namespace Player
         private void Update()
         {
             //ground check
-            grounded = Physics.Raycast(raycastStart.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);  // Casts ray onto ground from players position halved to check if they're on the ground
-
+            grounded = Physics.Raycast(raycastStart.position, Vector3.down, playerHeight * 1f + 0.3f, whatIsGround);  // Casts ray onto ground from players position halved to check if they're on the ground
+            Debug.DrawRay(raycastStart.position, Vector3.down, Color.black, whatIsGround);
+             
             MyInput();
             SpeedControl();
             StateHandler();

@@ -64,12 +64,21 @@ namespace Enemy
         private void OnTriggerEnter(Collider other)
         {
             Rigidbody rb;
-            rb = other.gameObject.GetComponent<Rigidbody>();         
+            rb = other.gameObject.GetComponent<Rigidbody>();
 
             if (other.gameObject.CompareTag("Bullet"))
             {
                 reduceHealth(1);
             }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            //if (collision.gameObject.tag == "Player") Can use if needed
+            //{
+            //    state = State.CHASE;
+            //    target = collision.gameObject;
+            //}
         }
     }
 }

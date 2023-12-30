@@ -13,16 +13,21 @@ namespace Player
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Enemy"))
-            {
-                Vector3 direction = other.transform.position - transform.position;
-                direction.y = 0;
+            //if (other.CompareTag("Enemy"))
+            //{
+            //    //Vector3 direction = other.transform.position - transform.position;
+            //    //direction.y = 0;
 
-                if(direction.magnitude < distanceFromPlayer)
-                {
-                    other.transform.position = transform.position + direction.normalized * distanceFromPlayer;
-                }
-            }
+            //    ////if(direction.magnitude < distanceFromPlayer)
+            //    ////{
+            //    ////    Vector3 newPosition = transform.position + direction.normalized * distanceFromPlayer;
+
+            //    ////    Rigidbody enemyRigidbody = other.GetComponent<Rigidbody>();
+            //    ////    enemyRigidbody.MovePosition(newPosition);
+            //    ////}
+
+            //    //Debug.Log("Enemy Killed!");
+            //}
         }
     }
 }
