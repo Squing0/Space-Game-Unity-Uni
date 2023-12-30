@@ -3204,6 +3204,9 @@ MonoBehaviour:
   runAnimation: Run
   combatRunAnimation: Combat_run
   attackAnimation: Attack4
+  whatisGround:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!136 &347864891955560869
 CapsuleCollider:
   m_ObjectHideFlags: 0

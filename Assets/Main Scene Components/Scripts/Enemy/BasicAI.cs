@@ -36,9 +36,12 @@ namespace Enemy
 
         [Header("Animations")]
         public Animator enemyAnimator;
-        public String runAnimation;
+        public String runAnimation; // Change to lower case string
         public String combatRunAnimation;
         public String attackAnimation;
+
+        Vector3 playerPos;
+        public LayerMask whatisGround;
 
         private void Awake()
         {
@@ -94,16 +97,29 @@ namespace Enemy
                 state = State.CHASE;
             }
 
-            Collider knifeCollider = knifeObj.GetComponent<Collider>();
+            Collider knifeCollider = knifeObj.GetComponent<Collider>(); // THIS DOESN'T WORK
             knifeCollider.transform.position = knifeObj.transform.position;
             knifeCollider.transform.rotation = knifeObj.transform.rotation;
+
+            //RaycastHit hit;
+            //playerPos = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
+
+            //if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, whatisGround))
+            //{
+            //   playerPos.y = hit.point.y;
+            //}
+            //Debug.DrawRay(transform.position, Vector3.down, Color.blue);
         }
 
         private void AttackPlayer()
         {
+            transform.LookAt(target.transform.position);
             agent.SetDestination(target.transform.position);
-            transform.LookAt(target.transform.position);  // Find better way for this
-                                                          //enemyAnimator.Play(combatRunAnimation);
+            //transform.LookAt(playerPos);
+            //agent.SetDestination(playerPos);
+
+            // Find better way for this
+            //enemyAnimator.Play(combatRunAnimation);
 
             if (!alreadyAttacked)
             {
@@ -175,7 +191,11 @@ namespace Enemy
         private void Chase()
         {
             agent.speed = chaseSpeed;
+            transform.LookAt(target.transform.position);
             agent.SetDestination(target.transform.position);
+            //transform.LookAt(playerPos);
+            //agent.SetDestination(playerPos);
+
             knifeObj.SetActive(false);
 
             enemyAnimator.StopPlayback();
