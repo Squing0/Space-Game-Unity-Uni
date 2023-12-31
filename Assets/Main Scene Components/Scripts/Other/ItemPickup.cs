@@ -11,18 +11,21 @@ public class ItemPickup : MonoBehaviour
     public float speedTime;
 
     public GameObject playerHealthBar;    // Don't like this as speed and ammo don't use
+    public GameObject gameSetter;   //Figure out better name for this and script
 
     private GunShoot gs; // Is this best way to access other scripts?
     private PlayerMovement pm;
     private HealthBar hb;
+    private EnemyCreator en;
     private void Start()
     {
         StartCoroutine(DestroyPowerup());
+        en = gameSetter.GetComponent<EnemyCreator>();
     }
 
     private IEnumerator DestroyPowerup()
     {
-        yield return new WaitForSeconds(10);    // Make variable (get from creator script so consistent?)
+        yield return new WaitForSeconds(en.PowerupChargeAppear);    // Need to change with speed of timer
         Destroy(gameObject);
     }
 

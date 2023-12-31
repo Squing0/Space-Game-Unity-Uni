@@ -5,13 +5,21 @@ using Enemy;
 public class EnemyCreator : MonoBehaviour
 {
     public GameObject enemy;
-    public GameObject ship;
     public GameObject player;
     public GameObject timer;    // NAMES WAY TOO SIMILAR
     public GameObject speedUp;
     public GameObject healthUp;
     public GameObject ammoUp;
-    
+    public GameObject powerupPos;
+    public int powerupChargeAppear;
+    public int enemyChargeAppear;
+
+    public int PowerupChargeAppear
+    {
+        get { return powerupChargeAppear; }
+    }
+
+
     private bool isRunning;
     private bool enemySpawned;
     private bool powerUpSpawned;
@@ -25,7 +33,7 @@ public class EnemyCreator : MonoBehaviour
     }
     void Start()
     {
-        enemyPos = new Vector3(250, 0.5f, 250);       
+        enemyPos = new Vector3(250, 0.6f, 250);       
 
         isRunning = true;
         enemySpawned = false;
@@ -36,10 +44,10 @@ public class EnemyCreator : MonoBehaviour
 
     void Update()
     {
-        float randomPos = Random.Range(245, 255);
+        float randomPos = Random.Range(245, 275);   // Adjust if having problems
         enemyPos = new Vector3(randomPos, 0.5f, randomPos);
 
-        if (!enemySpawned && (int)time.Charge % 15 == 0)
+        if (!enemySpawned && (int)time.Charge % enemyChargeAppear == 0)
         {
             Debug.Log($"Charge value: {time.Charge}");
             CreateEm();
@@ -48,7 +56,7 @@ public class EnemyCreator : MonoBehaviour
             StartCoroutine(ResetEnemyCreation());
         }
 
-        if(!powerUpSpawned && (int)time.Charge % 10 == 0)
+        if(!powerUpSpawned && (int)time.Charge % powerupChargeAppear == 0)
         {
             CreatePowerup();
             powerUpSpawned = true;
@@ -76,7 +84,10 @@ public class EnemyCreator : MonoBehaviour
                 powerup = healthUp; // Put just to get rid of unassigned error but can changed
                 break;
         }
-        GameObject newPowerup = Instantiate(powerup, enemyPos, Quaternion.Euler(270,45,45));
+        Vector3 adjustedPowPos = new Vector3(powerupPos.transform.position.x, powerupPos.transform.position.y + 1f, powerupPos.transform.position.z);
+
+        Instantiate(powerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));
+        //GameObject newPowerup = Instantiate(powerup, powerupPos.transform.position, Quaternion.Euler(270,45,45));
     }
 
     private IEnumerator ResetEnemyCreation()
