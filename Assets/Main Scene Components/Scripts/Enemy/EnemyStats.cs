@@ -50,6 +50,12 @@ namespace Enemy
             healthBar.updateHealth(health, maxHealth);
         }
 
+        public void IncreaseHealth(int amount)
+        {
+            health += amount;
+            healthBar.updateHealth(health, maxHealth);
+        }
+
         public IEnumerator DestroyEnemy()
         {
 

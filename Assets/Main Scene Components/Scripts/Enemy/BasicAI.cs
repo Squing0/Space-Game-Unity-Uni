@@ -110,6 +110,8 @@ namespace Enemy
             //   playerPos.y = hit.point.y;
             //}
             //Debug.DrawRay(transform.position, Vector3.down, Color.blue);
+
+            Debug.Log(agent.speed); // for checking powerup
         }
 
         private void AttackPlayer()
@@ -222,6 +224,18 @@ namespace Enemy
             {
 
             }
+        }
+
+        public void SpeedUpActivate(float speedIncrease, float speedTime)   // Copied from player movement (use interface?)
+        {
+            agent.speed += speedIncrease;
+            StartCoroutine(SpeedTimer(speedIncrease, speedTime));
+        }
+
+        private IEnumerator SpeedTimer(float speedDecrease, float speedCooldown)
+        {
+            yield return new WaitForSeconds(speedCooldown);
+            agent.speed -= speedDecrease;
         }
     }
 }

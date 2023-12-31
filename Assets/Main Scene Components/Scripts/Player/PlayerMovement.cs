@@ -309,7 +309,7 @@ namespace Player
             }
 }
 
-public void SpeedUpActivate(float speedIncrease, float speedTime)  // MAKE MORE GENERAL LIKE ABOVE SO REUSABLE???
+        public void SpeedUpActivate(float speedIncrease, float speedTime)  // MAKE MORE GENERAL LIKE ABOVE SO REUSABLE???
         {
             walkSpeed += speedIncrease;
             runSpeed += speedIncrease;

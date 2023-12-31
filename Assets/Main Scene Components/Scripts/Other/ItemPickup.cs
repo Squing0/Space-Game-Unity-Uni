@@ -19,6 +19,7 @@ public class ItemPickup : MonoBehaviour
     private HealthBar hb;
     private EnemyCreator en;
     private EnemyStats es;
+    private BasicAi ai;
     private void Start()
     {
         en = gameSetter.GetComponent<EnemyCreator>();
@@ -76,13 +77,19 @@ public class ItemPickup : MonoBehaviour
                 es = other.GetComponent<EnemyStats>();
                 if (es.Health < es.MaxHealth)   // repeated from above
                 {
-                    es.Health += 1;
+                    es.IncreaseHealth(1);
                 }
                 else
                 {
                     Debug.Log("Health full!");
-                }
-                es.reduceHealth(1);
+                }              
+                Destroy(gameObject);
+            }
+
+            if(tag == "SpeedIncrease")
+            {
+                ai = other.GetComponent <BasicAi>();
+                ai.SpeedUpActivate(speedToAdd, speedTime);
                 Destroy(gameObject);
             }
         }
