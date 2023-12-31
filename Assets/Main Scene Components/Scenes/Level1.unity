@@ -8365,7 +8365,7 @@ MonoBehaviour:
   ammoUp: {fileID: 1892801627}
   powerupPos: {fileID: 1694652915}
   powerupChargeAppear: 5
-  enemyChargeAppear: 20
+  enemyChargeAppear: 10
 --- !u!1 &986943090
 GameObject:
   m_ObjectHideFlags: 0
