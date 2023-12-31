@@ -3200,6 +3200,7 @@ MonoBehaviour:
   alreadyAttacked: 0
   rockObj: {fileID: 0}
   knifeObj: {fileID: 5264161407582644982}
+  timeBetweenAttacks: 2
   enemyAnimator: {fileID: 5614403018944200062}
   runAnimation: Run
   combatRunAnimation: Combat_run

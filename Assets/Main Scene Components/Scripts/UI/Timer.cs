@@ -22,7 +22,12 @@ namespace UI
             get { return charge; }
             set { charge = value; }
         }
-        public int timeSpeeder;
+        public float timeSpeeder;
+        public float TimeSpeeder
+        {
+            get { return timeSpeeder; }
+            set { timeSpeeder = value; }
+        }
 
         //public GameObject gameover;
         //GameOverScreen gm;

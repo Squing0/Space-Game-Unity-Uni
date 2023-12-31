@@ -31,6 +31,7 @@ namespace Enemy
         private Rigidbody rb;
 
         public GameObject knifeObj;
+        public float timeBetweenAttacks;
 
         Vector3 playerRange;
 
@@ -138,7 +139,7 @@ namespace Enemy
                 enemyAnimator.Play(attackAnimation);
 
                 //StartCoroutine(ResetAttacked());
-                Invoke(nameof(ResetAttack), 2f);
+                Invoke(nameof(ResetAttack), timeBetweenAttacks);    // CHANGE TO COROUTINE
             }
         }
 

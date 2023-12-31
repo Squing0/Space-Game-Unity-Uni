@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Player;
 using UI;
+using Enemy;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -17,10 +18,11 @@ public class ItemPickup : MonoBehaviour
     private PlayerMovement pm;
     private HealthBar hb;
     private EnemyCreator en;
+    private EnemyStats es;
     private void Start()
     {
-        StartCoroutine(DestroyPowerup());
         en = gameSetter.GetComponent<EnemyCreator>();
+        StartCoroutine(DestroyPowerup());     
     }
 
     private IEnumerator DestroyPowerup()
@@ -43,6 +45,7 @@ public class ItemPickup : MonoBehaviour
             if(tag == "HealthIncrease")
             {
                 pm = other.gameObject.GetComponent<PlayerMovement>();
+
                 if(pm.Health < pm.MaxHealth)
                 {
                     pm.Health += 1;
@@ -51,6 +54,7 @@ public class ItemPickup : MonoBehaviour
                 {
                     Debug.Log("Health full!");
                 }
+
                 Debug.Log(pm.Health);
                 hb = playerHealthBar.gameObject.GetComponent<HealthBar>();
                 hb.updateHealth(pm.Health, pm.MaxHealth);
@@ -61,6 +65,24 @@ public class ItemPickup : MonoBehaviour
             {
                 pm = other.gameObject.GetComponent<PlayerMovement>();
                 pm.SpeedUpActivate(speedToAdd, speedTime);
+                Destroy(gameObject);
+            }
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            if (tag == "HealthIncrease")
+            {
+                es = other.GetComponent<EnemyStats>();
+                if (es.Health < es.MaxHealth)   // repeated from above
+                {
+                    es.Health += 1;
+                }
+                else
+                {
+                    Debug.Log("Health full!");
+                }
+                es.reduceHealth(1);
                 Destroy(gameObject);
             }
         }

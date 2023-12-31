@@ -17,6 +17,12 @@ public class EnemyCreator : MonoBehaviour
     public int PowerupChargeAppear
     {
         get { return powerupChargeAppear; }
+        set { powerupChargeAppear = value; }
+    }
+    public int EnemyChargeAppear
+    {
+        get { return enemyChargeAppear; }
+        set {  enemyChargeAppear = value; }
     }
 
 
