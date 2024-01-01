@@ -7,6 +7,12 @@ namespace UI
     public class TitleScreen : MonoBehaviour
     {
         public GameObject difficultyScreen;
+
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         public void StartBtnClick()
         {
             //SceneManager.LoadScene("Level1");   // Change name!

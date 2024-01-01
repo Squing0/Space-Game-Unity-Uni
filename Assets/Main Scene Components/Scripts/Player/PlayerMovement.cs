@@ -121,12 +121,12 @@ namespace Player
             rb.freezeRotation = true; // Allows physics system to control rotation of object
 
             readyToJump = true;
-
             maxJumps = 2;
             jumpCounter = 0;
+
             maxHealth = 6;  // Should be able to change in inspector
             health = maxHealth;
-            Health = health;
+            //Health = health;
         }
 
         private void Update()

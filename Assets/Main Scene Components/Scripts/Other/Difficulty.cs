@@ -65,7 +65,7 @@ public class Difficulty : MonoBehaviour
                 powerupTime = 5;
                 enemyTime = 15;
                 maxHealth = 10;
-                health = 10;
+                health = 10;    // hate wat of doing this but player health only gets set to max in start of player movement script.
                 walkSpeed = 10;
                 runSpeed = 15;
                 enemyAttackTime = 3;

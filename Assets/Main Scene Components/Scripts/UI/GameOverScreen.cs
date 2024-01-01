@@ -28,7 +28,7 @@ namespace UI
 
         public void ResetScene()
         {
-            SceneManager.LoadScene("Level1");
+            SceneManager.LoadScene("Title Screen");
         }
     }
 }
