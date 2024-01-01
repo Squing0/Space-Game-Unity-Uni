@@ -57,18 +57,18 @@ public class StartValues : MonoBehaviour
 
         if (!enemySpawned && (int)charger.ChargeValue % enemyChargeAppear == 0)
         {
+            enemySpawned = true;
             CreateEnemy();
-            enemySpawned=true;
 
-            StartCoroutine(ResetObjectCreation(enemySpawned));
+            StartCoroutine(ResetObjectCreation("enemy"));
         }
 
         if(!powerUpSpawned && (int)charger.ChargeValue % powerupChargeAppear == 0)
         {
-            CreatePowerup();
             powerUpSpawned = true;
+            CreatePowerup();          
 
-            StartCoroutine(ResetObjectCreation(powerUpSpawned));
+            StartCoroutine(ResetObjectCreation("powerup"));
         }
 
     }
@@ -98,10 +98,11 @@ public class StartValues : MonoBehaviour
         //GameObject newPowerup = Instantiate(powerup, powerupPos.transform.position, Quaternion.Euler(270,45,45));
     }
 
-    private IEnumerator ResetObjectCreation(bool isSpawned) // Is this needed?
+    private IEnumerator ResetObjectCreation(string specificObject) // Is this needed?
     {
         yield return new WaitForSeconds(1);
-        isSpawned = false;
+        if (specificObject == "powerup") { powerUpSpawned = false; }
+        if (specificObject == "enemy") { enemySpawned = false; }
     }
 
     public void CreateEnemy()
