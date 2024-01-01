@@ -26,12 +26,11 @@ namespace Player
 
             yRotation += mouseX;
 
-            xRotation -= mouseY; // don't understand the rotation here
+            xRotation -= mouseY; 
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);  // Limits range of camera movement
 
             // rotate camera and orientation
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-            //playerModel.rotation = Quaternion.Euler(xRotation, yRotation, 0);     Didn't work
             orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         }
     }
