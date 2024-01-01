@@ -6,17 +6,16 @@ public class ShipManager : MonoBehaviour
     public int health = 20;
     public int maxHealth = 20;
 
+    [Header("Game Objects")]
+    public GameObject gameover;
+    public HealthBar healthBar;
+
+    private GameOverScreen gm;
+
     public int Health
     {
         get { return health; }
-        set { }
     }
-
-    public GameObject gameover;
-    private GameOverScreen gm;
-
-    [SerializeField]
-    private HealthBar healthBar;
 
     private void Start()
     {

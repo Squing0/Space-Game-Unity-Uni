@@ -6,29 +6,31 @@ using Enemy;
 
 public class ItemPickup : MonoBehaviour
 {
-    public int ammoToAdd; // Awful name
+    [Header("Powerups")]
+    public int ammoToAdd; 
     public int healthToAdd;
     public int speedToAdd;
     public float speedTime;
 
+    [Header("Other Objects")]
     public GameObject playerHealthBar;    // Don't like this as speed and ammo don't use
-    public GameObject gameSetter;   //Figure out better name for this and script
+    public GameObject startValuesObj;   //Figure out better name for this and script
 
-    private GunShoot gs; // Is this best way to access other scripts?
-    private PlayerMovement pm;
-    private HealthBar hb;
-    private StartValues en;
-    private EnemyStats es;
+    private GunShoot gunshoot; // Is this best way to access other scripts?
+    private PlayerMovement player;
+    private HealthBar healthbar;
+    private StartValues startValues;
+    private EnemyStats enemyStats;
     private BasicAi ai;
     private void Start()
     {
-        en = gameSetter.GetComponent<StartValues>();
+        startValues = startValuesObj.GetComponent<StartValues>();
         StartCoroutine(DestroyPowerup());     
     }
 
     private IEnumerator DestroyPowerup()
     {
-        yield return new WaitForSeconds(en.PowerupChargeAppear);    // Need to change with speed of timer
+        yield return new WaitForSeconds(startValues.PowerupChargeAppear);    // Need to change with speed of timer
         Destroy(gameObject);
     }
 
@@ -38,34 +40,36 @@ public class ItemPickup : MonoBehaviour
         {
             if(tag == "AmmoIncrease")
             {
-                gs = other.gameObject.GetComponentInChildren<GunShoot>();
-                gs.AddAmmo(ammoToAdd);
+                gunshoot = other.gameObject.GetComponentInChildren<GunShoot>();
+                gunshoot.AddAmmo(ammoToAdd);
+
                 Destroy(gameObject);
             }
 
             if(tag == "HealthIncrease")
             {
-                pm = other.gameObject.GetComponent<PlayerMovement>();
+                player = other.gameObject.GetComponent<PlayerMovement>();
 
-                if(pm.Health < pm.MaxHealth)
+                if(player.Health < player.MaxHealth)
                 {
-                    pm.Health += 1;
+                    player.Health += 1;
                 }
                 else
                 {
                     Debug.Log("Health full!");
                 }
 
-                Debug.Log(pm.Health);
-                hb = playerHealthBar.gameObject.GetComponent<HealthBar>();
-                hb.updateHealth(pm.Health, pm.MaxHealth);
+                healthbar = playerHealthBar.gameObject.GetComponent<HealthBar>();
+                healthbar.updateHealth(player.Health, player.MaxHealth);
+
                 Destroy(gameObject);
             }
 
             if(tag == "SpeedIncrease")
             {
-                pm = other.gameObject.GetComponent<PlayerMovement>();
-                pm.SpeedUpActivate(speedToAdd, speedTime);
+                player = other.gameObject.GetComponent<PlayerMovement>();
+                player.SpeedUpActivate(speedToAdd, speedTime);
+
                 Destroy(gameObject);
             }
         }
@@ -74,10 +78,10 @@ public class ItemPickup : MonoBehaviour
         {
             if (tag == "HealthIncrease")
             {
-                es = other.GetComponent<EnemyStats>();
-                if (es.Health < es.MaxHealth)   // repeated from above
+                enemyStats = other.GetComponent<EnemyStats>();
+                if (enemyStats.Health < enemyStats.MaxHealth)   // repeated from above
                 {
-                    es.IncreaseHealth(1);
+                    enemyStats.IncreaseHealth(1);
                 }
                 else
                 {

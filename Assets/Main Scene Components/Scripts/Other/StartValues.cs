@@ -6,14 +6,22 @@ public class StartValues : MonoBehaviour
 {
     [Header("GameObjects")]
     public GameObject enemyObj;
-    public GameObject playerObj;
-    public GameObject timerObj;    // NAMES WAY TOO SIMILAR
     public GameObject speedUpObj;
     public GameObject healthUpObj;
     public GameObject ammoUpObj;
+    public GameObject playerObj;
+    public GameObject timerObj;    // NAMES WAY TOO SIMILAR
     public GameObject powerupPosObj;
+
+    [Header("Appear Rates")]
     public int powerupChargeAppear;
     public int enemyChargeAppear;
+
+    private bool enemySpawned;
+    private bool powerUpSpawned;
+
+    private Vector3 enemyPos;
+    private Charge charger;
 
     public int PowerupChargeAppear
     {
@@ -27,13 +35,6 @@ public class StartValues : MonoBehaviour
     }
 
 
-    private bool isRunning;
-    private bool enemySpawned;
-    private bool powerUpSpawned;
-
-    private Vector3 enemyPos;
-    private Charge charger;
-
     private void Awake()
     {
         charger = timerObj.GetComponent<Charge>();
@@ -42,11 +43,10 @@ public class StartValues : MonoBehaviour
     {
         enemyPos = new Vector3(250, 0.6f, 250);       
 
-        isRunning = true;
         enemySpawned = false;
         powerUpSpawned = false;
 
-        CreateEm();
+        CreateEnemy();
         CreatePowerup();
     }
 
@@ -57,18 +57,18 @@ public class StartValues : MonoBehaviour
 
         if (!enemySpawned && (int)charger.ChargeValue % enemyChargeAppear == 0)
         {
-            Debug.Log($"Charge value: {charger.ChargeValue}");
-            CreateEm();
-
+            CreateEnemy();
             enemySpawned=true;
-            StartCoroutine(ResetEnemyCreation());
+
+            StartCoroutine(ResetObjectCreation(enemySpawned));
         }
 
         if(!powerUpSpawned && (int)charger.ChargeValue % powerupChargeAppear == 0)
         {
             CreatePowerup();
             powerUpSpawned = true;
-            StartCoroutine(ResetPowerUpCreation());
+
+            StartCoroutine(ResetObjectCreation(powerUpSpawned));
         }
 
     }
@@ -109,12 +109,16 @@ public class StartValues : MonoBehaviour
         powerUpSpawned = false; // EXACT SAME AS ABOVE?
     }
 
-    public void CreateEm()
+    private IEnumerator ResetObjectCreation(bool isSpawned)
+    {
+        yield return new WaitForSeconds(1);
+        isSpawned = false;
+    }
+
+    public void CreateEnemy()
     {
         GameObject newEnemy = Instantiate(enemyObj, enemyPos, Quaternion.identity);
-        newEnemy.name = "Enemy Clone";
-
-        BasicAi AI = newEnemy.GetComponent<BasicAi>();
+        newEnemy.name = "Enemy Clone";  // Why was this done? (don't remember)
 
         int stateChosen = Random.Range(1, 3);    // Change to 4 with patrol
         switch (stateChosen)
@@ -126,6 +130,5 @@ public class StartValues : MonoBehaviour
                 newEnemy.GetComponent<BasicAi>().state = BasicAi.State.SHIP;
                 break;
         }
-        Debug.Log(AI.state);
     }
 }

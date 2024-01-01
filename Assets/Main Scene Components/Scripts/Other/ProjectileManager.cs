@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ProjectileManager : MonoBehaviour
 {
+    public float aliveTime;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") && gameObject.CompareTag("Bullet"))
@@ -22,7 +23,7 @@ public class ProjectileManager : MonoBehaviour
     }
     public IEnumerator deleteProjectile(GameObject obj)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(aliveTime);
 
         Destroy(obj);
     }
