@@ -1,28 +1,30 @@
 using Enemy;
 using Player;
 using UI;
-using System.Threading;
 using UnityEngine;
 
 public class Difficulty : MonoBehaviour
 {
+    [Header("Difficulty")]
     public string difficulty;
+
+    [Header("Game Objects")]
     public GameObject timerObj;
     public GameObject enemyCreatorObj;
     public GameObject playerObj;
     public GameObject enemyObj;
 
-    private UI.Timer timer;    //Make how access variables here consistent (if annoying get rid of properties
-    private EnemyCreator enemyCreator;
+    private Charge charger;    //Make how access variables here consistent (if annoying get rid of properties
+    private StartValues enemyCreator;   // CHANGE THIS
     private PlayerMovement player;
     private BasicAi enemyAi;
 
     private void Start()
     {
-        difficulty = DifficultyAcrossScenes.instance.difficulty;
+        difficulty = DifficultyAcrossScenes.instance.difficulty;    // (This flags as an error but functions perfectly)
 
-        timer = timerObj.GetComponent<UI.Timer>();
-        enemyCreator = enemyCreatorObj.GetComponent<EnemyCreator>();
+        charger = timerObj.GetComponent<Charge>();
+        enemyCreator = enemyCreatorObj.GetComponent<StartValues>();
         player = playerObj.GetComponent<PlayerMovement>();
         enemyAi = enemyObj.GetComponent<BasicAi>();
 
@@ -65,7 +67,7 @@ public class Difficulty : MonoBehaviour
                 powerupTime = 5;
                 enemyTime = 15;
                 maxHealth = 10;
-                health = 10;    // hate wat of doing this but player health only gets set to max in start of player movement script.
+                health = 10;    // hate way of doing this but player health only gets set to max in start of player movement script.
                 walkSpeed = 10;
                 runSpeed = 15;
                 enemyAttackTime = 3;
@@ -92,12 +94,12 @@ public class Difficulty : MonoBehaviour
                 break;
         }
 
-        timer.TimeSpeeder = time;   // DON'T FORGET NAMESPACES
+        charger.ChargeSpeeder = time;   
         enemyCreator.PowerupChargeAppear = powerupTime;
         enemyCreator.EnemyChargeAppear = enemyTime;
         player.MaxHealth = maxHealth;
         player.Health = health;
-        player.walkSpeed = walkSpeed; // Change so that only need to alter one speed value?
+        player.walkSpeed = walkSpeed; 
         player.runSpeed = runSpeed;
         enemyAi.timeBetweenAttacks = enemyAttackTime;
     }

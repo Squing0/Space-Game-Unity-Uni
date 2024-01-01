@@ -10,9 +10,13 @@ namespace Enemy
         [Header("Health")]
         public int health = 3;
         public int maxHealth = 3;
-
-        public NavMeshAgent agent;
         public HealthBar healthBar;    // Change this to be more efficient
+
+        [Header("Enemy")]
+        public NavMeshAgent agent;
+        public float enemyAliveTime;
+        public GameObject enemyPrefab;
+
         public int Health
         {
             get { return health; }
@@ -58,10 +62,9 @@ namespace Enemy
 
         public IEnumerator DestroyEnemy()
         {
+            yield return new WaitForSeconds(enemyAliveTime);   
 
-            yield return new WaitForSeconds(40f);   // Make variable?
-
-            if (gameObject.name != "Zolrik (1)")
+            if(gameObject.name != enemyPrefab.name) // Try to change this if possible
             {
                 Destroy(gameObject);
             }
@@ -69,22 +72,10 @@ namespace Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            Rigidbody rb;
-            rb = other.gameObject.GetComponent<Rigidbody>();
-
             if (other.gameObject.CompareTag("Bullet"))
             {
                 reduceHealth(1);
             }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            //if (collision.gameObject.tag == "Player") Can use if needed
-            //{
-            //    state = State.CHASE;
-            //    target = collision.gameObject;
-            //}
-        }
+        }       
     }
 }

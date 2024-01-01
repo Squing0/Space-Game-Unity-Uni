@@ -10,6 +10,5 @@ namespace UI
             DifficultyAcrossScenes.instance.difficulty = difficultyChoice;
             SceneManager.LoadScene("Main Game");
         }
-
     }
 }

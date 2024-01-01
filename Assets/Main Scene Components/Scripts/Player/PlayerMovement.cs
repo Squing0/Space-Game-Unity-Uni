@@ -28,7 +28,7 @@ namespace Player
         private float startYScale;
 
         [Header("Score")]
-        public Timer timer;
+        public Charge charger;
         public GameObject gameover;
         GameOverScreen gm;  // CHANGE NAMES
 

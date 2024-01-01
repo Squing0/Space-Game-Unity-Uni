@@ -12,9 +12,6 @@ namespace Enemy
         public enum State { PATROL, CHASE, SHIP, ATTACK }    // Make property? Might be different with enums?
         public State state;
 
-        //public GameObject[] waypoints;
-        //private int waypointIndex = 0;
-
         public GameObject ship;
 
         public float patrolSpeed = 0.5f;
@@ -27,39 +24,39 @@ namespace Enemy
         public bool alreadyAttacked;
 
         public GameObject rockObj;
-        private ProjectileManager pm;
+        private ProjectileManager projectileManager;
         private Rigidbody rb;
 
         public GameObject knifeObj;
         public float timeBetweenAttacks;
 
-        Vector3 playerRange;
+        //Vector3 playerRange;
 
         [Header("Animations")]
         public Animator enemyAnimator;
-        public String runAnimation; // Change to lower case string
-        public String combatRunAnimation;
-        public String attackAnimation;
+        public string runAnimation; 
+        public string combatRunAnimation;
+        public string attackAnimation;
 
         Vector3 playerPos;
         public LayerMask whatisGround;
 
         private void Awake()
         {
-            pm = rockObj.GetComponent<ProjectileManager>();
+            projectileManager = rockObj.GetComponent<ProjectileManager>();
         }
         private void Start()
         {
             agent = GetComponent<NavMeshAgent>();
+
             agent.updatePosition = true;
             agent.updateRotation = true;
 
-            //state = State.CHASE;  // fucks with instantiating states
             StartCoroutine(FSM());
 
-            playerRange = new Vector3(ship.transform.position.x - 1,    // CHANGE NAME
-                ship.transform.position.y,
-                ship.transform.position.z - 1);
+            //playerRange = new Vector3(ship.transform.position.x - 1,    // CHANGE NAME (use to fix ship AI?)
+            //    ship.transform.position.y,
+            //    ship.transform.position.z - 1);
         }
 
         IEnumerator FSM()
@@ -89,6 +86,7 @@ namespace Enemy
         private void Update()
         {
             PlayerWithinRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
+
             if (PlayerWithinRange && state == State.CHASE)  // So that doesn't inerfere with ship or patrol
             {
                 state = State.ATTACK;
@@ -110,8 +108,6 @@ namespace Enemy
             //   playerPos.y = hit.point.y;
             //}
             //Debug.DrawRay(transform.position, Vector3.down, Color.blue);
-
-            Debug.Log(agent.speed); // for checking powerup
         }
 
         private void AttackPlayer()
@@ -135,12 +131,12 @@ namespace Enemy
                 //rb.gameObject.tag = "EnemyBullet";  // Changed tag as bullets would hit enemy colliders and weren't supposed to.    
 
                 rb.velocity = transform.forward * 30;
-                StartCoroutine(pm.deleteProjectile(rb.gameObject));
+                StartCoroutine(projectileManager.deleteProjectile(rb.gameObject));
 
                 alreadyAttacked = true;
                 enemyAnimator.Play(attackAnimation);
 
-                //StartCoroutine(ResetAttacked());
+                //StartCoroutine(ResetAttacked());  // For some reason doesn't work
                 Invoke(nameof(ResetAttack), timeBetweenAttacks);    // CHANGE TO COROUTINE
             }
         }
@@ -153,24 +149,9 @@ namespace Enemy
         private IEnumerator ResetAttacked()
         {
             alreadyAttacked = false;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(timeBetweenAttacks);
         }
-
-        //private void patrol()
-        //{
-        //    agent.speed = patrolSpeed;
-        //    if (Vector3.Distance(transform.position, waypoints[waypointIndex].transform.position) > 1) {
-        //        agent.SetDestination(waypoints[waypointIndex].transform.position);
-        //    }
-        //    else
-        //    {
-        //        waypointIndex++;
-        //    }
-
-        //    if (waypointIndex >= waypoints.Length){
-        //        waypointIndex = 0;
-        //    }
-        //}
+     
         private void Ship()
         {
             knifeObj.SetActive(true);   // Should only have to be in one place
@@ -201,10 +182,6 @@ namespace Enemy
             agent.speed = chaseSpeed;
             transform.LookAt(target.transform.position);
             agent.SetDestination(target.transform.position);
-            
-
-            //transform.LookAt(playerPos);
-            //agent.SetDestination(playerPos);
 
             knifeObj.SetActive(false);
 
@@ -216,14 +193,6 @@ namespace Enemy
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRange);
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Player"))
-            {
-
-            }
         }
 
         public void SpeedUpActivate(float speedIncrease, float speedTime)   // Copied from player movement (use interface?)

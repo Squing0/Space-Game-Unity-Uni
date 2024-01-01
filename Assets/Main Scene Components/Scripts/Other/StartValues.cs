@@ -2,15 +2,16 @@ using System.Collections;
 using UnityEngine;
 using UI;
 using Enemy;
-public class EnemyCreator : MonoBehaviour
+public class StartValues : MonoBehaviour
 {
-    public GameObject enemy;
-    public GameObject player;
-    public GameObject timer;    // NAMES WAY TOO SIMILAR
-    public GameObject speedUp;
-    public GameObject healthUp;
-    public GameObject ammoUp;
-    public GameObject powerupPos;
+    [Header("GameObjects")]
+    public GameObject enemyObj;
+    public GameObject playerObj;
+    public GameObject timerObj;    // NAMES WAY TOO SIMILAR
+    public GameObject speedUpObj;
+    public GameObject healthUpObj;
+    public GameObject ammoUpObj;
+    public GameObject powerupPosObj;
     public int powerupChargeAppear;
     public int enemyChargeAppear;
 
@@ -31,11 +32,11 @@ public class EnemyCreator : MonoBehaviour
     private bool powerUpSpawned;
 
     private Vector3 enemyPos;
-    private Timer time;
+    private Charge charger;
 
     private void Awake()
     {
-        time = timer.GetComponent<Timer>();
+        charger = timerObj.GetComponent<Charge>();
     }
     void Start()
     {
@@ -44,6 +45,7 @@ public class EnemyCreator : MonoBehaviour
         isRunning = true;
         enemySpawned = false;
         powerUpSpawned = false;
+
         CreateEm();
         CreatePowerup();
     }
@@ -53,16 +55,16 @@ public class EnemyCreator : MonoBehaviour
         float randomPos = Random.Range(245, 275);   // Adjust if having problems
         enemyPos = new Vector3(randomPos, 0.5f, randomPos);
 
-        if (!enemySpawned && (int)time.Charge % enemyChargeAppear == 0)
+        if (!enemySpawned && (int)charger.ChargeValue % enemyChargeAppear == 0)
         {
-            Debug.Log($"Charge value: {time.Charge}");
+            Debug.Log($"Charge value: {charger.ChargeValue}");
             CreateEm();
 
             enemySpawned=true;
             StartCoroutine(ResetEnemyCreation());
         }
 
-        if(!powerUpSpawned && (int)time.Charge % powerupChargeAppear == 0)
+        if(!powerUpSpawned && (int)charger.ChargeValue % powerupChargeAppear == 0)
         {
             CreatePowerup();
             powerUpSpawned = true;
@@ -78,19 +80,19 @@ public class EnemyCreator : MonoBehaviour
         switch (powerUpchosen)
         {
             case 1:
-                powerup = speedUp;
+                powerup = speedUpObj;
                 break;
             case 2:
-                powerup = healthUp;
+                powerup = healthUpObj;
                 break;
             case 3:
-                powerup = ammoUp;
+                powerup = ammoUpObj;
                 break;
             default: 
-                powerup = healthUp; // Put just to get rid of unassigned error but can changed
+                powerup = healthUpObj; // Put just to get rid of unassigned error but can changed
                 break;
         }
-        Vector3 adjustedPowPos = new Vector3(powerupPos.transform.position.x, powerupPos.transform.position.y + 1f, powerupPos.transform.position.z);
+        Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
 
         Instantiate(powerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));
         //GameObject newPowerup = Instantiate(powerup, powerupPos.transform.position, Quaternion.Euler(270,45,45));
@@ -109,7 +111,7 @@ public class EnemyCreator : MonoBehaviour
 
     public void CreateEm()
     {
-        GameObject newEnemy = Instantiate(enemy, enemyPos, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyObj, enemyPos, Quaternion.identity);
         newEnemy.name = "Enemy Clone";
 
         BasicAi AI = newEnemy.GetComponent<BasicAi>();

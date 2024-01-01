@@ -10,7 +10,7 @@ namespace UI
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None; // Cursor needs to be reset when game is reloaded
             Cursor.visible = true;
         }
         public void StartBtnClick()

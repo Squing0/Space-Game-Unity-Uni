@@ -17,12 +17,12 @@ public class ItemPickup : MonoBehaviour
     private GunShoot gs; // Is this best way to access other scripts?
     private PlayerMovement pm;
     private HealthBar hb;
-    private EnemyCreator en;
+    private StartValues en;
     private EnemyStats es;
     private BasicAi ai;
     private void Start()
     {
-        en = gameSetter.GetComponent<EnemyCreator>();
+        en = gameSetter.GetComponent<StartValues>();
         StartCoroutine(DestroyPowerup());     
     }
 
