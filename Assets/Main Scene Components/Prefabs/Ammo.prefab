@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6145027403741201260
+--- !u!1 &1409824142491567130
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1466567464589985161}
-  - component: {fileID: 7414955873521169648}
-  - component: {fileID: 6897912267542277618}
-  - component: {fileID: 2780202368748163884}
-  - component: {fileID: 5336151630643639660}
+  - component: {fileID: 1420509331778297869}
+  - component: {fileID: 4708335594096338012}
+  - component: {fileID: 6783035332749657607}
+  - component: {fileID: 2301099324365758660}
+  - component: {fileID: 526476112955733328}
   m_Layer: 0
-  m_Name: Health
+  m_Name: Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1466567464589985161
+--- !u!4 &1420509331778297869
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6145027403741201260}
+  m_GameObject: {fileID: 1409824142491567130}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.00041532516, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7492173940459316028}
+  m_Father: {fileID: 7963453091383374921}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!33 &7414955873521169648
+--- !u!33 &4708335594096338012
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6145027403741201260}
-  m_Mesh: {fileID: 4300000, guid: 4f1fb6f3be731ba458d3f8702ff68c24, type: 2}
---- !u!23 &6897912267542277618
+  m_GameObject: {fileID: 1409824142491567130}
+  m_Mesh: {fileID: 4300000, guid: a1685fc22e7b2cf499f502521f768a7b, type: 2}
+--- !u!23 &6783035332749657607
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6145027403741201260}
+  m_GameObject: {fileID: 1409824142491567130}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -85,13 +85,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2780202368748163884
+--- !u!65 &2301099324365758660
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6145027403741201260}
+  m_GameObject: {fileID: 1409824142491567130}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -105,15 +105,15 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.017919816, y: 0.01791982, z: 0.0058251917}
-  m_Center: {x: 0.000000004656613, y: 0, z: 0}
---- !u!95 &5336151630643639660
+  m_Center: {x: 9.313226e-10, y: -0.0004155157, z: 2.328307e-10}
+--- !u!95 &526476112955733328
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6145027403741201260}
+  m_GameObject: {fileID: 1409824142491567130}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 40cfe5f4633028844aad80696856c136, type: 2}
@@ -128,7 +128,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &6872716620051978546
+--- !u!1 &5549273874480595262
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,39 +136,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7492173940459316028}
-  - component: {fileID: -7383960797873673081}
-  - component: {fileID: 2990593795191257871}
+  - component: {fileID: 7963453091383374921}
+  - component: {fileID: -5035890315378684006}
+  - component: {fileID: -6281736550182399592}
   m_Layer: 0
-  m_Name: Health 1
-  m_TagString: HealthIncrease
+  m_Name: Ammo
+  m_TagString: AmmoIncrease
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7492173940459316028
+--- !u!4 &7963453091383374921
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6872716620051978546}
+  m_GameObject: {fileID: 5549273874480595262}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 248.19875, y: 0.883, z: 271.4041}
+  m_LocalPosition: {x: 245.36406, y: 0.866, z: 271.233}
   m_LocalScale: {x: 0.54923, y: 0.54923, z: 0.54923}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1466567464589985161}
+  - {fileID: 1420509331778297869}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 270, y: 0, z: 0}
---- !u!65 &-7383960797873673081
+--- !u!65 &-5035890315378684006
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6872716620051978546}
+  m_GameObject: {fileID: 5549273874480595262}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -183,19 +183,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2990593795191257871
+--- !u!114 &-6281736550182399592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6872716620051978546}
+  m_GameObject: {fileID: 5549273874480595262}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c5dd009d57685d448de0dd58bc1daac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoToAdd: 0
-  healthToAdd: 1
+  ammoToAdd: 10
+  healthToAdd: 0
   speedToAdd: 0
   speedTime: 0
