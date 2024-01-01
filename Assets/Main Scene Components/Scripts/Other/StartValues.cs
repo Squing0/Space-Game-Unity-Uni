@@ -98,18 +98,7 @@ public class StartValues : MonoBehaviour
         //GameObject newPowerup = Instantiate(powerup, powerupPos.transform.position, Quaternion.Euler(270,45,45));
     }
 
-    private IEnumerator ResetEnemyCreation()
-    {
-        yield return new WaitForSeconds(1);
-        enemySpawned = false;
-    }
-    private IEnumerator ResetPowerUpCreation()
-    {
-        yield return new WaitForSeconds(1);
-        powerUpSpawned = false; // EXACT SAME AS ABOVE?
-    }
-
-    private IEnumerator ResetObjectCreation(bool isSpawned)
+    private IEnumerator ResetObjectCreation(bool isSpawned) // Is this needed?
     {
         yield return new WaitForSeconds(1);
         isSpawned = false;

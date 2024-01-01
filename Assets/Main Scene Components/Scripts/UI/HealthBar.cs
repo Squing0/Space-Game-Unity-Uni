@@ -5,8 +5,7 @@ namespace UI
 {
     public class HealthBar : MonoBehaviour
     {
-        [SerializeField]
-        private Slider slider;
+        public Slider slider;
 
         private void Start()
         {
