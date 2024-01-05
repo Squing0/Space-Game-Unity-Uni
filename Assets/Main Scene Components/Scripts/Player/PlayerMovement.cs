@@ -196,18 +196,18 @@ namespace Player
             }
 
             // Start crouching
-            //if (Input.GetKeyDown(crouchKey))  VERY BUGGY (one piece reference) 
-            //{
-            //    transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);   // Halves the size of the player
+            if (Input.GetKeyDown(crouchKey)) // VERY BUGGY(one piece reference)
+                {
+                    transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);   // Halves the size of the player
 
-            //    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);  // Pushes them down so that they don't remain in the air 
-            //}
+                    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);  // Pushes them down so that they don't remain in the air 
+                }
 
-            ////// Stop crouching
-            //if (Input.GetKeyUp(crouchKey))
-            //{
-            //    transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
-            //}
+            // Stop crouching
+            if (Input.GetKeyUp(crouchKey))
+            {
+                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
+            }
         }
 
         private void Jump()
@@ -262,6 +262,23 @@ namespace Player
             else if (!grounded)
             {
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10 * airMultiplier, ForceMode.Acceleration); // Air mulyiplier is used here to slightly increase air speed
+            }
+
+            if (grounded && Input.GetKeyDown(KeyCode.F) || !grounded && Input.GetKeyDown(KeyCode.F))
+            {
+                StartCoroutine(Dash());
+                //rb.AddForce(moveDirection.normalized * 3f * 10, ForceMode.Impulse);
+            }
+        }
+
+        private IEnumerator Dash() // Got this from youtube tutorial, change to own way (look gpt example)
+        {
+            float startTime = Time.time;
+
+            while (Time.time < startTime + 0.25f)
+            {
+                rb.AddForce(moveDirection.normalized * .8f * 10, ForceMode.Impulse);
+                yield return null;
             }
         }
 

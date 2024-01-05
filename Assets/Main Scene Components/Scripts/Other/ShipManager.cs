@@ -45,7 +45,7 @@ public class ShipManager : MonoBehaviour
 
     private IEnumerator ReduceShipHealth()
     {
-        if (shipAttackable)
+        if (shipAttackable) // Chatgpt modified original code (don't think needs to be changed honestly)
         {
             health--;
             healthBar.updateHealth(health, maxHealth);
