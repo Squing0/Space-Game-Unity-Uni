@@ -118,7 +118,7 @@ namespace Enemy
             transform.LookAt(target.transform.position);    // Fucks up pos/ rotation
             agent.SetDestination(target.transform.position);
 
-            // ChatGpt Trial:
+            // ChatGpt Trial: (Not sure if this even works)
             Vector3 directionToPlayer = target.transform.position - transform.position;
             directionToPlayer.y = 0;
 
@@ -127,7 +127,8 @@ namespace Enemy
                 Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
             }
-                   
+            // ChatGpt Trial
+
             if (!alreadyAttacked)
             {
                 rb = Instantiate(rockObj, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
