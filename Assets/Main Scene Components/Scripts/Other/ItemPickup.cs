@@ -25,12 +25,18 @@ public class ItemPickup : MonoBehaviour
     private void Start()
     {
         startValues = startValuesObj.GetComponent<StartValues>();
-        StartCoroutine(DestroyPowerup());     
+        //if(name != "Ammo" || name != "Health" || name != "Speed")
+        //{
+        //    StartCoroutine(DestroyPowerup());
+        //}
+
+        StartCoroutine(DestroyPowerup());
     }
 
     private IEnumerator DestroyPowerup()
     {
         yield return new WaitForSeconds(startValues.PowerupChargeAppear);    // Need to change with speed of timer
+        //Destroy(startValues.CreatedPowerup);
         Destroy(gameObject);
     }
 

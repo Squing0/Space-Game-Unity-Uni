@@ -22,7 +22,13 @@ public class StartValues : MonoBehaviour
 
     private Vector3 enemyPos;
     private Charge charger;
+    private GameObject createdPowerup = null;
 
+    //public GameObject CreatedPowerup  
+    //{
+    //    get { return CreatedPowerup; } 
+    //}
+        
     public int PowerupChargeAppear
     {
         get { return powerupChargeAppear; }
@@ -76,25 +82,34 @@ public class StartValues : MonoBehaviour
     private void CreatePowerup()
     {
         int powerUpchosen = Random.Range(1, 4);
-        GameObject powerup;
+        //GameObject powerup;
+        Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
+
+        GameObject lol;
         switch (powerUpchosen)
         {
             case 1:
-                powerup = speedUpObj;
+                lol = Instantiate(ammoUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45)); 
+                lol.SetActive(true);
                 break;
             case 2:
-                powerup = healthUpObj;
+                lol = Instantiate(healthUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45));
+                lol.SetActive(true);
                 break;
             case 3:
-                powerup = ammoUpObj;
+                lol = Instantiate(speedUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45));
+                lol.SetActive(true);
                 break;
-            default: 
-                powerup = healthUpObj; // Put just to get rid of unassigned error but can changed
+            default:
+                lol = Instantiate(healthUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45)); // Put just to get rid of unassigned error but can changed
+                lol.SetActive(true);
                 break;
         }
-        Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
 
-        Instantiate(powerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));
+        //powerup.name = "Powerup Clone";
+        // GameObject createdpowerup =  Instantiate(powerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));   // Assigning the powerup to the prefab destroys it, so it can't be accessed in the scene
+        //Instantiate(createdPowerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));
+        //powerup.SetActive(true);
         //GameObject newPowerup = Instantiate(powerup, powerupPos.transform.position, Quaternion.Euler(270,45,45));
     }
 

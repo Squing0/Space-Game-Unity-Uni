@@ -944,6 +944,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Speed
       objectReference: {fileID: 0}
+    - target: {fileID: 3080723713481566649, guid: 5d779b88376f583478780ff942fbd56b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7630634450779668568, guid: 5d779b88376f583478780ff942fbd56b, type: 3}
       propertyPath: startValuesObj
       value: 
@@ -1166,7 +1170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.020000001, y: 0.87100005}
   m_AnchorMax: {x: 0.29325822, y: 0.96400005}
-  m_AnchoredPosition: {x: -29.5, y: -2}
+  m_AnchoredPosition: {x: -29.49997, y: -2}
   m_SizeDelta: {x: -53, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &294337720
@@ -1418,6 +1422,10 @@ PrefabInstance:
     - target: {fileID: 6872716620051978546, guid: 8f7d2b65750d8ca4e965f684947b2413, type: 3}
       propertyPath: m_Name
       value: Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872716620051978546, guid: 8f7d2b65750d8ca4e965f684947b2413, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7492173940459316028, guid: 8f7d2b65750d8ca4e965f684947b2413, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14529,6 +14537,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ammo
       objectReference: {fileID: 0}
+    - target: {fileID: 5549273874480595262, guid: cd055f44ceabf9e4f8f14bb15a288630, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7963453091383374921, guid: cd055f44ceabf9e4f8f14bb15a288630, type: 3}
       propertyPath: m_LocalPosition.x
       value: 245.36406
@@ -14709,7 +14721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeText: {fileID: 986943092}
-  chargeSpeeder: 6
+  chargeSpeeder: 1
   win: {fileID: 2032057757}
 --- !u!4 &1763760858
 Transform:

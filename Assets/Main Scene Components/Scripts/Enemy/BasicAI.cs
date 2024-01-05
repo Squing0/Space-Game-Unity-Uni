@@ -112,7 +112,7 @@ namespace Enemy
 
         private void AttackPlayer()
         {
-            //transform.LookAt(target.transform.position);
+            transform.LookAt(target.transform.position);    // Fucks up pos/ rotation
             agent.SetDestination(target.transform.position);
 
             // ChatGpt Trial:
