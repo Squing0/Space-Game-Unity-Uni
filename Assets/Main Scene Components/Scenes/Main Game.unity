@@ -989,10 +989,6 @@ PrefabInstance:
       propertyPath: rockObj
       value: 
       objectReference: {fileID: 7132604846174010296}
-    - target: {fileID: 3906507480096554849, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 1152861125}
     - target: {fileID: 8139422624394418415, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: m_Name
       value: Zolrik (1)
@@ -1074,14 +1070,6 @@ PrefabInstance:
       propertyPath: rockObj
       value: 
       objectReference: {fileID: 7132604846174010296}
-    - target: {fileID: 3906507480096554849, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 1152861125}
-    - target: {fileID: 3906507480096554849, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8139422624394418415, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: m_Name
       value: Zolrik (2)
@@ -1170,7 +1158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.020000001, y: 0.87100005}
   m_AnchorMax: {x: 0.29325822, y: 0.96400005}
-  m_AnchoredPosition: {x: -29.49997, y: -2}
+  m_AnchoredPosition: {x: -29.499939, y: -2}
   m_SizeDelta: {x: -53, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &294337720
@@ -16199,6 +16187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   maxHealth: 20
+  healthDelay: 2
   gameover: {fileID: 20673845}
   healthBar: {fileID: 1450196215}
 --- !u!65 &1404633345429469568

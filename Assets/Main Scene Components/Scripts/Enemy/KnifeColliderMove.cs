@@ -10,7 +10,6 @@ public class KnifeColliderMove : MonoBehaviour
     }
     void Update()
     {
-        knifeColl.transform.position = transform.position;  
-
+        knifeColl.transform.position = transform.position;
     }
 }

@@ -1,17 +1,21 @@
 using UnityEngine;
 using UI;
+using System;
+using System.Collections;
+
 public class ShipManager : MonoBehaviour
 {
     [Header("Health")]
     public int health = 20;
     public int maxHealth = 20;
+    public float healthDelay;
 
     [Header("Game Objects")]
     public GameObject gameover;
     public HealthBar healthBar;
 
     private GameOverScreen gm;
-
+    private bool shipAttackable;
     public int Health
     {
         get { return health; }
@@ -21,6 +25,7 @@ public class ShipManager : MonoBehaviour
     {
         gm = gameover.GetComponent<GameOverScreen>();
         health = maxHealth;
+        shipAttackable = true;
     }
     private void Update()
     {
@@ -30,13 +35,26 @@ public class ShipManager : MonoBehaviour
         }
     }
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Knife"))       // Change to compare tag for this and other occurences
+        if (collision.gameObject.CompareTag("Enemy") && shipAttackable)       // Change to compare tag for this and other occurences
+        {
+            StartCoroutine(ReduceShipHealth());
+        }
+    }
+
+    private IEnumerator ReduceShipHealth()
+    {
+        if (shipAttackable)
         {
             health--;
             healthBar.updateHealth(health, maxHealth);
+            shipAttackable = false;
         }
+
+        yield return new WaitForSeconds(healthDelay);
+
+        shipAttackable = true;
     }
 
     private void OnTriggerEnter(Collider other)

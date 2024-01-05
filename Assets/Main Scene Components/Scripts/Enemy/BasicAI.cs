@@ -28,6 +28,7 @@ namespace Enemy
         private Rigidbody rb;
 
         public GameObject knifeObj;
+        private Collider knifeCollider;
         public float timeBetweenAttacks;
 
         //Vector3 playerRange;
@@ -51,6 +52,8 @@ namespace Enemy
 
             agent.updatePosition = true;
             agent.updateRotation = true;
+
+            knifeCollider = knifeObj.GetComponent<Collider>();
 
             StartCoroutine(FSM());
 
@@ -96,7 +99,7 @@ namespace Enemy
                 state = State.CHASE;
             }
 
-            //Collider knifeCollider = knifeObj.GetComponent<Collider>(); // THIS DOESN'T WORK
+           // THIS DOESN'T WORK
             //knifeCollider.transform.position = knifeObj.transform.position;
             //knifeCollider.transform.rotation = knifeObj.transform.rotation;
 
@@ -169,7 +172,10 @@ namespace Enemy
             //enemyAnimator.Play(runAnimation);
 
             if (!alreadyAttacked)   // Just copied from attack method
-            {               
+            {
+                //knifeCollider.transform.position = knifeObj.transform.position;
+                //knifeCollider.transform.rotation = knifeObj.transform.rotation;
+
                 enemyAnimator.Play(attackAnimation);
                 alreadyAttacked = true;
 
