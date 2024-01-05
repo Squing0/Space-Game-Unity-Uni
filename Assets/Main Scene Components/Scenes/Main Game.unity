@@ -945,14 +945,6 @@ PrefabInstance:
       value: Speed
       objectReference: {fileID: 0}
     - target: {fileID: 7630634450779668568, guid: 5d779b88376f583478780ff942fbd56b, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 294337718}
-    - target: {fileID: 7630634450779668568, guid: 5d779b88376f583478780ff942fbd56b, type: 3}
-      propertyPath: gameSetter
-      value: 
-      objectReference: {fileID: 982527178}
-    - target: {fileID: 7630634450779668568, guid: 5d779b88376f583478780ff942fbd56b, type: 3}
       propertyPath: startValuesObj
       value: 
       objectReference: {fileID: 982527178}
@@ -1415,14 +1407,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 370337827}
     m_Modifications:
-    - target: {fileID: 2990593795191257871, guid: 8f7d2b65750d8ca4e965f684947b2413, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 294337718}
-    - target: {fileID: 2990593795191257871, guid: 8f7d2b65750d8ca4e965f684947b2413, type: 3}
-      propertyPath: gameSetter
-      value: 
-      objectReference: {fileID: 982527178}
     - target: {fileID: 2990593795191257871, guid: 8f7d2b65750d8ca4e965f684947b2413, type: 3}
       propertyPath: startValuesObj
       value: 
@@ -13787,7 +13771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1281051799
 Transform:
   m_ObjectHideFlags: 0
@@ -14533,14 +14517,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1037956435}
     m_Modifications:
-    - target: {fileID: -6281736550182399592, guid: cd055f44ceabf9e4f8f14bb15a288630, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 294337718}
-    - target: {fileID: -6281736550182399592, guid: cd055f44ceabf9e4f8f14bb15a288630, type: 3}
-      propertyPath: gameSetter
-      value: 
-      objectReference: {fileID: 982527178}
     - target: {fileID: -6281736550182399592, guid: cd055f44ceabf9e4f8f14bb15a288630, type: 3}
       propertyPath: startValuesObj
       value: 

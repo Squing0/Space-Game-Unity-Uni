@@ -181,8 +181,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.9822007, y: 1, z: 1.855489}
+  m_Center: {x: -0.04472926, y: 1.3317383e-17, z: -0.0056215986}
 --- !u!114 &2990593795191257871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,3 +199,5 @@ MonoBehaviour:
   healthToAdd: 1
   speedToAdd: 0
   speedTime: 0
+  playerHealthBar: {fileID: 0}
+  startValuesObj: {fileID: 0}
