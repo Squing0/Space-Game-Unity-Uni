@@ -20,14 +20,14 @@ public class Difficulty : MonoBehaviour
     private PlayerMovement player;
     private EnemyAI enemyAi;
 
-    float time = 1;       // Make all of these private
-    int powerupTime = 1;
-    int enemyTime = 1;
-    int maxHealth = 1;  
-    int health = 1;
-    float walkSpeed = 1; 
-    float runSpeed = 1;
-    float enemyAttackTime = 1;
+    private float time = 1;       
+    private int powerupTime = 1;
+    private int enemyTime = 1;
+    private int maxHealth = 1;
+    private int health = 1;
+    private float walkSpeed = 1;
+    private float runSpeed = 1;
+    private float enemyAttackTime = 1;
 
     private void Start()
     {
@@ -46,14 +46,14 @@ public class Difficulty : MonoBehaviour
         switch (difficulty)
         {
             case "Easy":
-                SetValues(2, 5, 15, 10, 10, 15, 3);
+                SetValues(2, 5, 15, 10, 10, 10, 15, 3);
                 break;
             case "Normal":
-                SetValues(1, 10, 10, 8, 9, 14, 2.5f);
+                SetValues(1, 10, 10, 8, 8, 9, 14, 2.5f);
 
                 break;
             case "Hard":
-                SetValues(1, 15, 8, 6, 8, 13, 2);
+                SetValues(1, 15, 8, 6, 6, 8, 13, 2);
                 break;
         }
 
@@ -67,13 +67,13 @@ public class Difficulty : MonoBehaviour
         enemyAi.timeBetweenAttacks = enemyAttackTime;
     }
 
-    public void SetValues(float timeV, int pTimeV, int eTimeV, int maxHealthV, float wSpeedV, float rSpeedV, float eAttackTimeV)
+    public void SetValues(float timeV, int pTimeV, int eTimeV, int healthV, int maxHealthV, float wSpeedV, float rSpeedV, float eAttackTimeV)
     {
         time = timeV;
         powerupTime = pTimeV;
         enemyTime = eTimeV;
         maxHealth = maxHealthV;
-        //health = healthV;
+        health = healthV;
         walkSpeed = wSpeedV;
         runSpeed = rSpeedV;
         enemyAttackTime = eAttackTimeV;

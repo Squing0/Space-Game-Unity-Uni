@@ -8,15 +8,6 @@ public class DifficultyAcrossScenes : MonoBehaviour
 
     private void Awake()
     {
-        //if (instance == null)   // GOT FROM GPT
-        //{
-        //    instance = this;
-        //    DontDestroyOnLoad(gameObject);
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
         instance = this;
     }
 

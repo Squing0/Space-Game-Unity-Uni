@@ -11,11 +11,13 @@ public class ProjectileManager : MonoBehaviour
             Destroy(gameObject);    // Make so destroys once hit anything, not specifically enemy               
         }
 
-        if(other.gameObject.CompareTag("Player") && gameObject.CompareTag("Rock"))
+        if (other.gameObject.CompareTag("Player") && gameObject.CompareTag("Rock"))
         {
             Destroy(gameObject);
         }
-        // Have code for just destroying object in general?
+        //Have code for just destroying object in general ?
+
+        //Destroy(gameObject);  // For some reason, changing it to just this caused problems
     }
     private void OnCollisionEnter(Collision collision)
     {

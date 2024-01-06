@@ -22,12 +22,6 @@ public class StartValues : MonoBehaviour
 
     private Vector3 enemyPos;
     private Charge charger;
-    private GameObject createdPowerup = null;
-
-    //public GameObject CreatedPowerup  
-    //{
-    //    get { return CreatedPowerup; } 
-    //}
         
     public int PowerupChargeAppear
     {

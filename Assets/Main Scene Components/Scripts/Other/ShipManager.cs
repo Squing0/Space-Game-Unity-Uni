@@ -6,17 +6,15 @@ using System.Collections;
 public class ShipManager : MonoBehaviour
 {
     [Header("Health")]
-    public int health = 20;
-    public int maxHealth = 20;
+    private int health;
+    public int maxHealth;
     public float healthDelay;
 
     [Header("Game Objects")]
-    public GameObject gameover;
     public HealthBar healthBar;
-
-    //private GameOverScreen gm;
     public GameObject UIManager;
     private UiManager UI;
+
     private bool shipAttackable;
     public int Health
     {

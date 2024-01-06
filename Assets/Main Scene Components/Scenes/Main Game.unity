@@ -1011,6 +1011,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1763760856}
     - target: {fileID: 687611247020337071, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
+      propertyPath: maxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 687611247020337071, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: enemyPrefab
       value: 
       objectReference: {fileID: 799748377}
@@ -6913,7 +6917,6 @@ MonoBehaviour:
   crouchSpeed: 2
   crouchYScale: 1.5
   charger: {fileID: 0}
-  health: 6
   maxHealth: 6
   healthBar: {fileID: 1546248300}
   speedIncrease: 2
@@ -16323,10 +16326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca29e123c409fc840b0f5f26c7440a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
   maxHealth: 20
   healthDelay: 2
-  gameover: {fileID: 0}
   healthBar: {fileID: 1450196215}
   UIManager: {fileID: 940486134}
 --- !u!65 &1404633345429469568

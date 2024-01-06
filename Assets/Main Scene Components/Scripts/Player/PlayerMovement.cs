@@ -22,11 +22,6 @@ namespace Player
         private int jumpCounter;
         bool readyToJump;
 
-        [Header("Crouching")]
-        public float crouchSpeed;
-        public float crouchYScale;
-        private float startYScale;
-
         [Header("Score")]
         public Charge charger;
 
@@ -105,7 +100,6 @@ namespace Player
         {
             walking,
             running,
-            crouching,
             air
         }
 
@@ -193,20 +187,6 @@ namespace Player
 
                 StartCoroutine(ResetJump());
             }
-
-            // Start crouching
-            if (Input.GetKeyDown(crouchKey)) // VERY BUGGY(one piece reference)
-                {
-                    transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);   // Halves the size of the player
-
-                    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);  // Pushes them down so that they don't remain in the air 
-                }
-
-            // Stop crouching
-            if (Input.GetKeyUp(crouchKey))
-            {
-                transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);    // Resets player size
-            }
         }
 
         private void Jump()
@@ -221,13 +201,6 @@ namespace Player
         }
         private void StateHandler()
         {
-            // Crouching:
-            if (grounded && Input.GetKey(crouchKey))    //Each state has different speed depending on which key is pressed
-            {
-                state = MovementState.crouching;
-                moveSpeed = crouchSpeed;
-            }
-
             // Running:
             if (grounded && Input.GetKey(sprintKey))
             {
@@ -289,26 +262,12 @@ namespace Player
             if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); //Limits a user when they hit their top speed
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z); // Limits a user when they hit their top speed
             }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Enemy")
-            {
-                //if (health < 3)
-                //{
-                //    health += 1;    // Increases health with a cap of 3
-                //    //healthUpdate();
-                //}
-                //else
-                //{
-                //    Debug.Log("Health already full!");  // Still destroys object if player collides with it but informs that health is full            
-                //}
-                Destroy(other.gameObject);
-            }
-
             if (other.CompareTag("Rock"))
             {
                 health -= 1;
@@ -316,7 +275,7 @@ namespace Player
             }
         }
 
-        private void OnCollisionEnter(Collision collision)   // Needed anymore? (TAKE OUT EVENTUALLY)
+        private void OnCollisionEnter(Collision collision)  
         {
             if (collision.gameObject.tag == "Enemy")
             {

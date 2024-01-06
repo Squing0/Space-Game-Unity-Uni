@@ -8,8 +8,8 @@ namespace Enemy
     public class EnemyStats : MonoBehaviour
     {
         [Header("Health")]
-        public int health = 3;
-        public int maxHealth = 3;
+        private int health;
+        public int maxHealth;
         public HealthBar healthBar;    // Change this to be more efficient
 
         [Header("Enemy")]
@@ -23,7 +23,7 @@ namespace Enemy
         public int Health
         {
             get { return health; }
-            set { health = value; }  // Use MAX health here too
+            set { health = value; }  
         }
 
         public int MaxHealth
@@ -42,6 +42,8 @@ namespace Enemy
         {
             charge = Charger.GetComponent<Charge>();
             StartCoroutine(DestroyEnemy());
+
+            health = maxHealth;
         }
         private void Update()
         {

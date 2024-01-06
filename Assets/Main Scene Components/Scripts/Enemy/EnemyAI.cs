@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,13 +8,14 @@ namespace Enemy
     {
         public NavMeshAgent agent;
 
-        public enum State { PATROL, CHASE, SHIP, ATTACK }    // Make property? Might be different with enums?
+        public enum State { PATROL, CHASE, SHIP, ATTACK }    
         public State state;
 
         public GameObject ship;
 
         public float patrolSpeed = 0.5f;
         public float chaseSpeed = 1.0f;
+        public float attackSpeed = 1.1f;
         public GameObject player;
 
         public LayerMask isPlayer;
@@ -28,10 +28,7 @@ namespace Enemy
         private Rigidbody rb;
 
         public GameObject knifeObj;
-        private Collider knifeCollider;
         public float timeBetweenAttacks;
-
-        //Vector3 playerRange;
 
         [Header("Animations")]
         public Animator enemyAnimator;
@@ -53,13 +50,7 @@ namespace Enemy
             agent.updatePosition = true;
             agent.updateRotation = true;
 
-            knifeCollider = knifeObj.GetComponent<Collider>();
-
             StartCoroutine(FSM());
-
-            //playerRange = new Vector3(ship.transform.position.x - 1,    // CHANGE NAME (use to fix ship AI?)
-            //    ship.transform.position.y,
-            //    ship.transform.position.z - 1);
         }
 
         IEnumerator FSM()
@@ -98,23 +89,12 @@ namespace Enemy
             {
                 state = State.CHASE;
             }
-
-           // THIS DOESN'T WORK
-            //knifeCollider.transform.position = knifeObj.transform.position;
-            //knifeCollider.transform.rotation = knifeObj.transform.rotation;
-
-            //RaycastHit hit;
-            //playerPos = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
-
-            //if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity, whatisGround))
-            //{
-            //   playerPos.y = hit.point.y;
-            //}
-            //Debug.DrawRay(transform.position, Vector3.down, Color.blue);
         }
 
         private void AttackPlayer()
         {
+            //agent.speed = attackSpeed;    // This causes issues
+
             //Vector3 trial = new Vector3(0, target.transform.position.y, 0);
             Vector3 trial = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             transform.LookAt(trial);    // Fucks up pos/ rotation
@@ -134,7 +114,6 @@ namespace Enemy
             if (!alreadyAttacked)
             {
                 rb = Instantiate(rockObj, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-                //rb.gameObject.tag = "EnemyBullet";  // Changed tag as bullets would hit enemy colliders and weren't supposed to.    
 
                 rb.velocity = transform.forward * 30;
                 StartCoroutine(projectileManager.deleteProjectile(rb.gameObject));
@@ -163,22 +142,8 @@ namespace Enemy
             knifeObj.SetActive(true);   // Should only have to be in one place
             agent.SetDestination(ship.transform.position);
 
-            //var rotation = Quaternion.LookRotation(ship.transform.position - transform.position); // Taken from unity thread
-            //rotation.y = 0;
-            //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime);
-
-            //transform.LookAt(ship.transform.position);
-
-            //Rigidbody enemyRB = agent.GetComponent<Rigidbody>();
-            //enemyRB.constraints = RigidbodyConstraints.FreezeRotation;
-            //enemyRB.constraints = RigidbodyConstraints.FreezePosition;
-            //enemyAnimator.Play(runAnimation);
-
             if (!alreadyAttacked)   // Just copied from attack method
             {
-                //knifeCollider.transform.position = knifeObj.transform.position;
-                //knifeCollider.transform.rotation = knifeObj.transform.rotation;
-
                 enemyAnimator.Play(attackAnimation);
                 alreadyAttacked = true;
 
