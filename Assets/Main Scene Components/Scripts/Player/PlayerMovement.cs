@@ -31,7 +31,7 @@ namespace Player
         public Charge charger;
 
         [Header("Health")]
-        public int health;
+        private int health;
         public int maxHealth;
 
         // Health property
@@ -119,15 +119,13 @@ namespace Player
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true; // Allows physics system to control rotation of object
 
+            ui = UIManager.GetComponent<UiManager>();
+
             readyToJump = true;
             maxJumps = 2;
             jumpCounter = 0;
 
-            maxHealth = 6;  // Should be able to change in inspector
-            health = maxHealth;
-            //Health = health;
-
-            ui = UIManager.GetComponent<UiManager>();   
+            health = maxHealth;        
         }
 
         private void Update()

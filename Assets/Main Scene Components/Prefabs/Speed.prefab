@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &247481884225420257
 Transform:
   m_ObjectHideFlags: 0
@@ -73,6 +73,7 @@ MonoBehaviour:
   speedTime: 5
   playerHealthBar: {fileID: 0}
   startValuesObj: {fileID: 0}
+  charger: {fileID: 0}
 --- !u!1 &6937879576508319411
 GameObject:
   m_ObjectHideFlags: 0

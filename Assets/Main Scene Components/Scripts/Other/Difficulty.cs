@@ -15,7 +15,7 @@ public class Difficulty : MonoBehaviour
     public GameObject playerObj;
     public GameObject enemyObj;
 
-    private Charge charger;    //Make how access variables here consistent (if annoying get rid of properties
+    private Charge charger;    //Make how access variables here consistent (if annoying get rid of properties)
     private StartValues enemyCreator;   // CHANGE THIS
     private PlayerMovement player;
     private EnemyAI enemyAi;
@@ -46,14 +46,14 @@ public class Difficulty : MonoBehaviour
         switch (difficulty)
         {
             case "Easy":
-                SetValues(2, 5, 15, 10, 10, 10, 15, 3);
+                SetValues(2, 5, 15, 10, 10, 15, 3);
                 break;
             case "Normal":
-                SetValues(1, 10, 10, 8, 8, 9, 14, 2.5f);
+                SetValues(1, 10, 10, 8, 9, 14, 2.5f);
 
                 break;
             case "Hard":
-                SetValues(1, 15, 8, 6, 6, 8, 13, 2);
+                SetValues(1, 15, 8, 6, 8, 13, 2);
                 break;
         }
 
@@ -67,13 +67,13 @@ public class Difficulty : MonoBehaviour
         enemyAi.timeBetweenAttacks = enemyAttackTime;
     }
 
-    public void SetValues(float timeV, int pTimeV, int eTimeV, int maxHealthV, int healthV, float wSpeedV, float rSpeedV, float eAttackTimeV)
+    public void SetValues(float timeV, int pTimeV, int eTimeV, int maxHealthV, float wSpeedV, float rSpeedV, float eAttackTimeV)
     {
         time = timeV;
         powerupTime = pTimeV;
         enemyTime = eTimeV;
         maxHealth = maxHealthV;
-        health = healthV;
+        //health = healthV;
         walkSpeed = wSpeedV;
         runSpeed = rSpeedV;
         enemyAttackTime = eAttackTimeV;

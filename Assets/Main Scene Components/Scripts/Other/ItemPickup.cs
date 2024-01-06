@@ -15,6 +15,7 @@ public class ItemPickup : MonoBehaviour
     [Header("Other Objects")]
     public GameObject playerHealthBar;    // Don't like this as speed and ammo don't use
     public GameObject startValuesObj;   //Figure out better name for this and script
+    public GameObject charger;
 
     private GunShoot gunshoot; // Is this best way to access other scripts?
     private PlayerMovement player;
@@ -22,9 +23,11 @@ public class ItemPickup : MonoBehaviour
     private StartValues startValues;
     private EnemyStats enemyStats;
     private EnemyAI ai;
+    private Charge charge;
     private void Start()
     {
         startValues = startValuesObj.GetComponent<StartValues>();
+        charge = charger.GetComponent<Charge>();
         //if(name != "Ammo" || name != "Health" || name != "Speed")
         //{
         //    StartCoroutine(DestroyPowerup());
@@ -35,7 +38,7 @@ public class ItemPickup : MonoBehaviour
 
     private IEnumerator DestroyPowerup()
     {
-        yield return new WaitForSeconds(startValues.PowerupChargeAppear);    // Need to change with speed of timer
+        yield return new WaitForSeconds(startValues.PowerupChargeAppear / charge.chargeSpeeder);    // Need to change with speed of timer
         //Destroy(startValues.CreatedPowerup);
         Destroy(gameObject);
     }

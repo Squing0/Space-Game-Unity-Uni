@@ -17,6 +17,9 @@ namespace Enemy
         public float enemyAliveTime;
         public GameObject enemyPrefab;
 
+        public GameObject Charger;
+        private Charge charge;
+
         public int Health
         {
             get { return health; }
@@ -37,6 +40,7 @@ namespace Enemy
 
         private void Start()
         {
+            charge = Charger.GetComponent<Charge>();
             StartCoroutine(DestroyEnemy());
         }
         private void Update()
@@ -62,7 +66,7 @@ namespace Enemy
 
         public IEnumerator DestroyEnemy()
         {
-            yield return new WaitForSeconds(enemyAliveTime);   
+            yield return new WaitForSeconds(enemyAliveTime / charge.ChargeSpeeder);   // Might not change much, but more to make consistent with powerups
 
             if(gameObject.name != enemyPrefab.name) // Try to change this if possible
             {
