@@ -29,8 +29,6 @@ namespace Player
 
         [Header("Score")]
         public Charge charger;
-        public GameObject gameover;
-        GameOverScreen gm;  // CHANGE NAMES
 
         [Header("Health")]
         public int health;
@@ -89,6 +87,8 @@ namespace Player
 
 
         // Miscellaneous 
+        public GameObject UIManager;
+        private UiManager ui;
 
         // Player movement
         float horizontalInput;
@@ -112,7 +112,6 @@ namespace Player
         private void Awake()
         {
             m_Camera = Camera.main; // unity tut
-            gm = gameover.GetComponent<GameOverScreen>();
             //playerAreaRange = Physics.CheckSphere(transform.position, playerRange, isEnemy); // Not sure if useful
         }
         private void Start()
@@ -127,6 +126,8 @@ namespace Player
             maxHealth = 6;  // Should be able to change in inspector
             health = maxHealth;
             //Health = health;
+
+            ui = UIManager.GetComponent<UiManager>();   
         }
 
         private void Update()
@@ -151,7 +152,7 @@ namespace Player
 
             if (health < 1)
             {
-                gm.ActivateGameover("You lost all your health!");
+                ui.ActivateGameover("You lost all your health!");
             }
         }
         private void FixedUpdate()

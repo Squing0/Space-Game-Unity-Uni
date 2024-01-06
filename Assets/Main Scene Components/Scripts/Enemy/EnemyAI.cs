@@ -16,7 +16,7 @@ namespace Enemy
 
         public float patrolSpeed = 0.5f;
         public float chaseSpeed = 1.0f;
-        public GameObject target;
+        public GameObject player;
 
         public LayerMask isPlayer;
         public float attackRange;
@@ -115,8 +115,10 @@ namespace Enemy
 
         private void AttackPlayer()
         {
-            transform.LookAt(target.transform.position);    // Fucks up pos/ rotation
-            agent.SetDestination(target.transform.position);
+            //Vector3 trial = new Vector3(0, target.transform.position.y, 0);
+            Vector3 trial = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            transform.LookAt(trial);    // Fucks up pos/ rotation
+            agent.SetDestination(player.transform.position);
 
             // ChatGpt Trial: (Not sure if this even works)
             //Vector3 directionToPlayer = target.transform.position - transform.position;
@@ -167,9 +169,9 @@ namespace Enemy
 
             //transform.LookAt(ship.transform.position);
 
-            Rigidbody enemyRB = agent.GetComponent<Rigidbody>();
-            enemyRB.constraints = RigidbodyConstraints.FreezeRotation;
-            enemyRB.constraints = RigidbodyConstraints.FreezePosition;
+            //Rigidbody enemyRB = agent.GetComponent<Rigidbody>();
+            //enemyRB.constraints = RigidbodyConstraints.FreezeRotation;
+            //enemyRB.constraints = RigidbodyConstraints.FreezePosition;
             //enemyAnimator.Play(runAnimation);
 
             if (!alreadyAttacked)   // Just copied from attack method
@@ -187,8 +189,8 @@ namespace Enemy
         private void Chase()
         {
             agent.speed = chaseSpeed;
-            transform.LookAt(target.transform.position);
-            agent.SetDestination(target.transform.position);
+            transform.LookAt(player.transform.position);
+            agent.SetDestination(player.transform.position);
 
             knifeObj.SetActive(false);
 

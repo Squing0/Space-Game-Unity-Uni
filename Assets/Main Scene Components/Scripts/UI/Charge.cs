@@ -10,8 +10,8 @@ namespace UI
         private bool chargeOn = true;
         public float chargeSpeeder;
 
-        public GameObject win;
-        private GameWinScreen winScreen;    // Put in UI manager? (fine either way)
+        public GameObject UIManager;
+        private UiManager ui;
         public bool ChargeOn
         {get { return chargeOn; } set { chargeOn = value;}}
         public float ChargeValue
@@ -21,7 +21,7 @@ namespace UI
        
         private void Start()
         {
-            winScreen = win.GetComponent<GameWinScreen>();
+            ui = UIManager.GetComponent<UiManager>();
         }
         private void Update()
         {
@@ -35,7 +35,7 @@ namespace UI
             }
             else
             {
-                winScreen.ActivateWin();
+                ui.ActivateWin();
             }
         }
     }

@@ -14,7 +14,9 @@ public class ShipManager : MonoBehaviour
     public GameObject gameover;
     public HealthBar healthBar;
 
-    private GameOverScreen gm;
+    //private GameOverScreen gm;
+    public GameObject UIManager;
+    private UiManager UI;
     private bool shipAttackable;
     public int Health
     {
@@ -23,7 +25,7 @@ public class ShipManager : MonoBehaviour
 
     private void Start()
     {
-        gm = gameover.GetComponent<GameOverScreen>();
+        UI = UIManager.GetComponent<UiManager>();
         health = maxHealth;
         shipAttackable = true;
     }
@@ -31,7 +33,7 @@ public class ShipManager : MonoBehaviour
     {
         if (health < 1)
         {
-            gm.ActivateGameover("Your ship was destroyed!");
+            UI.ActivateGameover("Your ship was destroyed!");
         }
     }
     
