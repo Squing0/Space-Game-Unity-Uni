@@ -17,7 +17,7 @@ public class Difficulty : MonoBehaviour
     private Charge charger;    //Make how access variables here consistent (if annoying get rid of properties
     private StartValues enemyCreator;   // CHANGE THIS
     private PlayerMovement player;
-    private BasicAi enemyAi;
+    private EnemyAI enemyAi;
 
     private void Start()
     {
@@ -26,7 +26,7 @@ public class Difficulty : MonoBehaviour
         charger = timerObj.GetComponent<Charge>();
         enemyCreator = enemyCreatorObj.GetComponent<StartValues>();
         player = playerObj.GetComponent<PlayerMovement>();
-        enemyAi = enemyObj.GetComponent<BasicAi>();
+        enemyAi = enemyObj.GetComponent<EnemyAI>();
 
         SelectDifficulty();
     }

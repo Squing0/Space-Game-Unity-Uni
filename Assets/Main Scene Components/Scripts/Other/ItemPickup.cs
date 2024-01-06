@@ -21,7 +21,7 @@ public class ItemPickup : MonoBehaviour
     private HealthBar healthbar;
     private StartValues startValues;
     private EnemyStats enemyStats;
-    private BasicAi ai;
+    private EnemyAI ai;
     private void Start()
     {
         startValues = startValuesObj.GetComponent<StartValues>();
@@ -98,7 +98,7 @@ public class ItemPickup : MonoBehaviour
 
             if(tag == "SpeedIncrease")
             {
-                ai = other.GetComponent <BasicAi>();
+                ai = other.GetComponent <EnemyAI>();
                 ai.SpeedUpActivate(speedToAdd, speedTime);
                 Destroy(gameObject);
             }

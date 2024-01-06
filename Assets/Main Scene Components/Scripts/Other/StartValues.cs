@@ -129,10 +129,10 @@ public class StartValues : MonoBehaviour
         switch (stateChosen)
         {
             case 1:
-                newEnemy.GetComponent<BasicAi>().state = BasicAi.State.CHASE;
+                newEnemy.GetComponent<EnemyAI>().state = EnemyAI.State.CHASE;
                 break;
             case 2:
-                newEnemy.GetComponent<BasicAi>().state = BasicAi.State.SHIP;
+                newEnemy.GetComponent<EnemyAI>().state = EnemyAI.State.SHIP;
                 break;
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace Enemy
 {
-    public class BasicAi : MonoBehaviour
+    public class EnemyAI : MonoBehaviour
     {
         public NavMeshAgent agent;
 
@@ -119,14 +119,14 @@ namespace Enemy
             agent.SetDestination(target.transform.position);
 
             // ChatGpt Trial: (Not sure if this even works)
-            Vector3 directionToPlayer = target.transform.position - transform.position;
-            directionToPlayer.y = 0;
+            //Vector3 directionToPlayer = target.transform.position - transform.position;
+            //directionToPlayer.y = 0;
 
-            if(directionToPlayer.y > 0.1f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
-            }
+            //if(directionToPlayer.y > 0.1f)
+            //{
+            //    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
+            //}
             // ChatGpt Trial
 
             if (!alreadyAttacked)
