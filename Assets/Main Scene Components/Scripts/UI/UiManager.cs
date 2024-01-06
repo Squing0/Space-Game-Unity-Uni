@@ -21,7 +21,7 @@ namespace UI
 
         private PlayerMovement playerMovement;
         private Charge charger;
-        private ShipManager shipManager; // CHANGE FOR THE LOVE OF GOD
+        private ShipManager shipManager; 
 
         private float totalScore;   // change to int?
         private void Start()
@@ -34,7 +34,6 @@ namespace UI
         public void CalculateScore(string endReason, TMP_Text scoreText)
         {
             Time.timeScale = 0; // Pauses game
-            //charger.ChargeOn = false;
 
             totalScore = (100 - charger.ChargeValue) + (playerMovement.Health * 25) + (shipManager.Health * 25);
 

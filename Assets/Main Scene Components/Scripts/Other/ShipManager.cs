@@ -37,7 +37,7 @@ public class ShipManager : MonoBehaviour
     
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && shipAttackable)       // Change to compare tag for this and other occurences
+        if (collision.gameObject.CompareTag("Enemy") && shipAttackable)       
         {
             StartCoroutine(ReduceShipHealth());
         }

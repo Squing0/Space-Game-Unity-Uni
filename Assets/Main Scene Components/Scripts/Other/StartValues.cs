@@ -10,7 +10,7 @@ public class StartValues : MonoBehaviour
     public GameObject healthUpObj;
     public GameObject ammoUpObj;
     public GameObject playerObj;
-    public GameObject timerObj;    // NAMES WAY TOO SIMILAR
+    public GameObject timerObj;   
     public GameObject powerupPosObj;
 
     [Header("Appear Rates")]
@@ -78,7 +78,7 @@ public class StartValues : MonoBehaviour
     private void CreatePowerup()
     {
         int powerUpchosen = Random.Range(1, 4);
-        //GameObject powerup;
+
         Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
 
         GameObject lol;
@@ -101,12 +101,6 @@ public class StartValues : MonoBehaviour
                 lol.SetActive(true);
                 break;
         }
-
-        //powerup.name = "Powerup Clone";
-        // GameObject createdpowerup =  Instantiate(powerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));   // Assigning the powerup to the prefab destroys it, so it can't be accessed in the scene
-        //Instantiate(createdPowerup, adjustedPowPos, Quaternion.Euler(270, 45, 45));
-        //powerup.SetActive(true);
-        //GameObject newPowerup = Instantiate(powerup, powerupPos.transform.position, Quaternion.Euler(270,45,45));
     }
 
     private IEnumerator ResetObjectCreation(string specificObject) // Is this needed?

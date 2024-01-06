@@ -13,7 +13,7 @@ namespace UI
         public GameObject UIManager;
         private UiManager ui;
         public bool ChargeOn
-        {get { return chargeOn; } set { chargeOn = value;}}
+        {get { return chargeOn; } set { chargeOn = value;}} // Make all properties like this
         public float ChargeValue
         {get { return chargeValue; } set { chargeValue = value;}}
         public float ChargeSpeeder

@@ -115,7 +115,7 @@ namespace Player
 
         public void AddAmmo(int ammo)
         {
-            if (currentBullets == magazineTotal)    // Make total that total bullets can't go over?
+            if (currentBullets == magazineTotal)    
             {
                 bulletTotal += ammo;
             }
