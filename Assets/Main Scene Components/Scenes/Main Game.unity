@@ -1011,10 +1011,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1763760856}
     - target: {fileID: 687611247020337071, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
-      propertyPath: maxHealth
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 687611247020337071, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: enemyPrefab
       value: 
       objectReference: {fileID: 799748377}
@@ -1032,10 +1028,6 @@ PrefabInstance:
       objectReference: {fileID: 1006786820}
     - target: {fileID: 2166618201246524983, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: player
-      value: 
-      objectReference: {fileID: 714840884}
-    - target: {fileID: 2166618201246524983, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
-      propertyPath: target
       value: 
       objectReference: {fileID: 714840884}
     - target: {fileID: 2166618201246524983, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
@@ -6914,8 +6906,6 @@ MonoBehaviour:
   jumpCooldown: 1
   airMultiplier: 2
   maxJumps: 2
-  crouchSpeed: 2
-  crouchYScale: 1.5
   charger: {fileID: 0}
   maxHealth: 6
   healthBar: {fileID: 1546248300}
