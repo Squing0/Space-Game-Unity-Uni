@@ -54,6 +54,8 @@ public class StartValues : MonoBehaviour
 
         CreateEnemy();
         CreatePowerup();
+
+        Time.timeScale = 1; // Resumes game if paused from earlier playthrough
     }
 
     void Update()

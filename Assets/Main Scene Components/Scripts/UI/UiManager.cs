@@ -31,20 +31,13 @@ namespace UI
             shipManager = shipObj.GetComponent<ShipManager>();
         }
 
-        private void Update()
-        {
-            //if (Input.GetKeyDown(KeyCode.R) && mainHUD.activeInHierarchy == false)    // Allows the user to restart with R as mouse can't be used due to it being used with the camera
-            //{
-            //    restart.onClick.Invoke();
-            //}
-        }
-
         public void CalculateScore(string endReason, TMP_Text scoreText)
         {
-            charger.ChargeOn = false;
-            // Make stopper for ship health and player health too? don't want to repeate same thing three times
+            Time.timeScale = 0; // Pauses game
+            //charger.ChargeOn = false;
 
             totalScore = (100 - charger.ChargeValue) + (playerMovement.Health * 25) + (shipManager.Health * 25);
+
             scoreText.text = $"{endReason}\nScore: {(int)totalScore}";
         }
 

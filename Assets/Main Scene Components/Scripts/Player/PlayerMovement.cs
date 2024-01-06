@@ -265,7 +265,7 @@ namespace Player
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10 * airMultiplier, ForceMode.Acceleration); // Air mulyiplier is used here to slightly increase air speed
             }
 
-            if (grounded && Input.GetKeyDown(KeyCode.F) || !grounded && Input.GetKeyDown(KeyCode.F))
+            if (grounded && Input.GetMouseButtonDown(1) || !grounded && Input.GetMouseButtonDown(1))
             {
                 StartCoroutine(Dash());
                 //rb.AddForce(moveDirection.normalized * 3f * 10, ForceMode.Impulse);

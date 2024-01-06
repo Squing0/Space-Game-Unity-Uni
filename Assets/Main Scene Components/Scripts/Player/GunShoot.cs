@@ -68,7 +68,7 @@ namespace Player
                 Shoot();
             }
 
-            if (Input.GetKey(KeyCode.E) && currentBullets < magazineTotal && bulletTotal > 0)
+            if (Input.GetKey(KeyCode.R) && currentBullets < magazineTotal && bulletTotal > 0)
             {
                 Invoke(nameof(Reload), reloadTime); // CHANGE TO COROUTINE FOR BOTH, BE CONSISTENT
             }

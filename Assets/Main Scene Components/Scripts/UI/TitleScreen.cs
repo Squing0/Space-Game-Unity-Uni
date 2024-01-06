@@ -7,6 +7,8 @@ namespace UI
     public class TitleScreen : MonoBehaviour
     {
         public GameObject difficultyScreen;
+        public GameObject titleScreen;
+        public GameObject controlsScreen;
 
         private void Start()
         {
@@ -32,6 +34,18 @@ namespace UI
 
             EditorApplication.ExitPlaymode();
             Application.Quit();
+        }
+
+        public void BackBtnClick()
+        {
+            controlsScreen.SetActive(false);
+            titleScreen.SetActive(true);          
+        }
+
+        public void ControlBtnClick()
+        {
+            titleScreen.SetActive(false);
+            controlsScreen.SetActive(true);
         }
     }
 }
