@@ -1,5 +1,6 @@
 using Enemy;
 using Player;
+using System.Data;
 using UI;
 using UnityEngine;
 
@@ -19,6 +20,15 @@ public class Difficulty : MonoBehaviour
     private PlayerMovement player;
     private EnemyAI enemyAi;
 
+    float time = 1;       // Make all of these private
+    int powerupTime = 1;
+    int enemyTime = 1;
+    int maxHealth = 1;  
+    int health = 1;
+    float walkSpeed = 1; 
+    float runSpeed = 1;
+    float enemyAttackTime = 1;
+
     private void Start()
     {
         difficulty = DifficultyAcrossScenes.instance.difficulty;    // (This flags as an error but functions perfectly)
@@ -36,71 +46,36 @@ public class Difficulty : MonoBehaviour
         switch (difficulty)
         {
             case "Easy":
-                DifficultyChoice("Easy");
+                SetValues(2, 5, 15, 10, 10, 10, 15, 3);
                 break;
             case "Normal":
-                DifficultyChoice("Normal");
+                SetValues(1, 10, 10, 8, 8, 9, 14, 2.5f);
+
                 break;
             case "Hard":
-                DifficultyChoice("Hard");
-                break;
-        }
-    }
-
-
-    public void DifficultyChoice(string difficulty)
-    {
-
-        float time = 1;
-        int powerupTime = 1;
-        int enemyTime = 1;
-        int maxHealth = 1;  // NEED TO INCLUDE BASE HEALTH HERE TOO
-        int health = 1;
-        float walkSpeed = 1; // Change so that only need to alter one speed value?
-        float runSpeed = 1;
-        float enemyAttackTime = 1;
-
-        switch(difficulty)  // Have better way of doing this, possibly with method?
-        {
-            case "Easy":
-                time = 2;
-                powerupTime = 5;
-                enemyTime = 15;
-                maxHealth = 10;
-                health = 10;    // hate way of doing this but player health only gets set to max in start of player movement script.
-                walkSpeed = 10;
-                runSpeed = 15;
-                enemyAttackTime = 3;
-                break;
-            case "Normal":
-                time = 1f;
-                powerupTime = 10;
-                enemyTime = 10;
-                maxHealth = 8;
-                health = 8;
-                walkSpeed = 9;
-                runSpeed = 14;
-                enemyAttackTime = 2.5f;
-                break;
-            case "Hard":
-                time = 1f;
-                powerupTime = 15;
-                enemyTime = 8;
-                maxHealth = 6;
-                health = 6;
-                walkSpeed = 8;
-                runSpeed = 13;
-                enemyAttackTime = 2;
+                SetValues(1, 15, 8, 6, 6, 8, 13, 2);
                 break;
         }
 
-        charger.ChargeSpeeder = time;   
+        charger.ChargeSpeeder = time;
         enemyCreator.PowerupChargeAppear = powerupTime;
         enemyCreator.EnemyChargeAppear = enemyTime;
         player.MaxHealth = maxHealth;
         player.Health = health;
-        player.walkSpeed = walkSpeed; 
+        player.walkSpeed = walkSpeed;
         player.runSpeed = runSpeed;
         enemyAi.timeBetweenAttacks = enemyAttackTime;
+    }
+
+    public void SetValues(float timeV, int pTimeV, int eTimeV, int maxHealthV, int healthV, float wSpeedV, float rSpeedV, float eAttackTimeV)
+    {
+        time = timeV;
+        powerupTime = pTimeV;
+        enemyTime = eTimeV;
+        maxHealth = maxHealthV;
+        health = healthV;
+        walkSpeed = wSpeedV;
+        runSpeed = rSpeedV;
+        enemyAttackTime = eAttackTimeV;
     }
 }
