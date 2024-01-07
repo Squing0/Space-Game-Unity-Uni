@@ -55,14 +55,12 @@ public class ItemPickup : MonoBehaviour
                 if(player.Health < player.MaxHealth)
                 {
                     player.Health += 1;
+                    player.IncreaseHealth(1);
                 }
                 else
                 {
                     Debug.Log("Health full!");
                 }
-
-                healthbar = playerHealthBar.gameObject.GetComponent<HealthBar>();
-                healthbar.updateHealth(player.Health, player.MaxHealth);
 
                 Destroy(gameObject);
             }

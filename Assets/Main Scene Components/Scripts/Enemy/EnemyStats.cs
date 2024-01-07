@@ -38,6 +38,7 @@ namespace Enemy
             StartCoroutine(DestroyEnemy());
 
             health = maxHealth;
+            //healthBar = new HealthBar(health, maxHealth);
         }
         private void Update()
         {
@@ -48,16 +49,16 @@ namespace Enemy
             }
         }
 
-        public void reduceHealth(int damage)
+        public void DecreaseHealth(int damage)
         {
             health -= damage;
-            healthBar.updateHealth(health, maxHealth);
+            healthBar.UpdateHealth(health, maxHealth);
         }
 
         public void IncreaseHealth(int amount)
         {
             health += amount;
-            healthBar.updateHealth(health, maxHealth);
+            healthBar.UpdateHealth(health, maxHealth);
         }
 
         public IEnumerator DestroyEnemy()
@@ -74,7 +75,7 @@ namespace Enemy
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
-                reduceHealth(1);
+                DecreaseHealth(1);
             }
         }       
     }

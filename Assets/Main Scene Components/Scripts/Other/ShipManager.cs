@@ -32,6 +32,10 @@ public class ShipManager : MonoBehaviour
         health = maxHealth;
         shipAttackable = true;
     }
+    private void Start()
+    {
+        //healthBar = new HealthBar(health, maxHealth);
+    }
     private void Update()
     {
         if (health < 1)
@@ -52,8 +56,7 @@ public class ShipManager : MonoBehaviour
     {
         if (shipAttackable) // Chatgpt modified original code (don't think needs to be changed honestly)
         {
-            health--;
-            healthBar.updateHealth(health, maxHealth);
+            DecreaseHealth(1);
             shipAttackable = false;
         }
 
@@ -67,7 +70,19 @@ public class ShipManager : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             health--;
-            healthBar.updateHealth(health, maxHealth);
+            DecreaseHealth(1);
         }
+    }
+
+    public void DecreaseHealth(int damage)
+    {
+        health -= damage;
+        healthBar.UpdateHealth(health, maxHealth);
+    }
+
+    public void IncreaseHealth(int amount)
+    {
+        health += amount;
+        healthBar.UpdateHealth(health, maxHealth);
     }
 }

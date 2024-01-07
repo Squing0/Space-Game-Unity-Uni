@@ -43,7 +43,10 @@ namespace Player
         {get { return maxHealth; }set { maxHealth = value; } }
 
         [SerializeField]
-        private HealthBar healthBar;
+        public HealthBar healthBar;
+
+
+        // Make property later 
 
         [Header("Power Ups")]
         public float speedIncrease;
@@ -102,8 +105,9 @@ namespace Player
             readyToJump = true;
             maxJumps = 2;
             jumpCounter = 0;
-
-            health = maxHealth;        
+            
+            health = maxHealth;
+            //healthBar = new HealthBar(health, maxHealth);
         }
 
         private void Update()
@@ -254,8 +258,7 @@ namespace Player
         {
             if (other.CompareTag("Rock"))
             {
-                health -= 1;
-                healthBar.updateHealth(health, maxHealth);
+                DecreaseHealth(1);
             }
         }
 
@@ -263,10 +266,20 @@ namespace Player
         {
             if (collision.gameObject.tag == "Enemy")
             {
-                health -= 1;
-                healthBar.updateHealth(health, maxHealth);
+                IncreaseHealth(1);
             }
 }
+        public void DecreaseHealth(int damage)
+        {
+            health -= damage;
+            healthBar.UpdateHealth(health, maxHealth);
+        }
+
+        public void IncreaseHealth(int amount)
+        {
+            health += amount;
+            healthBar.UpdateHealth(health, maxHealth);
+        }
 
         public void SpeedUpActivate(float speedIncrease, float speedTime)  // MAKE MORE GENERAL LIKE ABOVE SO REUSABLE???
         {
