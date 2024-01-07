@@ -1,6 +1,5 @@
 using Enemy;
 using Player;
-using System.Data;
 using UI;
 using UnityEngine;
 
@@ -10,9 +9,6 @@ public class Difficulty : MonoBehaviour
     public string difficulty;
 
     [Header("Game Objects")]
-    public GameObject timerObj;
-    public GameObject enemyCreatorObj;
-    public GameObject playerObj;
     public GameObject enemyObj;
 
     private Charge charger;    //Make how access variables here consistent (if annoying get rid of properties)
@@ -36,9 +32,9 @@ public class Difficulty : MonoBehaviour
     }
     private void Start()
     {
-        charger = timerObj.GetComponent<Charge>();
-        enemyCreator = enemyCreatorObj.GetComponent<StartValues>();
-        player = playerObj.GetComponent<PlayerMovement>();
+        charger = FindAnyObjectByType<Charge>();    // Generally use object of type for single instance objects that aren't managers for simplicity
+        enemyCreator = FindAnyObjectByType<StartValues>();
+        player = FindAnyObjectByType<PlayerMovement>();
         enemyAi = enemyObj.GetComponent<EnemyAI>();
 
         SelectDifficulty();

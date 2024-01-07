@@ -9,7 +9,7 @@ namespace Enemy
     {
         [Header("Health")]
         private int health;
-        public int maxHealth;
+        public int maxHealth;   // Could set to private but means will only work with difficulty selected.
         public HealthBar healthBar;    // Change this to be more efficient
 
         [Header("Enemy")]
@@ -17,19 +17,13 @@ namespace Enemy
         public float enemyAliveTime;
         public GameObject enemyPrefab;
 
-        public GameObject Charger;
         private Charge charge;
 
         public int Health
-        {
-            get { return health; }
-            set { health = value; }  
-        }
+        { get { return health;}}
 
         public int MaxHealth
-        {
-            get { return maxHealth; }
-            set { maxHealth = value; }
+        { get { return maxHealth; } set { maxHealth = value;}
         }
 
         private void Awake()
@@ -40,7 +34,7 @@ namespace Enemy
 
         private void Start()
         {
-            charge = Charger.GetComponent<Charge>();
+            charge = FindAnyObjectByType<Charge>();
             StartCoroutine(DestroyEnemy());
 
             health = maxHealth;

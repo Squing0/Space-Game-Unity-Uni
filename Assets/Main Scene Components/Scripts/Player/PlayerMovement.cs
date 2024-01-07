@@ -27,32 +27,15 @@ namespace Player
 
         [Header("Health")]
         private int health;
-        public int maxHealth;
+        private int maxHealth;
 
         // Health property
+
         public int Health
-        {
-            get
-            {
-                return health;
-            }
-            set
-            {
-                health = value;
-            }
-        }
+        { get { return health; } set { health = value; } }
 
         public int MaxHealth
-        {
-            get
-            {
-                return maxHealth;
-            }
-            set
-            {
-                maxHealth = value;
-            }
-        }
+        {get { return maxHealth; }set { maxHealth = value; } }
 
         [SerializeField]
         private HealthBar healthBar;
@@ -105,7 +88,6 @@ namespace Player
         {
             m_Camera = Camera.main; // unity tut
             //playerAreaRange = Physics.CheckSphere(transform.position, playerRange, isEnemy); // Not sure if useful
-            health = maxHealth;
         }
         private void Start()
         {
@@ -116,7 +98,7 @@ namespace Player
             maxJumps = 2;
             jumpCounter = 0;
 
-            //health = maxHealth;        
+            health = maxHealth;        
         }
 
         private void Update()

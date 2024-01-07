@@ -10,9 +10,6 @@ namespace UI
     {
         public static UiManager instance;
 
-        public GameObject playerObj;
-        public GameObject timerObj;
-        public GameObject shipObj;
         public GameObject mainHUD;
         public TMP_Text gameoverScoreText;
         public TMP_Text winScoreText;
@@ -39,8 +36,8 @@ namespace UI
         }
         private void Start()
         {
-            playerMovement = playerObj.GetComponent<PlayerMovement>();
-            charger = timerObj.GetComponent<Charge>();
+            playerMovement = FindAnyObjectByType<PlayerMovement>();
+            charger = FindAnyObjectByType<Charge>();
         }
 
         public void CalculateScore(string endReason, TMP_Text scoreText)

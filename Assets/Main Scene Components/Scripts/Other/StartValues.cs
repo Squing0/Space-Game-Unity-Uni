@@ -9,13 +9,11 @@ public class StartValues : MonoBehaviour
     public GameObject speedUpObj;
     public GameObject healthUpObj;
     public GameObject ammoUpObj;
-    public GameObject playerObj;
-    public GameObject timerObj;   
     public GameObject powerupPosObj;
 
     [Header("Appear Rates")]
-    public int powerupChargeAppear;
-    public int enemyChargeAppear;
+    private int powerupChargeAppear;
+    private int enemyChargeAppear;
 
     private bool enemySpawned;
     private bool powerUpSpawned;
@@ -43,7 +41,7 @@ public class StartValues : MonoBehaviour
     }
     void Start()
     {
-        charger = timerObj.GetComponent<Charge>();
+        charger = FindAnyObjectByType<Charge>();
 
         CreateEnemy();
         CreatePowerup();

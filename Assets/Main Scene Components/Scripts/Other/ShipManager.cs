@@ -16,9 +16,7 @@ public class ShipManager : MonoBehaviour
 
     private bool shipAttackable;
     public int Health
-    {
-        get { return health; }
-    }
+    { get { return health; }}
 
     private void Awake()
     {
@@ -32,9 +30,6 @@ public class ShipManager : MonoBehaviour
         }
 
         health = maxHealth;
-    }
-    private void Start()
-    {
         shipAttackable = true;
     }
     private void Update()

@@ -29,12 +29,12 @@ namespace Player
             m_Camera = Camera.main;
             enemyCrosshair.enabled = false;
 
-            pm = bullet.GetComponent<ProjectileManager>();
+            readyToAttack = true;
+            currentBullets = magazineTotal;
         }
         private void Start()
         {
-            readyToAttack = true;
-            currentBullets = magazineTotal;
+            pm = bullet.GetComponent<ProjectileManager>();
             gunSmoke.Stop();
         }
         private void Update()

@@ -8,7 +8,7 @@ public class DifficultyAcrossScenes : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        instance = this;    // may need to add checking if null but not sure
     }
 
     public void SelectDifficulty(string difficultyChoice)

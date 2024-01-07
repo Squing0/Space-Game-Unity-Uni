@@ -14,8 +14,6 @@ public class ItemPickup : MonoBehaviour
 
     [Header("Other Objects")]
     public GameObject playerHealthBar;    // Don't like this as speed and ammo don't use
-    public GameObject startValuesObj;   
-    public GameObject charger;
 
     private GunShoot gunshoot; 
     private PlayerMovement player;
@@ -26,15 +24,15 @@ public class ItemPickup : MonoBehaviour
     private Charge charge;
     private void Start()
     {
-        startValues = startValuesObj.GetComponent<StartValues>();
-        charge = charger.GetComponent<Charge>();
+        startValues = FindAnyObjectByType<StartValues>();
+        charge = FindAnyObjectByType<Charge>();
 
         StartCoroutine(DestroyPowerup());
     }
 
     private IEnumerator DestroyPowerup()
     {
-        yield return new WaitForSeconds(startValues.PowerupChargeAppear / charge.chargeSpeeder);   
+        yield return new WaitForSeconds(startValues.PowerupChargeAppear / charge.ChargeSpeeder);   
         Destroy(gameObject);
     }
 

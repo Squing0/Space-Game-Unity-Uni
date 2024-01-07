@@ -8,7 +8,7 @@ namespace UI
         public TMP_Text chargeText;
         private float chargeValue = 1;
         private bool chargeOn = true;
-        public float chargeSpeeder;
+        private float chargeSpeeder;
 
         public bool ChargeOn
         {get { return chargeOn; } set { chargeOn = value;}} // Make all properties like this
