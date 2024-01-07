@@ -7,9 +7,14 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement")]
-        public float walkSpeed;
-        public float runSpeed;
+        private float walkSpeed;
+        private float runSpeed;
         private float moveSpeed;
+
+        // Walk property
+        public float WalkSpeed { get { return walkSpeed; } set { walkSpeed = value; } }
+        // Run property
+        public float RunSpeed { get { return runSpeed; } set { runSpeed = value; } }
 
         public float groundDrag;
         public MovementState state;

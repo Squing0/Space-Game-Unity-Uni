@@ -60,8 +60,8 @@ public class Difficulty : MonoBehaviour
         enemyCreator.EnemyChargeAppear = enemyTime;
         player.MaxHealth = maxHealth;
         player.Health = health;
-        player.walkSpeed = walkSpeed;
-        player.runSpeed = runSpeed;
+        player.WalkSpeed = walkSpeed;
+        player.RunSpeed = runSpeed;
         enemyAi.timeBetweenAttacks = enemyAttackTime;
     }
 

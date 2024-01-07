@@ -30,6 +30,10 @@ namespace Enemy
         public GameObject knifeObj;
         public float timeBetweenAttacks;
 
+        // time attack property
+        //public float TimeBetweenAttacks // Doesn't work for some reason
+        //{ get { return timeBetweenAttacks; }set { timeBetweenAttacks = value; } }
+
         [Header("Animations")]
         public Animator enemyAnimator;
         public string runAnimation; 
@@ -96,8 +100,10 @@ namespace Enemy
             //agent.speed = attackSpeed;    // This causes issues
 
             //Vector3 trial = new Vector3(0, target.transform.position.y, 0);
-            Vector3 trial = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-            transform.LookAt(trial);    // Fucks up pos/ rotation
+            //Vector3 trial = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            //transform.LookAt(trial);    // Fucks up pos/ rotation
+            
+            transform.LookAt(player.transform.position);
             agent.SetDestination(player.transform.position);
 
             // ChatGpt Trial: (Not sure if this even works)
