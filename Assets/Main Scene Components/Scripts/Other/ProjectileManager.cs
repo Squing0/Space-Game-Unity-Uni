@@ -3,7 +3,20 @@ using UnityEngine;
 
 public class ProjectileManager : MonoBehaviour
 {
+    public static ProjectileManager instance;
     public float aliveTime;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") && gameObject.CompareTag("Bullet"))

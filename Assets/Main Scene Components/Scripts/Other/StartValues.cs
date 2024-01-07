@@ -34,17 +34,16 @@ public class StartValues : MonoBehaviour
         set {  enemyChargeAppear = value; }
     }
 
-
     private void Awake()
     {
-        charger = timerObj.GetComponent<Charge>();
-    }
-    void Start()
-    {
-        enemyPos = new Vector3(250, 0.6f, 250);       
+        enemyPos = new Vector3(250, 0.6f, 250);
 
         enemySpawned = false;
         powerUpSpawned = false;
+    }
+    void Start()
+    {
+        charger = timerObj.GetComponent<Charge>();
 
         CreateEnemy();
         CreatePowerup();

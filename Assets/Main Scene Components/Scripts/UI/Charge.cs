@@ -10,8 +10,6 @@ namespace UI
         private bool chargeOn = true;
         public float chargeSpeeder;
 
-        public GameObject UIManager;
-        private UiManager ui;
         public bool ChargeOn
         {get { return chargeOn; } set { chargeOn = value;}} // Make all properties like this
         public float ChargeValue
@@ -19,10 +17,6 @@ namespace UI
         public float ChargeSpeeder
         {get { return chargeSpeeder; } set { chargeSpeeder = value; }}
        
-        private void Start()
-        {
-            ui = UIManager.GetComponent<UiManager>();
-        }
         private void Update()
         {
             if (chargeValue < 100)
@@ -35,7 +29,7 @@ namespace UI
             }
             else
             {
-                ui.ActivateWin();
+                UiManager.instance.ActivateWin();
             }
         }
     }

@@ -8,6 +8,8 @@ namespace UI
 {
     public class UiManager : MonoBehaviour
     {
+        public static UiManager instance;
+
         public GameObject playerObj;
         public GameObject timerObj;
         public GameObject shipObj;
@@ -21,23 +23,33 @@ namespace UI
 
         private PlayerMovement playerMovement;
         private Charge charger;
-        private ShipManager shipManager; 
 
         private float totalScore;   // change to int?
+
+        private void Awake()
+        {
+            if(instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
         private void Start()
         {
             playerMovement = playerObj.GetComponent<PlayerMovement>();
             charger = timerObj.GetComponent<Charge>();
-            shipManager = shipObj.GetComponent<ShipManager>();
         }
 
         public void CalculateScore(string endReason, TMP_Text scoreText)
         {
             Time.timeScale = 0; // Pauses game
 
-            totalScore = (100 - charger.ChargeValue) + (playerMovement.Health * 25) + (shipManager.Health * 25);
+            totalScore = (100 - charger.ChargeValue) + (playerMovement.Health * 25) + (ShipManager.instance.Health * 25);
 
-            scoreText.text = $"{endReason}\nScore: {(int)totalScore}";
+            scoreText.text = $"{endReason}\nScore: {(int)totalScore}";     
         }
 
         public void ActivateWin()

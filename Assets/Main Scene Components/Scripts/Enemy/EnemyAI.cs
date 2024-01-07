@@ -41,14 +41,14 @@ namespace Enemy
 
         private void Awake()
         {
-            projectileManager = rockObj.GetComponent<ProjectileManager>();
-        }
-        private void Start()
-        {
             agent = GetComponent<NavMeshAgent>();
 
             agent.updatePosition = true;
             agent.updateRotation = true;
+        }
+        private void Start()
+        {
+            projectileManager = rockObj.GetComponent<ProjectileManager>();
 
             StartCoroutine(FSM());
         }

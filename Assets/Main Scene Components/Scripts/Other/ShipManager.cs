@@ -1,10 +1,11 @@
 using UnityEngine;
 using UI;
-using System;
 using System.Collections;
 
 public class ShipManager : MonoBehaviour
 {
+    public static ShipManager instance; // Anything relating to an instance needs to be kept in awake and not update
+
     [Header("Health")]
     private int health;
     public int maxHealth;
@@ -12,8 +13,6 @@ public class ShipManager : MonoBehaviour
 
     [Header("Game Objects")]
     public HealthBar healthBar;
-    public GameObject UIManager;
-    private UiManager UI;
 
     private bool shipAttackable;
     public int Health
@@ -21,17 +20,28 @@ public class ShipManager : MonoBehaviour
         get { return health; }
     }
 
+    private void Awake()
+    {
+        if(instance == null)    // Took from gpt but keep for everything else too
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        health = maxHealth;
+    }
     private void Start()
     {
-        UI = UIManager.GetComponent<UiManager>();
-        health = maxHealth;
         shipAttackable = true;
     }
     private void Update()
     {
         if (health < 1)
         {
-            UI.ActivateGameover("Your ship was destroyed!");
+            UiManager.instance.ActivateGameover("Your ship was destroyed!");
         }
     }
     

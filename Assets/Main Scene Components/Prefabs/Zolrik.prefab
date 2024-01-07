@@ -3176,6 +3176,7 @@ MonoBehaviour:
   ship: {fileID: 0}
   patrolSpeed: 3
   chaseSpeed: 10
+  attackSpeed: 1.1
   player: {fileID: 0}
   isPlayer:
     serializedVersion: 2
@@ -3228,7 +3229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5241900b8daa97348a50c182a478dd98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 5
   healthBar: {fileID: 1997100429181169726}
   agent: {fileID: 6572093370058569238}
   enemyAliveTime: 30

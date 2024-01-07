@@ -82,8 +82,6 @@ namespace Player
 
 
         // Miscellaneous 
-        public GameObject UIManager;
-        private UiManager ui;
 
         // Player movement
         float horizontalInput;
@@ -107,19 +105,18 @@ namespace Player
         {
             m_Camera = Camera.main; // unity tut
             //playerAreaRange = Physics.CheckSphere(transform.position, playerRange, isEnemy); // Not sure if useful
+            health = maxHealth;
         }
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true; // Allows physics system to control rotation of object
 
-            ui = UIManager.GetComponent<UiManager>();
-
             readyToJump = true;
             maxJumps = 2;
             jumpCounter = 0;
 
-            health = maxHealth;        
+            //health = maxHealth;        
         }
 
         private void Update()
@@ -144,7 +141,7 @@ namespace Player
 
             if (health < 1)
             {
-                ui.ActivateGameover("You lost all your health!");
+                UiManager.instance.ActivateGameover("You lost all your health!");
             }
         }
         private void FixedUpdate()

@@ -29,10 +29,13 @@ public class Difficulty : MonoBehaviour
     private float runSpeed = 1;
     private float enemyAttackTime = 1;
 
-    private void Start()
+    private void Awake()
     {
         difficulty = DifficultyAcrossScenes.instance.difficulty;    // (This flags as an error but functions perfectly)
 
+    }
+    private void Start()
+    {
         charger = timerObj.GetComponent<Charge>();
         enemyCreator = enemyCreatorObj.GetComponent<StartValues>();
         player = playerObj.GetComponent<PlayerMovement>();
@@ -50,7 +53,6 @@ public class Difficulty : MonoBehaviour
                 break;
             case "Normal":
                 SetValues(1, 10, 10, 8, 8, 9, 14, 2.5f);
-
                 break;
             case "Hard":
                 SetValues(1, 15, 8, 6, 6, 8, 13, 2);
