@@ -40,7 +40,7 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
-            if(tag == "AmmoIncrease")
+            if(gameObject.CompareTag("AmmoIncrease"))
             {
                 gunshoot = other.gameObject.GetComponentInChildren<GunShoot>();
                 gunshoot.AddAmmo(ammoToAdd);
@@ -48,13 +48,13 @@ public class ItemPickup : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            if(tag == "HealthIncrease")
+            if(gameObject.CompareTag("HealthIncrease"))
             {
                 player = other.gameObject.GetComponent<PlayerMovement>();
 
                 if(player.Health < player.MaxHealth)
                 {
-                    player.Health += 1;
+                    //player.Health += 1;
                     player.IncreaseHealth(1);
                 }
                 else
@@ -65,7 +65,7 @@ public class ItemPickup : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            if(tag == "SpeedIncrease")
+            if(gameObject.CompareTag("SpeedIncrease"))
             {
                 player = other.gameObject.GetComponent<PlayerMovement>();
                 player.SpeedUpActivate(speedToAdd, speedTime);
@@ -76,7 +76,7 @@ public class ItemPickup : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            if (tag == "HealthIncrease")
+            if (gameObject.CompareTag("HealthIncrease"))
             {
                 enemyStats = other.GetComponent<EnemyStats>();
                 if (enemyStats.Health < enemyStats.MaxHealth)   // repeated from above
@@ -90,12 +90,23 @@ public class ItemPickup : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            if(tag == "SpeedIncrease")
+            if(gameObject.CompareTag("SpeedIncrease"))
             {
                 ai = other.GetComponent <EnemyAI>();
                 ai.SpeedUpActivate(speedToAdd, speedTime);
+
+                Destroy(gameObject);
+            }
+
+            if (gameObject.CompareTag("AmmoIncrease"))
+            {
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void HealthActivate()
+    {
+
     }
 }

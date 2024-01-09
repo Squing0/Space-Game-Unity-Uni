@@ -75,6 +75,7 @@ namespace Player
 
             if (Input.GetKey(KeyCode.R) && currentBullets < magazineTotal && bulletTotal > 0)
             {
+                AudioManager.instance.reloadSound.Play();
                 Invoke(nameof(Reload), reloadTime); // CHANGE TO COROUTINE FOR BOTH, BE CONSISTENT
             }
 
@@ -103,7 +104,7 @@ namespace Player
             //{
             //    currentBullets = magazineTotal;
             //}
-
+           
             float bulletsNeeded = magazineTotal - currentBullets;   //Chatgpt gave this, change?
 
             if (bulletTotal >= bulletsNeeded)
@@ -140,6 +141,7 @@ namespace Player
 
         private void Shoot()
         {
+            AudioManager.instance.shootSound.Play();
 
             readyToAttack = false;
             Vector3 mousePos = Input.mousePosition;

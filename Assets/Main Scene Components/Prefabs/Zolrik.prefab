@@ -3190,6 +3190,7 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   enemyAnimator: {fileID: 5614403018944200062}
   runAnimation: Run
+  walkAnimation: Walk
   combatRunAnimation: Combat_run
   attackAnimation: Attack4
   whatisGround:
@@ -3235,6 +3236,8 @@ MonoBehaviour:
   agent: {fileID: 6572093370058569238}
   enemyAliveTime: 15
   enemyPrefabName: Zolrik (1)
+  deathAnimation: Death1
+  moralityBarObj: {fileID: 0}
 --- !u!54 &6038267614222630791
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -125,7 +125,6 @@ public class StartValues : MonoBehaviour
                 break;
             case 3:
                 newEnemy.GetComponent<EnemyAI>().state = EnemyAI.State.PATROL;
-                Debug.Log("PATROL");    
                 break;
         }
     }

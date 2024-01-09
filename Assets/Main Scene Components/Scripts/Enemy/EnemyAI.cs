@@ -43,7 +43,8 @@ namespace Enemy
 
         [Header("Animations")]
         public Animator enemyAnimator;
-        public string runAnimation; 
+        public string runAnimation;
+        public string walkAnimation;
         public string combatRunAnimation;
         public string attackAnimation;
 
@@ -190,6 +191,7 @@ namespace Enemy
         private void Patrol()
         {
             agent.speed = patrolSpeed;
+            enemyAnimator.Play(walkAnimation);
 
             if(patrolPointFound)
             {

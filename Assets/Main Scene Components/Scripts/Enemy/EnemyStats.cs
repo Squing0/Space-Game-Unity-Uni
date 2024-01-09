@@ -16,10 +16,12 @@ namespace Enemy
         public NavMeshAgent agent;
         public float enemyAliveTime;
         public string enemyPrefabName;
+        public string deathAnimation;
 
         private Charge charge;
         private EnemyAI ai;
         private HealthBar moralityBar;
+        private Animator animator;
         public GameObject moralityBarObj;
 
         public int Health
@@ -35,6 +37,7 @@ namespace Enemy
             agent = GetComponent<NavMeshAgent>();
             ai = GetComponent<EnemyAI>();
             moralityBar = moralityBarObj.GetComponent<HealthBar>();
+            animator = GetComponent<Animator>();
         }
 
         private void Start()
@@ -51,9 +54,20 @@ namespace Enemy
             if (health < 1)
             {
                 agent.isStopped = true;
-                CheckMorality();
-                Destroy(gameObject);
+                animator.Play(deathAnimation);
+                AudioManager.instance.enemyDeathSound.Play();
+
+                StartCoroutine(PlayDeathAnimation());
+
             }
+        }
+
+        private IEnumerator PlayDeathAnimation()
+        {
+            yield return new WaitForSeconds(1f);
+            CheckMorality();
+            Destroy(gameObject);
+
         }
 
         public void DecreaseHealth(int damage)
