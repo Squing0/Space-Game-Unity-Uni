@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UI;
+using System;
+using UnityEngine.UI;
 
 namespace Player
 {
@@ -45,6 +47,10 @@ namespace Player
         [SerializeField]
         public HealthBar healthBar;
 
+        // Dashing
+        private bool readyToDash;
+        private Color originalDashColour;
+        public RawImage dashIcon;
 
         // Make property later 
 
@@ -103,6 +109,8 @@ namespace Player
             rb.freezeRotation = true; // Allows physics system to control rotation of object
 
             readyToJump = true;
+            readyToDash = true;
+            originalDashColour = dashIcon.color;
             maxJumps = 2;
             jumpCounter = 0;
             
@@ -133,6 +141,15 @@ namespace Player
             if (health < 1)
             {
                 UiManager.instance.ActivateGameover("You lost all your health!");
+            }
+
+            if (!readyToDash)
+            {
+                dashIcon.color = Color.black;
+            }
+            else
+            {
+                dashIcon.color = originalDashColour;
             }
         }
         private void FixedUpdate()
@@ -224,11 +241,20 @@ namespace Player
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10 * airMultiplier, ForceMode.Acceleration); // Air mulyiplier is used here to slightly increase air speed
             }
 
-            if (grounded && Input.GetMouseButtonDown(1) || !grounded && Input.GetMouseButtonDown(1))
+            if (grounded && Input.GetMouseButtonDown(1) && readyToDash) // || !grounded && Input.GetMouseButtonDown(1) && readyToDash)
             {
                 StartCoroutine(Dash());
+
+                readyToDash = false;
+                StartCoroutine(ResetDash());
                 //rb.AddForce(moveDirection.normalized * 3f * 10, ForceMode.Impulse);
             }
+        }
+
+        private IEnumerator ResetDash()
+        {
+            yield return new WaitForSeconds(3); // Change to not hard coded
+            readyToDash = true;
         }
 
         private IEnumerator Dash() // Got this from youtube tutorial, change to own way (look gpt example)

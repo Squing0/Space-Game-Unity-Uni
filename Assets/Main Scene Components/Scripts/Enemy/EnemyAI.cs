@@ -1,3 +1,4 @@
+using Player;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,12 +17,18 @@ namespace Enemy
         public float patrolSpeed = 0.5f;
         public float chaseSpeed = 1.0f;
         public float attackSpeed = 1.1f;
-        public GameObject player;
+        public GameObject playerObj;
+        private GunShoot gunShoot;
 
         public LayerMask isPlayer;
         public float attackRange;
         public bool PlayerWithinRange;
         public bool alreadyAttacked;
+
+        // patrol speed
+        private Vector3 newPatrolPos;
+        private bool patrolPointFound;
+        public float patrolRange;
 
         public GameObject rockObj;
         private ProjectileManager projectileManager;
@@ -32,7 +39,7 @@ namespace Enemy
 
         // time attack property
         //public float TimeBetweenAttacks // Doesn't work for some reason
-        //{ get { return timeBetweenAttacks; }set { timeBetweenAttacks = value; } }
+        //{ get { return timeBetweenAttacks; } set { timeBetweenAttacks = value; }}
 
         [Header("Animations")]
         public Animator enemyAnimator;
@@ -49,10 +56,13 @@ namespace Enemy
 
             agent.updatePosition = true;
             agent.updateRotation = true;
+
+            patrolPointFound = true;
         }
         private void Start()
         {
             projectileManager = rockObj.GetComponent<ProjectileManager>();
+            gunShoot = FindAnyObjectByType<GunShoot>();
 
             StartCoroutine(FSM());
         }
@@ -63,9 +73,9 @@ namespace Enemy
             {
                 switch (state)
                 {
-                    //case State.PATROL:
-                    //    patrol();
-                    //    break;
+                    case State.PATROL:
+                        Patrol();
+                        break;
                     case State.CHASE:
                         Chase();
                         break;
@@ -93,6 +103,11 @@ namespace Enemy
             {
                 state = State.CHASE;
             }
+
+            if(PlayerWithinRange && state == State.SHIP && gunShoot.CurrentBullets == 0 && gunShoot.bulletTotal == 0)
+            {
+                state = State.CHASE;
+            }
         }
 
         private void AttackPlayer()
@@ -103,8 +118,11 @@ namespace Enemy
             //Vector3 trial = new Vector3(player.transform.position.x, 0, player.transform.position.z);
             //transform.LookAt(trial);    // Fucks up pos/ rotation
             
-            transform.LookAt(player.transform.position);
-            agent.SetDestination(player.transform.position);
+            transform.LookAt(playerObj.transform.position);
+            agent.SetDestination(playerObj.transform.position);
+
+            agent.updateRotation = false;
+            //agent.updatePosition = false;
 
             // ChatGpt Trial: (Not sure if this even works)
             //Vector3 directionToPlayer = target.transform.position - transform.position;
@@ -127,8 +145,8 @@ namespace Enemy
                 alreadyAttacked = true;
                 enemyAnimator.Play(attackAnimation);
 
-                //StartCoroutine(ResetAttacked());  // For some reason doesn't work
-                Invoke(nameof(ResetAttack), timeBetweenAttacks);    // CHANGE TO COROUTINE
+                StartCoroutine(ResetAttacked());  // For some reason doesn't work
+                //Invoke(nameof(ResetAttack), timeBetweenAttacks);    // CHANGE TO COROUTINE
             }
         }
 
@@ -139,8 +157,8 @@ namespace Enemy
 
         private IEnumerator ResetAttacked()
         {
-            alreadyAttacked = false;
             yield return new WaitForSeconds(timeBetweenAttacks);
+            alreadyAttacked = false;       
         }
      
         private void Ship()
@@ -160,13 +178,45 @@ namespace Enemy
         private void Chase()
         {
             agent.speed = chaseSpeed;
-            transform.LookAt(player.transform.position);
-            agent.SetDestination(player.transform.position);
+            transform.LookAt(playerObj.transform.position);
+            agent.SetDestination(playerObj.transform.position);
 
             knifeObj.SetActive(false);
 
             enemyAnimator.StopPlayback();
             enemyAnimator.Play(runAnimation);
+        }
+
+        private void Patrol()
+        {
+            agent.speed = patrolSpeed;
+
+            if(patrolPointFound)
+            {
+                newPatrolPos = FindNewPatrolPoint();
+                agent.SetDestination(newPatrolPos);
+
+                patrolPointFound = false;
+                StartCoroutine(ResetpatrolPos());
+            }
+        }
+
+        private IEnumerator ResetpatrolPos()
+        {
+            yield return new WaitForSeconds(3);
+            patrolPointFound = true;
+        }
+
+        private Vector3 FindNewPatrolPoint()    // Be careful, got this method from youtube tutorial
+        {
+            //Vector3 randomx = new Vector3(Random.Range(-10, 10), 0, 0);
+            //Vector3 randomz = new Vector3(0, 0, Random.Range(-10, 10));
+            float randomx = Random.Range(-patrolRange, patrolRange);
+            float randomz = Random.Range(-patrolRange, patrolRange);
+
+            return new Vector3(gameObject.transform.position.x + randomx, 
+                0, 
+                gameObject.transform.position.z + randomz);           
         }
      
         private void OnDrawGizmosSelected()

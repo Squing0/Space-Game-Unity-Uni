@@ -20,7 +20,14 @@ namespace UI
         //}
         private void Start()
         {
-            slider.value = 1;
+            if(gameObject.name != "MoralitySlider")
+            {
+                slider.value = 1;
+            }
+            //if(gameObject.name == "MoralityObject") // No FOFOOF
+            //{
+            //    slider.value = 0.5f;    // Improve this
+            //}
         }
         //private void Awake()
         //{
@@ -31,6 +38,16 @@ namespace UI
         public void UpdateHealth(float health, float maxHealth)  // youtube tut
         {
             slider.value = health / maxHealth;
+        }
+
+        public void IncreaseMorality(float morality)
+        {
+            slider.value += morality;
+        }
+
+        public void DecreaseMorality(float morality)
+        {
+            slider.value -= morality;
         }
 
         //public void UpdateHealth()  // youtube tut

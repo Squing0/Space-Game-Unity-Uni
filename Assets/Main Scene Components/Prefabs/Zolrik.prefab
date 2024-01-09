@@ -3177,13 +3177,14 @@ MonoBehaviour:
   patrolSpeed: 3
   chaseSpeed: 10
   attackSpeed: 1.1
-  player: {fileID: 0}
+  playerObj: {fileID: 0}
   isPlayer:
     serializedVersion: 2
     m_Bits: 128
   attackRange: 10
   PlayerWithinRange: 0
   alreadyAttacked: 0
+  patrolRange: 20
   rockObj: {fileID: 0}
   knifeObj: {fileID: 5264161407582644982}
   timeBetweenAttacks: 2
@@ -3232,9 +3233,8 @@ MonoBehaviour:
   maxHealth: 5
   healthBar: {fileID: 1997100429181169726}
   agent: {fileID: 6572093370058569238}
-  enemyAliveTime: 30
-  enemyPrefab: {fileID: 0}
-  Charger: {fileID: 0}
+  enemyAliveTime: 15
+  enemyPrefabName: Zolrik (1)
 --- !u!54 &6038267614222630791
 Rigidbody:
   m_ObjectHideFlags: 0

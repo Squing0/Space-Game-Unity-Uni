@@ -15,9 +15,12 @@ namespace Enemy
         [Header("Enemy")]
         public NavMeshAgent agent;
         public float enemyAliveTime;
-        public GameObject enemyPrefab;
+        public string enemyPrefabName;
 
         private Charge charge;
+        private EnemyAI ai;
+        private HealthBar moralityBar;
+        public GameObject moralityBarObj;
 
         public int Health
         { get { return health;}}
@@ -29,12 +32,15 @@ namespace Enemy
         private void Awake()
         {
             healthBar = GetComponentInChildren<HealthBar>();
-            agent = GetComponent<NavMeshAgent>();   // Do this like this for other scripts, is way Peter does it.
+            agent = GetComponent<NavMeshAgent>();
+            ai = GetComponent<EnemyAI>();
+            moralityBar = moralityBarObj.GetComponent<HealthBar>();
         }
 
         private void Start()
         {
             charge = FindAnyObjectByType<Charge>();
+
             StartCoroutine(DestroyEnemy());
 
             health = maxHealth;
@@ -45,6 +51,7 @@ namespace Enemy
             if (health < 1)
             {
                 agent.isStopped = true;
+                CheckMorality();
                 Destroy(gameObject);
             }
         }
@@ -61,14 +68,15 @@ namespace Enemy
             healthBar.UpdateHealth(health, maxHealth);
         }
 
-        public IEnumerator DestroyEnemy()
+        private IEnumerator DestroyEnemy()
         {
-            yield return new WaitForSeconds(enemyAliveTime / charge.ChargeSpeeder);   // Might not change much, but more to make consistent with powerups
+            yield return new WaitForSeconds(enemyAliveTime / charge.ChargeSpeeder);  // Might not change much, but more to make consistent with powerups
 
-            if(gameObject.name != enemyPrefab.name) // Try to change this if possible
+            if(gameObject.name != enemyPrefabName) // Try to change this if possible
             {
+                //CheckMorality();  // needed here? 
                 Destroy(gameObject);
-            }
+            }   
         }
 
         private void OnTriggerEnter(Collider other)
@@ -77,6 +85,18 @@ namespace Enemy
             {
                 DecreaseHealth(1);
             }
-        }       
+        }     
+        
+        private void CheckMorality()
+        {
+            if (ai.state == EnemyAI.State.PATROL)
+            {
+                moralityBar.IncreaseMorality(.1f);
+            }
+            else if (ai.state != EnemyAI.State.PATROL)
+            {
+                moralityBar.DecreaseMorality(.1f);
+            }
+        }
     }
 }

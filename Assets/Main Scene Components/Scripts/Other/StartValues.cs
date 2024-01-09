@@ -76,28 +76,30 @@ public class StartValues : MonoBehaviour
     {
         int powerUpchosen = Random.Range(1, 4);
 
-        Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
-
-        GameObject lol;
         switch (powerUpchosen)
         {
             case 1:
-                lol = Instantiate(ammoUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45)); 
-                lol.SetActive(true);
+                CreateSpecificPowerup(ammoUpObj);
                 break;
             case 2:
-                lol = Instantiate(healthUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45));
-                lol.SetActive(true);
+                CreateSpecificPowerup(healthUpObj);
                 break;
             case 3:
-                lol = Instantiate(speedUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45));
-                lol.SetActive(true);
+                CreateSpecificPowerup(speedUpObj);
                 break;
             default:
-                lol = Instantiate(healthUpObj, adjustedPowPos, Quaternion.Euler(270, 45, 45)); // Put just to get rid of unassigned error but can changed
-                lol.SetActive(true);
+                CreateSpecificPowerup(healthUpObj);
                 break;
         }
+    }
+
+    private void CreateSpecificPowerup(GameObject powerupChosen)
+    {
+        Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
+        GameObject powerup;
+
+        powerup = Instantiate(powerupChosen, adjustedPowPos, Quaternion.Euler(270, 45, 45));
+        powerup.SetActive(true);
     }
 
     private IEnumerator ResetObjectCreation(string specificObject) // Is this needed?
@@ -112,7 +114,7 @@ public class StartValues : MonoBehaviour
         GameObject newEnemy = Instantiate(enemyObj, enemyPos, Quaternion.identity);
         newEnemy.name = "Enemy Clone";  // Why was this done? (don't remember)
 
-        int stateChosen = Random.Range(1, 3);    // Change to 4 with patrol
+        int stateChosen = Random.Range(1, 4);    // Change to 4 with patrol
         switch (stateChosen)
         {
             case 1:
@@ -120,6 +122,10 @@ public class StartValues : MonoBehaviour
                 break;
             case 2:
                 newEnemy.GetComponent<EnemyAI>().state = EnemyAI.State.SHIP;
+                break;
+            case 3:
+                newEnemy.GetComponent<EnemyAI>().state = EnemyAI.State.PATROL;
+                Debug.Log("PATROL");    
                 break;
         }
     }

@@ -45,13 +45,13 @@ public class Difficulty : MonoBehaviour
         switch (difficulty)
         {
             case "Easy":
-                SetValues(2, 5, 15, 10, 10, 10, 15, 3);
+                SetValues(2, 5, 15, 10, 10, 10, 15, 3f);
                 break;
             case "Normal":
                 SetValues(1, 10, 10, 8, 8, 9, 14, 2.5f);
                 break;
             case "Hard":
-                SetValues(1, 15, 8, 6, 6, 8, 13, 2);
+                SetValues(1, 15, 8, 6, 6, 8, 13, 2f);
                 break;
         }
 
@@ -75,5 +75,7 @@ public class Difficulty : MonoBehaviour
         walkSpeed = wSpeedV;
         runSpeed = rSpeedV;
         enemyAttackTime = eAttackTimeV;
+
+        Debug.Log(eAttackTimeV);
     }
 }

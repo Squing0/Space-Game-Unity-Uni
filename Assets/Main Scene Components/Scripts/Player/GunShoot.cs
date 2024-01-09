@@ -6,6 +6,7 @@ namespace Player
 {
     public class GunShoot : MonoBehaviour
     {
+
         [Header("Shooting")]
         public Transform shootPos;
         public float bulletVelocity;
@@ -20,9 +21,13 @@ namespace Player
         private ProjectileManager pm;
         private Camera m_Camera;
 
-        public float magazineTotal, bulletTotal, reloadTime;
+        public float magazineTotal, bulletTotal, reloadTime;    
         private float currentBullets;
         public TMP_Text reloadText;
+
+        // Current Bullets property
+        public float CurrentBullets
+        { get { return currentBullets; } private set {}}
 
         private void Awake()
         {
@@ -42,7 +47,7 @@ namespace Player
             MyInput();
             MouseDetection();
 
-            reloadText.text = $"Bullets: {currentBullets}   {bulletTotal}";
+            reloadText.text = $"{currentBullets}   {bulletTotal}";
         }
 
         private void MouseDetection()
