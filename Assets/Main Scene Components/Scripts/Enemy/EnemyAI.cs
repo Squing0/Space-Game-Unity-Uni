@@ -95,6 +95,7 @@ namespace Enemy
         private void Update()
         {
             PlayerWithinRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
+            bool playerTooClose = Physics.CheckSphere(transform.position, 5, isPlayer);
 
             if (PlayerWithinRange && state == State.CHASE)  // So that doesn't inerfere with ship or patrol
             {
@@ -108,6 +109,15 @@ namespace Enemy
             if(PlayerWithinRange && state == State.SHIP && gunShoot.CurrentBullets == 0 && gunShoot.bulletTotal == 0)
             {
                 state = State.CHASE;
+            }
+
+            if(playerTooClose && state == State.ATTACK)
+            {
+                agent.speed = 0;
+            }
+            else
+            {
+                agent.speed = chaseSpeed;
             }
         }
 

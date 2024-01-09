@@ -54,10 +54,11 @@ namespace Enemy
             if (health < 1)
             {
                 agent.isStopped = true;
-                animator.Play(deathAnimation);
-                AudioManager.instance.enemyDeathSound.Play();
 
-                StartCoroutine(PlayDeathAnimation());
+                AudioManager.instance.enemyDeathSound.Play();
+                animator.Play(deathAnimation);
+                
+                StartCoroutine(PlayDeathAnimation());   // Change name
 
             }
         }

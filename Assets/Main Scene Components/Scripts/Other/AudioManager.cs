@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource winGameSound;
     public AudioSource LoseGameSound;
     public AudioSource enemyDeathSound;   
+    public AudioSource powerupSound;
 
     private void Awake()
     {

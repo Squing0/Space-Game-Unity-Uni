@@ -72,6 +72,8 @@ public class ItemPickup : MonoBehaviour
 
                 Destroy(gameObject);
             }
+
+            AudioManager.instance.powerupSound.Play();
         }
 
         if (other.CompareTag("Enemy"))
