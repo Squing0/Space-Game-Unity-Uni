@@ -57,35 +57,31 @@ namespace UI
 
         public void ActivateWin()
         {
-            if (!endSoundPlayed)
-            {
-                endSoundPlayed = true;
-                AudioManager.instance.winGameSound.Play();
-            }
-
-            winScreen.SetActive(true);
-            mainHUD.SetActive(false);
-
-            CalculateScore("You won!", winScoreText);
-            CalculateMoralityText(winMoralityText);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            ActivateEndGame(AudioManager.instance.winGameSound, 
+                winScreen, "You won!", winScoreText, 
+                winMoralityText);
         }
 
         public void ActivateGameover(string deathReason)
         {
+            ActivateEndGame(AudioManager.instance.LoseGameSound, 
+                gameoverScreen, deathReason,gameoverScoreText, 
+                gameoverMoralityText);
+        }
+
+        public void ActivateEndGame(AudioSource endSound, GameObject endScreen, string scoreTextValue, TMP_Text scoreText,  TMP_Text moralityText)
+        {
             if (!endSoundPlayed)
             {
                 endSoundPlayed = true;
-                AudioManager.instance.LoseGameSound.Play();
+                endSound.Play();
             }
 
-            gameoverScreen.SetActive(true);     // Set Background UI to active so is shown on screen
-            mainHUD.SetActive(false);      // Hide main UI so that only background is shown
+            endScreen.SetActive(true);
+            mainHUD.SetActive(false);
 
-            CalculateScore(deathReason, gameoverScoreText);
-            CalculateMoralityText(gameoverMoralityText);
+            CalculateScore(scoreTextValue, scoreText);
+            CalculateMoralityText(moralityText);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

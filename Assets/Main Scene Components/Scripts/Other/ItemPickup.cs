@@ -17,7 +17,6 @@ public class ItemPickup : MonoBehaviour
 
     private GunShoot gunshoot; 
     private PlayerMovement player;
-    private HealthBar healthbar;
     private StartValues startValues;
     private EnemyStats enemyStats;
     private EnemyAI ai;
@@ -44,8 +43,6 @@ public class ItemPickup : MonoBehaviour
             {
                 gunshoot = other.gameObject.GetComponentInChildren<GunShoot>();
                 gunshoot.AddAmmo(ammoToAdd);
-
-                Destroy(gameObject);
             }
 
             if(gameObject.CompareTag("HealthIncrease"))
@@ -54,23 +51,18 @@ public class ItemPickup : MonoBehaviour
 
                 if(player.Health < player.MaxHealth)
                 {
-                    //player.Health += 1;
                     player.IncreaseHealth(1);
                 }
                 else
                 {
                     Debug.Log("Health full!");
                 }
-
-                Destroy(gameObject);
             }
 
             if(gameObject.CompareTag("SpeedIncrease"))
             {
                 player = other.gameObject.GetComponent<PlayerMovement>();
                 player.SpeedUpActivate(speedToAdd, speedTime);
-
-                Destroy(gameObject);
             }
 
             AudioManager.instance.powerupSound.Play();
@@ -89,22 +81,17 @@ public class ItemPickup : MonoBehaviour
                 {
                     Debug.Log("Health full!");
                 }              
-                Destroy(gameObject);
             }
 
             if(gameObject.CompareTag("SpeedIncrease"))
             {
-                ai = other.GetComponent <EnemyAI>();
+                ai = other.GetComponent<EnemyAI>();
                 ai.SpeedUpActivate(speedToAdd, speedTime);
-
-                Destroy(gameObject);
             }
 
-            if (gameObject.CompareTag("AmmoIncrease"))
-            {
-                Destroy(gameObject);
-            }
         }
+
+        Destroy(gameObject);
     }
 
     private void HealthActivate()

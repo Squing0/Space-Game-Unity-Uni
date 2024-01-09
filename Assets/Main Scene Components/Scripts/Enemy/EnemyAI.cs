@@ -123,28 +123,11 @@ namespace Enemy
 
         private void AttackPlayer()
         {
-            //agent.speed = attackSpeed;    // This causes issues
-
-            //Vector3 trial = new Vector3(0, target.transform.position.y, 0);
-            //Vector3 trial = new Vector3(player.transform.position.x, 0, player.transform.position.z);
-            //transform.LookAt(trial);    // Fucks up pos/ rotation
-            
+           
             transform.LookAt(playerObj.transform.position);
             agent.SetDestination(playerObj.transform.position);
 
             agent.updateRotation = false;
-            //agent.updatePosition = false;
-
-            // ChatGpt Trial: (Not sure if this even works)
-            //Vector3 directionToPlayer = target.transform.position - transform.position;
-            //directionToPlayer.y = 0;
-
-            //if(directionToPlayer.y > 0.1f)
-            //{
-            //    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5);
-            //}
-            // ChatGpt Trial
 
             if (!alreadyAttacked)
             {
@@ -221,8 +204,6 @@ namespace Enemy
 
         private Vector3 FindNewPatrolPoint()    // Be careful, got this method from youtube tutorial
         {
-            //Vector3 randomx = new Vector3(Random.Range(-10, 10), 0, 0);
-            //Vector3 randomz = new Vector3(0, 0, Random.Range(-10, 10));
             float randomx = Random.Range(-patrolRange, patrolRange);
             float randomz = Random.Range(-patrolRange, patrolRange);
 
