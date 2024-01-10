@@ -15,7 +15,7 @@ public class ShipManager : MonoBehaviour
     public HealthBar healthBar;
 
     private bool shipAttackable;
-    private HealthManager healthManager;
+    public HealthManager healthManager;
     public int Health
     { get { return health; }}
 
@@ -36,7 +36,7 @@ public class ShipManager : MonoBehaviour
     private void Start()
     {
         //healthBar = new HealthBar(health, maxHealth);
-         healthManager = new HealthManager(health, maxHealth, healthBar);
+         healthManager = new HealthManager(health, maxHealth, healthBar, "Ship");
     }
     private void Update()
     {

@@ -11,6 +11,7 @@ namespace Enemy
         private int health;
         public int maxHealth;   // Could set to private but means will only work with difficulty selected.
         public HealthBar healthBar;    // Change this to be more efficient
+        public HealthManager healthManager;
 
         [Header("Enemy")]
         public NavMeshAgent agent;
@@ -38,6 +39,8 @@ namespace Enemy
             ai = GetComponent<EnemyAI>();
             moralityBar = moralityBarObj.GetComponent<HealthBar>();
             animator = GetComponent<Animator>();
+
+            health = maxHealth;
         }
 
         private void Start()
@@ -46,8 +49,7 @@ namespace Enemy
 
             StartCoroutine(DestroyEnemy());
 
-            health = maxHealth;
-            //healthBar = new HealthBar(health, maxHealth);
+            healthManager = new HealthManager(health, maxHealth, healthBar, "Enemy");
         }
         private void Update()
         {
@@ -63,6 +65,16 @@ namespace Enemy
             }
         }
 
+        public void KillEnemy()
+        {
+            agent.isStopped = true;
+
+            AudioManager.instance.enemyDeathSound.Play();
+            animator.Play(deathAnimation);
+
+            StartCoroutine(PlayDeathAnimation());   // Change name
+        }
+
         private IEnumerator PlayDeathAnimation()
         {
             yield return new WaitForSeconds(1f);
@@ -71,17 +83,17 @@ namespace Enemy
 
         }
 
-        public void DecreaseHealth(int damage)
-        {
-            health -= damage;
-            healthBar.UpdateHealth(health, maxHealth);
-        }
+        //public void DecreaseHealth(int damage)
+        //{
+        //    health -= damage;
+        //    healthBar.UpdateHealth(health, maxHealth);
+        //}
 
-        public void IncreaseHealth(int amount)
-        {
-            health += amount;
-            healthBar.UpdateHealth(health, maxHealth);
-        }
+        //public void IncreaseHealth(int amount)
+        //{
+        //    health += amount;
+        //    healthBar.UpdateHealth(health, maxHealth);
+        //}
 
         private IEnumerator DestroyEnemy()
         {
@@ -98,7 +110,8 @@ namespace Enemy
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
-                DecreaseHealth(1);
+                //DecreaseHealth(1);
+                healthManager.DecreaseHealth(1);
             }
         }     
         

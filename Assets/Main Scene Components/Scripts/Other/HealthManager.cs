@@ -1,43 +1,50 @@
 using Assets.Main_Scene_Components.Scripts.Other;
+using Enemy;
 using UI;
+using UnityEditor;
 using UnityEngine;
 
 public class HealthManager : HealthMethods
 {
-    private int health;
+    public int health;
     private int maxHealth;
-    private GameObject healthBarObj;
     private HealthBar healthBar;
+    private string type;
+    private EnemyStats enemyStats;
 
-    public HealthManager(int hea, int maxHea, HealthBar heaBar)
+    public HealthManager(int hea, int maxHea, HealthBar heaBar, string type)
     {
         health = hea;
         maxHealth = maxHea;
         healthBar = heaBar;
-        //healthBar = healthBarObj.GetComponent<HealthBar>();
+        this.type = type;
     }
-    //    public Health(int health, int maxHealth)
-    //    {
-    //        this.health = health;
-    //        this.maxHealth = maxHealth;
-    //    }
-
-    //    public void reduceHealth(int damage)
-    //    {
-    //        health -= damage;
-    //        healthBar.updateHealth(health, maxHealth);
-    //    }
-
-    //    public void IncreaseHealth(int amount)
-    //    {
-    //        health += amount;
-    //        healthBar.updateHealth(health, maxHealth);
-    //    }
-
     public void DecreaseHealth(int damage)
     {
         health -= damage;
         healthBar.UpdateHealth(health, maxHealth);
+
+        if(health < 1)
+        {
+            gameEnd(type);
+        }
+    }
+
+    private void gameEnd(string type)
+    {
+        switch (type)
+        {
+            case "Ship":
+                UiManager.instance.ActivateGameover("Your ship was destroyed!");
+                break;
+            case "Player":
+                UiManager.instance.ActivateGameover("Your health ran out!");
+                break;
+            case "Enemy":
+                enemyStats = healthBar.gameObject.GetComponentInParent<EnemyStats>();
+                enemyStats.KillEnemy();
+                break;
+        }
     }
 
     public void IncreaseHealth(int amount)

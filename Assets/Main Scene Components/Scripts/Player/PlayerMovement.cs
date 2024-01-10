@@ -35,7 +35,7 @@ namespace Player
         [Header("Health")]
         private int health;
         private int maxHealth;
-
+        public HealthManager healthManager;
         // Health property
 
         public int Health
@@ -101,20 +101,25 @@ namespace Player
         private void Awake()
         {
             m_Camera = Camera.main; // unity tut
-            //playerAreaRange = Physics.CheckSphere(transform.position, playerRange, isEnemy); // Not sure if useful
-        }
-        private void Start()
-        {
-            rb = GetComponent<Rigidbody>();
-            rb.freezeRotation = true; // Allows physics system to control rotation of object
 
             readyToJump = true;
             readyToDash = true;
             originalDashColour = dashIcon.color;
             maxJumps = 2;
             jumpCounter = 0;
+
+            //health = maxHealth;
+
             
+        }
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            rb.freezeRotation = true; // Allows physics system to control rotation of object
+
             health = maxHealth;
+            healthManager = new HealthManager(health, maxHealth, healthBar, "Player");
+            Debug.Log(health + " " + maxHealth);
             //healthBar = new HealthBar(health, maxHealth);
         }
 
@@ -292,7 +297,7 @@ namespace Player
         {
             if (collision.gameObject.tag == "Enemy")
             {
-                IncreaseHealth(1);
+                DecreaseHealth(1);
             }
 }
         public void DecreaseHealth(int damage)

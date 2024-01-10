@@ -20,6 +20,7 @@ namespace UI
         public TMP_Text winMoralityText;
 
         public Slider moralitySlider;
+        public string mainMenuScene;
 
         private PlayerMovement playerMovement;
         private Charge charger;
@@ -50,7 +51,7 @@ namespace UI
         {
             Time.timeScale = 0; // Pauses game
 
-            totalScore = (100 - charger.ChargeValue) + (playerMovement.Health * 25) + (ShipManager.instance.Health * 25);
+            totalScore = (100 - charger.ChargeValue) + (playerMovement.Health * 25) + (ShipManager.instance.healthManager.health * 25);
 
             scoreText.text = $"{endReason}\nScore: {(int)totalScore}";            
         }
@@ -107,7 +108,7 @@ namespace UI
 
         public void ResetScene()
         {
-            SceneManager.LoadScene("Title Screen");
+            SceneManager.LoadScene(mainMenuScene);
         }
     }
 }

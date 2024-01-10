@@ -41,27 +41,23 @@ public class ItemPickup : MonoBehaviour
         {
             if(gameObject.CompareTag("AmmoIncrease"))
             {
-                gunshoot = other.gameObject.GetComponentInChildren<GunShoot>();
+                gunshoot = other.GetComponentInChildren<GunShoot>();
                 gunshoot.AddAmmo(ammoToAdd);
             }
 
             if(gameObject.CompareTag("HealthIncrease"))
             {
-                player = other.gameObject.GetComponent<PlayerMovement>();
+                player = other.GetComponent<PlayerMovement>();
 
                 if(player.Health < player.MaxHealth)
                 {
-                    player.IncreaseHealth(1);
-                }
-                else
-                {
-                    Debug.Log("Health full!");
+                    player.healthManager.IncreaseHealth(1);
                 }
             }
 
             if(gameObject.CompareTag("SpeedIncrease"))
             {
-                player = other.gameObject.GetComponent<PlayerMovement>();
+                player = other.GetComponent<PlayerMovement>();
                 player.SpeedUpActivate(speedToAdd, speedTime);
             }
 
@@ -75,12 +71,8 @@ public class ItemPickup : MonoBehaviour
                 enemyStats = other.GetComponent<EnemyStats>();
                 if (enemyStats.Health < enemyStats.MaxHealth)   // repeated from above
                 {
-                    enemyStats.IncreaseHealth(1);
-                }
-                else
-                {
-                    Debug.Log("Health full!");
-                }              
+                    enemyStats.healthManager.IncreaseHealth(1);
+                }          
             }
 
             if(gameObject.CompareTag("SpeedIncrease"))
@@ -94,8 +86,12 @@ public class ItemPickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void HealthActivate()
-    {
-
-    }
+    //private void HealthActivate(Collider collider, ) Tried to automate
+    //{
+    //    enemyStats = other.GetComponent<EnemyStats>();
+    //    if (enemyStats.Health < enemyStats.MaxHealth)   // repeated from above
+    //    {
+    //        enemyStats.healthManager.IncreaseHealth(1);
+    //    }
+    //}
 }

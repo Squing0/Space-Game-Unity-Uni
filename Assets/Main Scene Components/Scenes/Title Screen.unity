@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   difficulty: 
+  mainGameScene: Main Game
 --- !u!1 &377364870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,6 +2231,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startScreenMusic: {fileID: 1351204714}
   mainGameMusic: {fileID: 0}
+  shootSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  winGameSound: {fileID: 0}
+  LoseGameSound: {fileID: 0}
+  enemyDeathSound: {fileID: 0}
+  powerupSound: {fileID: 0}
 --- !u!1 &1407516798
 GameObject:
   m_ObjectHideFlags: 0
