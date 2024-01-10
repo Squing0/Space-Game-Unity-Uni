@@ -11,7 +11,7 @@ namespace UI
         private float chargeSpeeder;
 
         public bool ChargeOn
-        {get { return chargeOn; } set { chargeOn = value;}} // Make all properties like this
+        {get { return chargeOn; } set { chargeOn = value;}} 
         public float ChargeValue
         {get { return chargeValue; } set { chargeValue = value;}}
         public float ChargeSpeeder

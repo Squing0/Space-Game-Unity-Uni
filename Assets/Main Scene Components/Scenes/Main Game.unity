@@ -350,14 +350,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67689904}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 243.08553, y: 28.028336, z: 257.03235}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1281051799}
   - {fileID: 1694652919}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 697785151}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &70515134
 GameObject:
@@ -922,6 +922,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1238376790}
     m_Modifications:
     - target: {fileID: 687611247020337071, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
+      propertyPath: mCamera
+      value: 
+      objectReference: {fileID: 1152861125}
+    - target: {fileID: 687611247020337071, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: moralityBarObj
       value: 
       objectReference: {fileID: 457287782}
@@ -945,6 +949,10 @@ PrefabInstance:
       propertyPath: playerObj
       value: 
       objectReference: {fileID: 714840884}
+    - target: {fileID: 3906507480096554849, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
+      propertyPath: m_camera
+      value: 
+      objectReference: {fileID: 1152861125}
     - target: {fileID: 8139422624394418415, guid: e63e63ac6da5d1a46a9d71bffa865993, type: 3}
       propertyPath: m_Name
       value: Zolrik (1)
@@ -7924,6 +7932,7 @@ Transform:
   - {fileID: 7132604846174010302}
   - {fileID: 470796}
   - {fileID: 1238376790}
+  - {fileID: 67689905}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
@@ -8189,7 +8198,7 @@ MonoBehaviour:
   jumpCooldown: 1
   airMultiplier: 2
   maxJumps: 2
-  charger: {fileID: 0}
+  charger: {fileID: 1763760857}
   healthBar: {fileID: 1546248300}
   dashIcon: {fileID: 422827762}
   speedIncrease: 2
@@ -19262,5 +19271,4 @@ SceneRoots:
   - {fileID: 697785151}
   - {fileID: 1066345586}
   - {fileID: 709717433}
-  - {fileID: 67689905}
   - {fileID: 504341073}

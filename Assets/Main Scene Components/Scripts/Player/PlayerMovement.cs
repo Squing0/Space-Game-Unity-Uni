@@ -45,7 +45,7 @@ namespace Player
         {get { return maxHealth; }set { maxHealth = value; } }
 
         [SerializeField]
-        public HealthBar healthBar;
+        public SliderManager     healthBar;
 
         // Dashing
         private bool readyToDash;

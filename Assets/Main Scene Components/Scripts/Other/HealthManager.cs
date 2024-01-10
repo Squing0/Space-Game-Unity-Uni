@@ -8,11 +8,11 @@ public class HealthManager : HealthMethods
 {
     public int health;
     private int maxHealth;
-    private HealthBar healthBar;
+    private SliderManager healthBar;
     private string type;
     private EnemyStats enemyStats;
 
-    public HealthManager(int hea, int maxHea, HealthBar heaBar, string type)
+    public HealthManager(int hea, int maxHea, SliderManager heaBar, string type)
     {
         health = hea;
         maxHealth = maxHea;

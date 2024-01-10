@@ -12,7 +12,7 @@ public class ShipManager : MonoBehaviour
     public float healthDelay;
 
     [Header("Game Objects")]
-    public HealthBar healthBar;
+    public SliderManager healthBar;
 
     private bool shipAttackable;
     public HealthManager healthManager;

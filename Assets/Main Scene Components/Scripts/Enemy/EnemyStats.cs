@@ -10,7 +10,7 @@ namespace Enemy
         [Header("Health")]
         private int health;
         public int maxHealth;   // Could set to private but means will only work with difficulty selected.
-        public HealthBar healthBar;    // Change this to be more efficient
+        public SliderManager healthBar;    // Change this to be more efficient
         public HealthManager healthManager;
 
         [Header("Enemy")]
@@ -18,10 +18,12 @@ namespace Enemy
         public float enemyAliveTime;
         public string enemyPrefabName;
         public string deathAnimation;
+        public Camera mCamera;
+        public GameObject enemyHealthSlider;
 
         private Charge charge;
         private EnemyAI ai;
-        private HealthBar moralityBar;
+        private SliderManager moralityBar;
         private Animator animator;
         public GameObject moralityBarObj;
 
@@ -34,13 +36,14 @@ namespace Enemy
 
         private void Awake()
         {
-            healthBar = GetComponentInChildren<HealthBar>();
+            healthBar = GetComponentInChildren<SliderManager>();
             agent = GetComponent<NavMeshAgent>();
             ai = GetComponent<EnemyAI>();
-            moralityBar = moralityBarObj.GetComponent<HealthBar>();
+            moralityBar = moralityBarObj.GetComponent<SliderManager>();
             animator = GetComponent<Animator>();
 
             health = maxHealth;
+            mCamera = Camera.main;
         }
 
         private void Start()
@@ -53,6 +56,8 @@ namespace Enemy
         }
         private void Update()
         {
+            enemyHealthSlider.transform.rotation = mCamera.transform.rotation;
+
             if (health < 1)
             {
                 agent.isStopped = true;

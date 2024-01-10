@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Main Scene Components/Scenes/Title Screen.unity
     guid: c8d28ee1f5f69154d9613876bee290af
+  - enabled: 1
+    path: Assets/Main Scene Components/Scenes/Main Game 1.unity
+    guid: c954abfe048734c479a74eb1706c5731
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

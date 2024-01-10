@@ -26,7 +26,7 @@ namespace UI
         private Charge charger;
         private bool endSoundPlayed;
 
-        private float totalScore;   // change to int?
+        private float totalScore;   
 
         private void Awake()
         {

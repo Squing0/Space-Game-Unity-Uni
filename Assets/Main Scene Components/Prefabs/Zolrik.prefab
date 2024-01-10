@@ -235,7 +235,6 @@ GameObject:
   - component: {fileID: 1580994197825231053}
   - component: {fileID: 7782707775351878582}
   - component: {fileID: 1997100429181169726}
-  - component: {fileID: 3906507480096554849}
   m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
@@ -328,19 +327,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 7782707775351878582}
---- !u!114 &3906507480096554849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908093944156100802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7152447b8b8e01443bb18535a4516efb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_camera: {fileID: 0}
 --- !u!1 &969025158167772386
 GameObject:
   m_ObjectHideFlags: 0
@@ -3237,6 +3223,8 @@ MonoBehaviour:
   enemyAliveTime: 15
   enemyPrefabName: Zolrik (1)
   deathAnimation: Death1
+  mCamera: {fileID: 0}
+  enemyHealthSlider: {fileID: 908093944156100802}
   moralityBarObj: {fileID: 0}
 --- !u!54 &6038267614222630791
 Rigidbody:

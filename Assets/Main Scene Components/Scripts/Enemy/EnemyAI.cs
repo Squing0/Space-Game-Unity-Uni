@@ -198,7 +198,7 @@ namespace Enemy
 
         private IEnumerator ResetpatrolPos()
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3); // Hard coded, change
             patrolPointFound = true;
         }
 
