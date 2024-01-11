@@ -8215,10 +8215,12 @@ MonoBehaviour:
   maxJumps: 2
   charger: {fileID: 1763760857}
   healthBar: {fileID: 1546248300}
-  dashIcon: {fileID: 422827762}
   speedIncrease: 2
   jumpIncrease: 2
   powerupCooldown: 2
+  dashIcon: {fileID: 422827762}
+  dashSpeed: 8
+  dashDelay: 3
   jumpKey: 32
   sprintKey: 304
   crouchKey: 306
@@ -8227,12 +8229,12 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  orientation: {fileID: 1644887782}
   playerAreaRange: 0
   isEnemy:
     serializedVersion: 2
     m_Bits: 256
   playerRange: 6
+  orientation: {fileID: 1644887782}
 --- !u!54 &714840887
 Rigidbody:
   m_ObjectHideFlags: 0

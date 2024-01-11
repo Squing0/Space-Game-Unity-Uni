@@ -42,7 +42,7 @@ public class ShipManager : MonoBehaviour
     private void Start()
     {
         // Health manager instantiated to handle all health methods.
-         healthManager = new HealthManager(health, maxHealth, healthBar, "Ship");
+        healthManager = new HealthManager(health, maxHealth, healthBar, "Ship");
     }
 
     private void OnCollisionStay(Collision collision)

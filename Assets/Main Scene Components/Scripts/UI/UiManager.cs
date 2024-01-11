@@ -29,7 +29,7 @@ namespace UI
         public string mainMenuScene;    // Made as variable in case name changes.
 
         // Scripts that will be changed.
-        private PlayerMovement playerMovement;  
+        private PlayerMovementAndStats playerMovement;  
         private Charge charger;
 
         private bool endSoundPlayed;
@@ -52,7 +52,7 @@ namespace UI
         private void Start()
         {
             // Other scripts are found in scene
-            playerMovement = FindAnyObjectByType<PlayerMovement>();
+            playerMovement = FindAnyObjectByType<PlayerMovementAndStats>();
             charger = FindAnyObjectByType<Charge>();
         }
 

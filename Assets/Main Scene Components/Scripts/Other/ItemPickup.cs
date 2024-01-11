@@ -18,7 +18,7 @@ public class ItemPickup : MonoBehaviour
 
     // Scripts that will be used.
     private GunShoot gunshoot; 
-    private PlayerMovement player;
+    private PlayerMovementAndStats player;
     private StartValues startValues;
     private EnemyStats enemyStats;
     private EnemyAI ai;
@@ -50,7 +50,7 @@ public class ItemPickup : MonoBehaviour
 
             if(gameObject.CompareTag("HealthIncrease")) // If health powerup, increase player health.
             {
-                player = other.GetComponent<PlayerMovement>();
+                player = other.GetComponent<PlayerMovementAndStats>();
 
                 if(player.Health < player.MaxHealth)    // Only increases health if less than max health.
                 {
@@ -60,7 +60,7 @@ public class ItemPickup : MonoBehaviour
 
             if(gameObject.CompareTag("SpeedIncrease"))  // If speed powerup, increases player speed with specified amount and time.
             {
-                player = other.GetComponent<PlayerMovement>();
+                player = other.GetComponent<PlayerMovementAndStats>();
                 player.SpeedUpActivate(speedToAdd, speedTime);
             }
 
@@ -89,13 +89,4 @@ public class ItemPickup : MonoBehaviour
 
         Destroy(gameObject);    // Powerup destroyed if picked up.
     }
-
-    //private void HealthActivate(Collider collider, ) Tried to automate
-    //{
-    //    enemyStats = other.GetComponent<EnemyStats>();
-    //    if (enemyStats.Health < enemyStats.MaxHealth)   // repeated from above
-    //    {
-    //        enemyStats.healthManager.IncreaseHealth(1);
-    //    }
-    //}
 }

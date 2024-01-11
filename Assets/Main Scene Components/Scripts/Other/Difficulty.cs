@@ -13,7 +13,7 @@ public class Difficulty : MonoBehaviour
     // Scripts to get values from.
     private Charge charger;    
     private StartValues enemyCreator;   
-    private PlayerMovement player;
+    private PlayerMovementAndStats player;
     private EnemyAI enemyAi;
 
     // Values to change.
@@ -33,7 +33,7 @@ public class Difficulty : MonoBehaviour
         // Other scripts not usually in start, but are because of use of instance.
         charger = FindAnyObjectByType<Charge>();
         enemyCreator = FindAnyObjectByType<StartValues>();
-        player = FindAnyObjectByType<PlayerMovement>();
+        player = FindAnyObjectByType<PlayerMovementAndStats>();
         enemyAi = enemyObj.GetComponent<EnemyAI>();
 
         SelectDifficulty();
