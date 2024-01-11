@@ -74,16 +74,4 @@ public class ShipManager : MonoBehaviour
             healthManager.DecreaseHealth(1);
         }
     }
-
-    //public void DecreaseHealth(int damage)
-    //{
-    //    health -= damage;
-    //    healthBar.UpdateHealth(health, maxHealth);
-    //}
-
-    //public void IncreaseHealth(int amount)
-    //{
-    //    health += amount;
-    //    healthBar.UpdateHealth(health, maxHealth);
-    //}
 }

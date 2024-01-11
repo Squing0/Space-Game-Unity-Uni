@@ -3,19 +3,20 @@ using Player;
 using UI;
 using UnityEngine;
 
+// Changes game values based on difficulty selected.
 public class Difficulty : MonoBehaviour
 {
-    [Header("Difficulty")]
     public string difficulty;
 
-    [Header("Game Objects")]
     public GameObject enemyObj;
 
-    private Charge charger;    //Make how access variables here consistent (if annoying get rid of properties)
-    private StartValues enemyCreator;   // CHANGE THIS
+    // Scripts to get values from.
+    private Charge charger;    
+    private StartValues enemyCreator;   
     private PlayerMovement player;
     private EnemyAI enemyAi;
 
+    // Values to change.
     private float time = 1;       
     private int powerupTime = 1;
     private int enemyTime = 1;
@@ -27,12 +28,13 @@ public class Difficulty : MonoBehaviour
 
     private void Awake()
     {
-        difficulty = DifficultyAcrossScenes.instance.difficulty;    // (This flags as an error but functions perfectly)
+        difficulty = DifficultyAcrossScenes.instance.difficulty;    // Difficuly gotten in awake specifically as instance is used here.
 
     }
     private void Start()
     {
-        charger = FindAnyObjectByType<Charge>();    // Generally use object of type for single instance objects that aren't managers for simplicity
+        // Scripts are found.
+        charger = FindAnyObjectByType<Charge>();    
         enemyCreator = FindAnyObjectByType<StartValues>();
         player = FindAnyObjectByType<PlayerMovement>();
         enemyAi = enemyObj.GetComponent<EnemyAI>();
@@ -40,6 +42,7 @@ public class Difficulty : MonoBehaviour
         SelectDifficulty();
     }
 
+    // Different values are applied based on selected difficulty.
     private void SelectDifficulty()
     {
         switch (difficulty)
@@ -65,6 +68,7 @@ public class Difficulty : MonoBehaviour
         enemyAi.timeBetweenAttacks = enemyAttackTime;
     }
 
+    // Values are set depending on what parameters given.
     public void SetValues(float timeV, int pTimeV, int eTimeV, int healthV, int maxHealthV, float wSpeedV, float rSpeedV, float eAttackTimeV)
     {
         time = timeV;
@@ -75,7 +79,5 @@ public class Difficulty : MonoBehaviour
         walkSpeed = wSpeedV;
         runSpeed = rSpeedV;
         enemyAttackTime = eAttackTimeV;
-
-        Debug.Log(eAttackTimeV);
     }
 }

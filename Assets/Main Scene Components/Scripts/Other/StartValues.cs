@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UI;
 using Enemy;
+// Handles instantiation of enemies and powerups at start of game.
 public class StartValues : MonoBehaviour
 {
     [Header("GameObjects")]
@@ -9,18 +10,21 @@ public class StartValues : MonoBehaviour
     public GameObject speedUpObj;
     public GameObject healthUpObj;
     public GameObject ammoUpObj;
-    public GameObject powerupPosObj;
 
-    [Header("Appear Rates")]
-    private int powerupChargeAppear;
+    [Header("Powerup Position")]
+    public Transform powerupPos;
+
+    private int powerupChargeAppear;    // Specific charge time that powerups and enemies appear at.
     private int enemyChargeAppear;
 
+    // Whether enemies or powerups have spawned.
     private bool enemySpawned;
     private bool powerUpSpawned;
 
-    private Vector3 enemyPos;
+    private Vector3 enemyPos;   // Specific position of enemy
     private Charge charger;
         
+    // Properties used as variables accessed in other methods.
     public int PowerupChargeAppear
     {
         get { return powerupChargeAppear; }
@@ -34,8 +38,9 @@ public class StartValues : MonoBehaviour
 
     private void Awake()
     {
-        enemyPos = new Vector3(250, 0.6f, 250);
+        enemyPos = new Vector3(250, 0.6f, 250); // Ensures that object is instantiated on navmesh.
 
+        // Powerups and enemies initially not spawned.
         enemySpawned = false;
         powerUpSpawned = false;
     }
@@ -51,30 +56,31 @@ public class StartValues : MonoBehaviour
 
     void Update()
     {
-        float randomPos = Random.Range(245, 275);   // Adjust if having problems
+        float randomPos = Random.Range(245, 275);   // x and y positions are randomly generated and applied to existing enemy object.
         enemyPos = new Vector3(randomPos, 0.5f, randomPos);
 
-        if (!enemySpawned && (int)charger.ChargeValue % enemyChargeAppear == 0)
+        if (!enemySpawned && (int)charger.ChargeValue % enemyChargeAppear == 0) // Modulo used to instantiate enemy at specific point in charge.
         {
             enemySpawned = true;
             CreateEnemy();
 
-            StartCoroutine(ResetObjectCreation("enemy"));
+            StartCoroutine(ResetObjectCreation("enemy"));   // Enemy creation reset ensures only one enemy created.
         }
 
-        if(!powerUpSpawned && (int)charger.ChargeValue % powerupChargeAppear == 0)
+        if (!powerUpSpawned && (int)charger.ChargeValue % powerupChargeAppear == 0) // Modulo used to instantiate powerup at specific point in charge.
         {
             powerUpSpawned = true;
-            CreatePowerup();          
+            CreatePowerup();
 
-            StartCoroutine(ResetObjectCreation("powerup"));
+            StartCoroutine(ResetObjectCreation("powerup")); // Powerup creation reset ensures only one powerup created.
         }
 
     }
 
+    // Randomly assigned one powerup of three to create.
     private void CreatePowerup()
     {
-        int powerUpchosen = Random.Range(1, 4);
+        int powerUpchosen = Random.Range(1, 4); 
 
         switch (powerUpchosen)
         {
@@ -87,34 +93,32 @@ public class StartValues : MonoBehaviour
             case 3:
                 CreateSpecificPowerup(speedUpObj);
                 break;
-            default:
-                CreateSpecificPowerup(healthUpObj);
-                break;
         }
     }
-
+    // Powerup is instantiated at specific rotation.
     private void CreateSpecificPowerup(GameObject powerupChosen)
     {
-        Vector3 adjustedPowPos = new Vector3(powerupPosObj.transform.position.x, powerupPosObj.transform.position.y + 1f, powerupPosObj.transform.position.z);
         GameObject powerup;
-
-        powerup = Instantiate(powerupChosen, adjustedPowPos, Quaternion.Euler(270, 45, 45));
-        powerup.SetActive(true);
+     
+        powerup = Instantiate(powerupChosen, powerupPos.position, Quaternion.Euler(270, 45, 45));
+        powerup.SetActive(true);    // Set to active as based off of unactive powerup prefab.
     }
 
-    private IEnumerator ResetObjectCreation(string specificObject) // Is this needed?
+    // Waits for one second before spawning other enemy or powerup.
+    private IEnumerator ResetObjectCreation(string specificObject) 
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1); 
         if (specificObject == "powerup") { powerUpSpawned = false; }
         if (specificObject == "enemy") { enemySpawned = false; }
     }
 
+    // Creates enemy with randomly chosen state of three.
     public void CreateEnemy()
     {
         GameObject newEnemy = Instantiate(enemyObj, enemyPos, Quaternion.identity);
-        newEnemy.name = "Enemy Clone";  // Why was this done? (don't remember)
+        newEnemy.name = "Enemy Clone";  // Enemy name changed to be different than initial prefab.
 
-        int stateChosen = Random.Range(1, 4);    // Change to 4 with patrol
+        int stateChosen = Random.Range(1, 4);    
         switch (stateChosen)
         {
             case 1:

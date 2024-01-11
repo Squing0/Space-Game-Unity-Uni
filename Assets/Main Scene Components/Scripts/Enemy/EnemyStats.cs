@@ -88,25 +88,12 @@ namespace Enemy
 
         }
 
-        //public void DecreaseHealth(int damage)
-        //{
-        //    health -= damage;
-        //    healthBar.UpdateHealth(health, maxHealth);
-        //}
-
-        //public void IncreaseHealth(int amount)
-        //{
-        //    health += amount;
-        //    healthBar.UpdateHealth(health, maxHealth);
-        //}
-
         private IEnumerator DestroyEnemy()
         {
-            yield return new WaitForSeconds(enemyAliveTime / charge.ChargeSpeeder);  // Might not change much, but more to make consistent with powerups
+            yield return new WaitForSeconds(enemyAliveTime / charge.ChargeSpeeder);  
 
-            if(gameObject.name != enemyPrefabName) // Try to change this if possible
+            if(gameObject.name != enemyPrefabName) 
             {
-                //CheckMorality();  // needed here? 
                 Destroy(gameObject);
             }   
         }
@@ -115,7 +102,6 @@ namespace Enemy
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
-                //DecreaseHealth(1);
                 healthManager.DecreaseHealth(1);
             }
         }     

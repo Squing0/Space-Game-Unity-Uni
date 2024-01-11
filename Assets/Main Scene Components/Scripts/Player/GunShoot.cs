@@ -6,7 +6,6 @@ namespace Player
 {
     public class GunShoot : MonoBehaviour
     {
-
         [Header("Shooting")]
         public Transform shootPos;
         public float bulletVelocity;
