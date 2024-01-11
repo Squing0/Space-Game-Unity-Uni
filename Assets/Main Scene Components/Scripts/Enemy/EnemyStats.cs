@@ -124,11 +124,11 @@ namespace Enemy
         {
             if (ai.state == EnemyAI.State.PATROL)
             {
-                moralityBar.IncreaseMorality(.1f);
+                moralityBar.ChangeMorality(.1f);
             }
             else if (ai.state != EnemyAI.State.PATROL)
             {
-                moralityBar.DecreaseMorality(.1f);
+                moralityBar.ChangeMorality(-.1f);
             }
         }
     }
