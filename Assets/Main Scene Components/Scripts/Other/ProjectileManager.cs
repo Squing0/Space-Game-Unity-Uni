@@ -1,44 +1,35 @@
 using System.Collections;
 using UnityEngine;
 
+// Manages methods related to bullet and rock projectiles.
 public class ProjectileManager : MonoBehaviour
 {
-    public static ProjectileManager instance;
+    // Time bullet stays alive if no triggers or collisions occur.
     public float aliveTime;
 
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
-    }
     private void OnTriggerEnter(Collider other)
     {
+        // Destroys bullet if hits enemy.
         if (other.gameObject.CompareTag("Enemy") && gameObject.CompareTag("Bullet"))
         {
-            Destroy(gameObject);    // Make so destroys once hit anything, not specifically enemy               
+            Destroy(gameObject);         
         }
 
+        // Destroys rock if hits player.
         if (other.gameObject.CompareTag("Player") && gameObject.CompareTag("Rock"))
         {
             Destroy(gameObject);
         }
-        //Have code for just destroying object in general ?
-
-        //Destroy(gameObject);  // For some reason, changing it to just this caused problems
     }
     private void OnCollisionEnter(Collision collision)
     {
+        // If rock or bullet haven't hit target and collider with terrain or other objects, destroy.
         Destroy(gameObject);
     }
+    // Deletes projectile if no triggers or collisions occur.
     public IEnumerator deleteProjectile(GameObject obj)
     {
-        yield return new WaitForSeconds(aliveTime);
+        yield return new WaitForSeconds(aliveTime); // Speciifed time for projectile to stay alive.
 
         Destroy(obj);
     }
