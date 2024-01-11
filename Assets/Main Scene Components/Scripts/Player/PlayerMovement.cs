@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UI;
-using System;
 using UnityEngine.UI;
 
 namespace Player
@@ -12,11 +11,6 @@ namespace Player
         private float walkSpeed;
         private float runSpeed;
         private float moveSpeed;
-
-        // Walk property
-        public float WalkSpeed { get { return walkSpeed; } set { walkSpeed = value; } }
-        // Run property
-        public float RunSpeed { get { return runSpeed; } set { runSpeed = value; } }
 
         public float groundDrag;
         public MovementState state;
@@ -38,21 +32,19 @@ namespace Player
         public HealthManager healthManager;
         // Health property
 
-        public int Health
-        { get { return health; } set { health = value; } }
+        public float WalkSpeed { get { return walkSpeed; } set { walkSpeed = value; } }
+        public float RunSpeed { get { return runSpeed; } set { runSpeed = value; } }
+        public int Health{ get { return health; } set { health = value; } }
 
-        public int MaxHealth
-        {get { return maxHealth; }set { maxHealth = value; } }
+        public int MaxHealth {get { return maxHealth; }set { maxHealth = value; } }
 
         [SerializeField]
-        public SliderManager     healthBar;
+        public SliderManager healthBar;
 
         // Dashing
         private bool readyToDash;
         private Color originalDashColour;
         public RawImage dashIcon;
-
-        // Make property later 
 
         [Header("Power Ups")]
         public float speedIncrease;
@@ -72,7 +64,7 @@ namespace Player
 
         public Transform orientation;
 
-        // Useful for trying to keeo enemy outside of player range
+        // Useful for trying to keep enemy outside of player range
         public bool playerAreaRange;
         public LayerMask isEnemy;
         public float playerRange;
@@ -81,10 +73,10 @@ namespace Player
         // Miscellaneous 
 
         // Player movement
-        float horizontalInput;
-        float verticalInput;
+        private float horizontalInput;
+        private float verticalInput;
 
-        Vector3 moveDirection;
+        private Vector3 moveDirection;
 
         // Rigidbody and camera
         Rigidbody rb;
@@ -162,11 +154,6 @@ namespace Player
             Moveplayer();    // Called within fixed update specifically as uses physics 
         }
 
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, playerRange);
-        }
         private void MyInput()
         {
             //Movement in any direction

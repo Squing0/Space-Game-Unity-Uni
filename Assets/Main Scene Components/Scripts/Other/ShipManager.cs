@@ -8,7 +8,7 @@ public class ShipManager : MonoBehaviour
     public static ShipManager instance; // Single instance as only one ship in scene.
 
     [Header("Health")]
-    public int maxHealth;
+    public int maxHealth;   
     public float healthDelay;
 
     [Header("Game Objects")]

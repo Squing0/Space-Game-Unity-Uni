@@ -212,12 +212,6 @@ namespace Enemy
                 gameObject.transform.position.z + randomz);           
         }
      
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
-        }
-
         public void SpeedUpActivate(float speedIncrease, float speedTime)   // Copied from player movement (use interface?)
         {
             agent.speed += speedIncrease;

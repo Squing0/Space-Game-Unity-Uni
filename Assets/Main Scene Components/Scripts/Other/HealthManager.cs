@@ -3,7 +3,7 @@ using Enemy;
 using UI;
 
 // Central health class to manage health and sliders.
-public class HealthManager : HealthMethods  // Interface is used as base class as mono behaviours can't be instantiated.
+public class HealthManager : HealthMethods  // Interface is used to inherit from as mono behaviours can't be instantiated.
 {
     // Health variables
     public int health;

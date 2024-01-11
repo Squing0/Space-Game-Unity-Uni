@@ -30,11 +30,8 @@ public class Difficulty : MonoBehaviour
     {
         difficulty = DifficultyAcrossScenes.instance.difficulty;    // Difficuly gotten in awake specifically as instance is used here.
 
-    }
-    private void Start()
-    {
-        // Scripts are found.
-        charger = FindAnyObjectByType<Charge>();    
+        // Other scripts not usually in start, but are because of use of instance.
+        charger = FindAnyObjectByType<Charge>();
         enemyCreator = FindAnyObjectByType<StartValues>();
         player = FindAnyObjectByType<PlayerMovement>();
         enemyAi = enemyObj.GetComponent<EnemyAI>();
