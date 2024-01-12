@@ -4,54 +4,66 @@ using UnityEngine;
 
 namespace Player
 {
+    // Handles all variables and methods relating to player shooting gun.
     public class GunShoot : MonoBehaviour
     {
         [Header("Shooting")]
         public Transform shootPos;
-        public float bulletVelocity;
         public GameObject bullet;
-
+        public float bulletVelocity;
         public float timeBetweenAttacks;
 
+        [Header("Effects")]
         public ParticleSystem gunSmoke;
         public UnityEngine.UI.Image enemyCrosshair;
-
-        private bool readyToAttack;
-        private ProjectileManager pm;
-        private Camera m_Camera;
-
-        public float magazineTotal, bulletTotal, reloadTime;    
-        private float currentBullets;
         public TMP_Text reloadText;
 
-        // Current Bullets property
+        [Header("Reload")]
+        public float magazineTotal;
+        public float bulletTotal;
+        public float reloadTime;
+
+        // Script to manipulate.
+        private ProjectileManager projectileManager;
+
+        private Camera mCamera;
+        private bool readyToAttack;
+
+        private float currentBullets;
+        // Property used as variable used by other scripts.
         public float CurrentBullets
         { get { return currentBullets; } private set {}}
 
         private void Awake()
         {
-            m_Camera = Camera.main;
+            // Uses main camera in scene and initially sets enemy cross hair to false.
+            mCamera = Camera.main;
             enemyCrosshair.enabled = false;
 
+            // Player is initially able to attack woth a full attack.
             readyToAttack = true;
             currentBullets = magazineTotal;
         }
         private void Start()
         {
-            pm = bullet.GetComponent<ProjectileManager>();
-            gunSmoke.Stop();
+            projectileManager = bullet.GetComponent<ProjectileManager>();
+            gunSmoke.Stop();    // Animation is stopped when scene starts.
         }
         private void Update()
         {
-            MyInput();
             MouseDetection();
-
             reloadText.text = $"{currentBullets}   {bulletTotal}";
         }
+        private void FixedUpdate()
+        {
+            MyInput();
+        }
 
+        // Detects if player is looking at enemy and shows crosshair if are.
         private void MouseDetection()
         {
-            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            // Raycast used to detect if player sees enemy based on mouse position.
+            Ray ray = mCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.collider.gameObject.tag == "Enemy")
@@ -64,118 +76,90 @@ namespace Player
                 }
             }
         }
-
+        // Calls method based on player inputs and conditions.
         private void MyInput()
         {
+            // If player clicks left mouse and has no bullets, can attack.
             if (Input.GetMouseButton(0) && readyToAttack && currentBullets > 0)
             {
                 Shoot();
             }
 
+            // Reloads with R, so long as magazine isn't full and there are bullets available.
             if (Input.GetKey(KeyCode.R) && currentBullets < magazineTotal && bulletTotal > 0)
             {
                 AudioManager.instance.reloadSound.Play();
-                Invoke(nameof(Reload), reloadTime); // CHANGE TO COROUTINE FOR BOTH, BE CONSISTENT
+                StartCoroutine(Reload());   // Coroutine used so player can't spam reload.
             }
-
-            //if (currentBullets == 0) // Would prefer to be -1 but this kinda works
-            //{
-            //    Invoke(nameof(Reload), reloadTime); // Make so takes longer, if run out of bullets and don't manually reload
-            //}
-
-            //if(bulletTotal == 0)
-            //{
-            //    readyToAttack = false;
-            //}
         }
-
-        private void Reload()
+        // Reloads player's bullets.
+        private IEnumerator Reload()
         {
-            //bulletTotal -= magazineTotal - currentBullets;
+            yield return new WaitForSeconds(reloadTime);
 
-            //if(bulletTotal < 0)
-            //{
-            //    currentBullets += bulletTotal;
-            //    bulletTotal = 0;
-            //}
+            // Calculates required ammo based on player's current bullets.
+            float requiredAmmo = magazineTotal - currentBullets;   
 
-            //if(bulletTotal > 0) 
-            //{
-            //    currentBullets = magazineTotal;
-            //}
-           
-            float bulletsNeeded = magazineTotal - currentBullets;   //Chatgpt gave this, change?
-
-            if (bulletTotal >= bulletsNeeded)
+            // Ammo taken from bullet toal and current bullets filled if there are more total bullets than required.
+            if (bulletTotal >= requiredAmmo)
             {
+                bulletTotal -= requiredAmmo;
                 currentBullets = magazineTotal;
-                bulletTotal -= bulletsNeeded;
             }
-            else
+            else    // If not more bullets than required, current bullets given remainder and total bullets emptied.
             {
                 currentBullets += bulletTotal;
                 bulletTotal = 0;
             }
         }
-
+        // Adds ammo when powerup gotten.
         public void AddAmmo(int ammo)
         {
+            // If player's current bullets are full, simply add to total.
             if (currentBullets == magazineTotal)    
             {
                 bulletTotal += ammo;
             }
             else
             {
+                // Add ammo given to current bullets.
                 currentBullets += ammo;
 
+                // If ammo goes over magazine total.
                 if (currentBullets > magazineTotal)
                 {
+                    // Calculate specific number of extra bullets and add to bullet total.
                     float extraBullets = currentBullets - magazineTotal;
                     bulletTotal += extraBullets;
 
+                    // Reset current bullets to magazine total.
                     currentBullets = magazineTotal;
                 }
             }
         }
-
+        // Shoots bullet projectile from player gun.
         private void Shoot()
         {
+            // Plays sound effect and particle effect.
             AudioManager.instance.shootSound.Play();
+            gunSmoke.Play();
+
+            // Instantiates bullet at specific rotation and shoots at player at specific velocity.
+            Rigidbody rb = Instantiate(bullet, shootPos.transform.position, Quaternion.Euler(90, 0, 0))
+                .GetComponent<Rigidbody>();
+            rb.velocity = shootPos.transform.forward * bulletVelocity;
 
             readyToAttack = false;
-            Vector3 mousePos = Input.mousePosition;
-            Ray ray = m_Camera.ScreenPointToRay(mousePos);  //Unity tutorial used here
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
+            StartCoroutine(projectileManager.deleteProjectile(rb.gameObject));  // Deletes projectile if not triggered or collided with objects.
+            StartCoroutine(ResetShooting());    // Resets shooting so player can't spam wit readyToAttack bool.
 
-            }
-
-            Vector3 alteredPosition = new Vector3(shootPos.transform.position.x, shootPos.transform.position.y, shootPos.transform.position.z);
-
-            GameObject clone = Instantiate(bullet, alteredPosition, Quaternion.Euler(90, 0, 0));
-            Rigidbody bulletRigidbody = clone.GetComponent<Rigidbody>();
-            bulletRigidbody.velocity = shootPos.transform.forward * bulletVelocity; // May be better to have more accurate/complex way of shooting here
-
-            //bulletRigidbody.AddForce(shootPos.transform.forward * 20f, ForceMode.Impulse);    // Alternate way of shooting bullets!
-            //bulletRigidbody.AddForce(shootPos.transform.up * 10f, ForceMode.Impulse);
-
-            gunSmoke.Play();          
-
-            StartCoroutine(pm.deleteProjectile(clone));
-            StartCoroutine(ResetShooting());
-
-            currentBullets--;
+            currentBullets--;   // Takes one bullet off.
         }
-
+        // Resets shooting with specified time.
         private IEnumerator ResetShooting()
         {
             yield return new WaitForSeconds(timeBetweenAttacks);
-
-            readyToAttack = true;
-        }
-        private void Reset()
-        {
             readyToAttack = true;
         }
     }

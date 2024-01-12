@@ -5,41 +5,36 @@ using UnityEngine.AI;
 
 namespace Enemy
 {
+    // Handles all variables and methods to manipulate enemy AI.
     public class EnemyAI : MonoBehaviour
     {
+        [Header("Agent")]
         public NavMeshAgent agent;
-
-        public enum State { PATROL, CHASE, SHIP, ATTACK }    
+        public enum State { PATROL, CHASE, SHIP, ATTACK }    // Enum used as values are unchangable.
         public State state;
 
-        public GameObject ship;
-
+        [Header("State speeds")]
         public float patrolSpeed = 0.5f;
         public float chaseSpeed = 1.0f;
         public float attackSpeed = 1.1f;
-        public GameObject playerObj;
-        private GunShoot gunShoot;
 
+        [Header("Attack")]
         public LayerMask isPlayer;
         public float attackRange;
         public bool PlayerWithinRange;
         public bool alreadyAttacked;
-
-        // patrol speed
-        private Vector3 newPatrolPos;
-        private bool patrolPointFound;
-        public float patrolRange;
-
-        public GameObject rockObj;
-        private ProjectileManager projectileManager;
-        private Rigidbody rb;
-
-        public GameObject knifeObj;
         public float timeBetweenAttacks;
 
-        // time attack property
-        //public float TimeBetweenAttacks // Doesn't work for some reason
-        //{ get { return timeBetweenAttacks; } set { timeBetweenAttacks = value; }}
+        [Header("Patrol")]
+        public float patrolRange;
+        public float timeBetweenPatrols;
+
+        [Header("Other game objects")]
+        public GameObject ship;
+        public GameObject playerObj;
+        public GameObject rockObj;
+        public GameObject knifeObj;
+        
 
         [Header("Animations")]
         public Animator enemyAnimator;
@@ -48,16 +43,23 @@ namespace Enemy
         public string combatRunAnimation;
         public string attackAnimation;
 
-        Vector3 playerPos;
-        public LayerMask whatisGround;
+        // Private patrol variables.
+        private Vector3 newPatrolPos;
+        private bool patrolPointFound;
+
+        // Scripts to be manipualted.
+        private ProjectileManager projectileManager;
+        private GunShoot gunShoot;
 
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
 
+            // Enemy position and rotation update as move.
             agent.updatePosition = true;
             agent.updateRotation = true;
 
+            // Patrol point initially found so new patrol point can be found
             patrolPointFound = true;
         }
         private void Start()
@@ -65,9 +67,11 @@ namespace Enemy
             projectileManager = rockObj.GetComponent<ProjectileManager>();
             gunShoot = FindAnyObjectByType<GunShoot>();
 
+            // Coroutine called in start so continually runs.
             StartCoroutine(FSM());
         }
 
+        // Controls when states are changed and calls assigned methods to states.
         IEnumerator FSM()
         {
             while (true)
@@ -94,130 +98,145 @@ namespace Enemy
 
         private void Update()
         {
+            ChangeStateIfRange();
+            StopEnemy();
+        }
+        // changes state based on if player is in range.
+        private void ChangeStateIfRange()
+        {
+            // Checks position of player relative to specified amount of distance to enemy.
             PlayerWithinRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
-            bool playerTooClose = Physics.CheckSphere(transform.position, 5, isPlayer);
 
-            if (PlayerWithinRange && state == State.CHASE)  // So that doesn't inerfere with ship or patrol
+            if (PlayerWithinRange && state == State.CHASE)  // If player in enemy range and chasing, attack.
             {
                 state = State.ATTACK;
             }
-            else if (!PlayerWithinRange && state == State.ATTACK)
+            else if (!PlayerWithinRange && state == State.ATTACK)   // If player not in enemy range, return to chase state.
             {
                 state = State.CHASE;
             }
 
-            if(PlayerWithinRange && state == State.SHIP && gunShoot.CurrentBullets == 0 && gunShoot.bulletTotal == 0)
+            // If player within range and player has no bullets at all, enemies will start attacking player.
+            if (PlayerWithinRange && state == State.SHIP && gunShoot.CurrentBullets == 0 && gunShoot.bulletTotal == 0)
             {
-                state = State.CHASE;
+                state = State.ATTACK;
             }
+        }
+        // Stops enemy if too close to player.
+        private void StopEnemy()
+        {
+            // Checks if player is too close in attack range.
+            bool playerTooClose = Physics.CheckSphere(transform.position, 9, isPlayer);
 
-            if(playerTooClose && state == State.ATTACK)
+            // If player is too close then enemy stops moving.
+            if (playerTooClose && state == State.ATTACK)
             {
                 agent.speed = 0;
             }
-            else
+            else    // if player not too close, then speed is set to normal.
             {
                 agent.speed = chaseSpeed;
             }
         }
-
+        // Enemy attacks player with rock object.
         private void AttackPlayer()
-        {
-           
-            transform.LookAt(playerObj.transform.position);
+        {      
+            // Enemy goes to directly to player.
+            transform.LookAt(playerObj.transform.position); // Helps with aiming at player.
             agent.SetDestination(playerObj.transform.position);
-
-            agent.updateRotation = false;
 
             if (!alreadyAttacked)
             {
-                rb = Instantiate(rockObj, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
+                // Instantiates rock object and fires toward player at specified speed.
+                Rigidbody rb = Instantiate(rockObj, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
                 rb.velocity = transform.forward * 30;
+
+                // Resets attack.
+                alreadyAttacked = true;
+                StartCoroutine(ResetAttacked());
+
+                // Starts coroutine to destrpoy projectile if not triggered or collided with objects.
                 StartCoroutine(projectileManager.deleteProjectile(rb.gameObject));
 
-                alreadyAttacked = true;
                 enemyAnimator.Play(attackAnimation);
 
-                StartCoroutine(ResetAttacked());  // For some reason doesn't work
-                //Invoke(nameof(ResetAttack), timeBetweenAttacks);    // CHANGE TO COROUTINE
             }
         }
-
-        private void ResetAttack()
-        {
-            alreadyAttacked = false;
-        }
-
+        // Resets attack at specified time interval.
         private IEnumerator ResetAttacked()
         {
             yield return new WaitForSeconds(timeBetweenAttacks);
             alreadyAttacked = false;       
         }
      
+        // Enemy attacks ship object.
         private void Ship()
         {
-            knifeObj.SetActive(true);   // Should only have to be in one place
+            // Knife only needed for ship object, so set here.
+            knifeObj.SetActive(true);   
             agent.SetDestination(ship.transform.position);
 
-            if (!alreadyAttacked)   // Just copied from attack method
-            {
-                enemyAnimator.Play(attackAnimation);
-                alreadyAttacked = true;
-
-                //StartCoroutine(ResetAttacked());
-                Invoke(nameof(ResetAttack), 2f);
-            }
+            enemyAnimator.Play(attackAnimation);    // Knife animation played to simulate hitting ship.
         }
+        // Enemy chases player.
         private void Chase()
-        {
+        {           
             agent.speed = chaseSpeed;
+            knifeObj.SetActive(false);  // Set false in case state changes from ship where knife active.
+
+            // Enemy chases player directly.
             transform.LookAt(playerObj.transform.position);
             agent.SetDestination(playerObj.transform.position);
-
-            knifeObj.SetActive(false);
 
             enemyAnimator.StopPlayback();
             enemyAnimator.Play(runAnimation);
         }
 
+        // Enemy patrols around area.
         private void Patrol()
         {
             agent.speed = patrolSpeed;
             enemyAnimator.Play(walkAnimation);
 
-            if(patrolPointFound)
+            if(patrolPointFound)    // Enemy continually looks for new patrol point, if one is found.
             {
-                newPatrolPos = FindNewPatrolPoint();
+                // New patrol point is found and set
+                newPatrolPos = FindNewPatrolPoint();    
                 agent.SetDestination(newPatrolPos);
 
+                // Patrol point is reset.
                 patrolPointFound = false;
                 StartCoroutine(ResetpatrolPos());
             }
         }
 
+        // Patrol point is reset after specified time.
         private IEnumerator ResetpatrolPos()
         {
-            yield return new WaitForSeconds(3); // Hard coded, change
+            yield return new WaitForSeconds(timeBetweenPatrols); 
             patrolPointFound = true;
         }
 
-        private Vector3 FindNewPatrolPoint()    // Be careful, got this method from youtube tutorial
+        // Enemy looks for new patrol point. Gotten from YouTube tutorial.
+        private Vector3 FindNewPatrolPoint()    
         {
+            // X and Z values are randomly generated in specific range.
             float randomx = Random.Range(-patrolRange, patrolRange);
             float randomz = Random.Range(-patrolRange, patrolRange);
 
+            // Patrol point with new X and Z values are returned.
             return new Vector3(gameObject.transform.position.x + randomx, 
                 0, 
                 gameObject.transform.position.z + randomz);           
         }
-     
-        public void SpeedUpActivate(float speedIncrease, float speedTime)   // Copied from player movement (use interface?)
+
+        // Increases enemy speed by specified amount for a specified time.
+        public void SpeedUpActivate(float speedIncrease, float speedTime)   
         {
             agent.speed += speedIncrease;
             StartCoroutine(SpeedTimer(speedIncrease, speedTime));
         }
-
+        // Returns enemy speed to normal after specified time.
         private IEnumerator SpeedTimer(float speedDecrease, float speedCooldown)
         {
             yield return new WaitForSeconds(speedCooldown);

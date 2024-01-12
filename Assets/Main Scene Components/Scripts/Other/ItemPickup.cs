@@ -52,7 +52,7 @@ public class ItemPickup : MonoBehaviour
             {
                 player = other.GetComponent<PlayerMovementAndStats>();
 
-                if(player.Health < player.MaxHealth)    // Only increases health if less than max health.
+                if(player.healthManager.health < player.MaxHealth)    // Only increases health if less than max health.
                 {
                     player.healthManager.IncreaseHealth(1);
                 }
@@ -73,7 +73,7 @@ public class ItemPickup : MonoBehaviour
             {
                 enemyStats = other.GetComponent<EnemyStats>();
 
-                if (enemyStats.Health < enemyStats.MaxHealth)   // Only increases health if less than max health.
+                if (enemyStats.healthManager.health < enemyStats.MaxHealth)   // Only increases health if less than max health.
                 {
                     enemyStats.healthManager.IncreaseHealth(1);
                 }          
