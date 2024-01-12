@@ -140,10 +140,11 @@ namespace Enemy
         }
         // Enemy attacks player with rock object.
         private void AttackPlayer()
-        {      
+        {
             // Enemy goes to directly to player.
             transform.LookAt(playerObj.transform.position); // Helps with aiming at player.
-            agent.SetDestination(playerObj.transform.position);
+
+            knifeObj.SetActive(false);  // Set false in case state changes from ship where knife active.
 
             if (!alreadyAttacked)
             {
@@ -182,7 +183,6 @@ namespace Enemy
         private void Chase()
         {           
             agent.speed = chaseSpeed;
-            knifeObj.SetActive(false);  // Set false in case state changes from ship where knife active.
 
             // Enemy chases player directly.
             transform.LookAt(playerObj.transform.position);

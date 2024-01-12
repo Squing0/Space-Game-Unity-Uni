@@ -95,7 +95,6 @@ namespace Player
         {
             // Setting jump variables.
             readyToJump = true;
-            maxJumps = 2;
             jumpCounter = 0;
 
             // Setting dash varaibles.

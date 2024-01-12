@@ -93,7 +93,7 @@ namespace Enemy
         private IEnumerator DestroyEnemy()
         {
             // Charge speeder used to change time depending on start values.
-            yield return new WaitForSeconds(enemyAliveTime / charge.ChargeSpeeder);  
+            yield return new WaitForSeconds((enemyAliveTime / charge.ChargeSpeeder) * 2);  
 
             // Name specifically checked against alien prefab so prefab not deleted.
             if(gameObject.name != enemyPrefabName) 
